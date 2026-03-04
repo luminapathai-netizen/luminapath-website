@@ -1,1949 +1,823 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuminaPath - Your Voice. Multiplied.</title>
-    <meta name="description" content="AI that captures your unique tone and scales it across 8 platforms. One idea becomes 8 authentic posts that sound exactly like you.">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        /* ========================================
-           CSS VARIABLES - DEEP SPACE FLUX THEME
-           ======================================== */
-        :root {
-            --navy: #020617;
-            --navy-50: #0B1121;
-            --navy-100: #1E293B;
-            --navy-200: #334155;
-            --neon-orange: #FF5500;
-            --neon-orange-hover: #FF6B2C;
-            --neon-blue: #3B82F6;
-            --text-primary: #F8FAFC;
-            --text-secondary: #94A3B8;
-            --text-muted: #64748B;
-            --border-default: #1E293B;
-            --glass-bg: rgba(11, 17, 33, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        /* ========================================
-           RESET & BASE STYLES
-           ======================================== */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 100px;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: var(--navy);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            letter-spacing: -0.025em;
-            line-height: 1.1;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: color 0.2s ease;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        button {
-            font-family: inherit;
-            cursor: pointer;
-            border: none;
-            outline: none;
-        }
-
-        input {
-            font-family: inherit;
-            border: none;
-            outline: none;
-        }
-
-        /* ========================================
-           UTILITY CLASSES
-           ======================================== */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-        }
-
-        .glass-card {
-            background: rgba(11, 17, 33, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--neon-orange), var(--neon-orange-hover), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 16px 32px;
-            background: var(--neon-orange);
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: var(--neon-orange-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        /* ========================================
-           GLOW BORDER ANIMATION
-           ======================================== */
-        .glow-border {
-            position: relative;
-        }
-
-        .glow-border::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(90deg, var(--neon-orange), var(--neon-orange-hover), var(--neon-blue), var(--neon-orange));
-            background-size: 200% 100%;
-            animation: border-trace 3s linear infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0.8;
-        }
-
-        @keyframes border-trace {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        /* ========================================
-           BACKGROUND EFFECTS
-           ======================================== */
-        .radial-gradient {
-            background: radial-gradient(ellipse at 50% 0%, rgba(255, 85, 0, 0.08) 0%, transparent 60%);
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.3;
-            animation: float 8s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .orb-orange {
-            background: linear-gradient(135deg, var(--neon-orange) 0%, var(--neon-orange-hover) 100%);
-        }
-
-        .orb-blue {
-            background: linear-gradient(135deg, var(--neon-blue) 0%, #1D4ED8 100%);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Noise overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            z-index: 9999;
-        }
-
-        /* ========================================
-           VOICE WAVE ANIMATION
-           ======================================== */
-        @keyframes voice-wave {
-            0%, 100% { transform: scaleY(0.3); }
-            50% { transform: scaleY(1); }
-        }
-
-        .voice-bar {
-            width: 6px;
-            background: linear-gradient(to top, var(--neon-orange), var(--neon-orange-hover));
-            border-radius: 3px;
-            animation: voice-wave 1s ease-in-out infinite;
-        }
-
-        .voice-bar:nth-child(1) { animation-delay: 0s; height: 32px; }
-        .voice-bar:nth-child(2) { animation-delay: 0.1s; height: 48px; }
-        .voice-bar:nth-child(3) { animation-delay: 0.2s; height: 24px; }
-        .voice-bar:nth-child(4) { animation-delay: 0.3s; height: 56px; }
-        .voice-bar:nth-child(5) { animation-delay: 0.4s; height: 40px; }
-        .voice-bar:nth-child(6) { animation-delay: 0.5s; height: 28px; }
-        .voice-bar:nth-child(7) { animation-delay: 0.6s; height: 44px; }
-
-        /* ========================================
-           ANIMATIONS
-           ======================================== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .animate-scaleIn {
-            animation: scaleIn 0.5s ease-out forwards;
-        }
-
-        .animate-pulse {
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* Staggered animations */
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
-
-        /* ========================================
-           NAVIGATION
-           ======================================== */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 24px 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav.scrolled {
-            padding: 16px 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .nav-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--neon-orange), var(--neon-orange-hover));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon svg {
-            width: 20px;
-            height: 20px;
-            color: white;
-        }
-
-        .logo-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            font-size: 15px;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: white;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .nav-cta {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
-
-        /* ========================================
-           HERO SECTION
-           ======================================== */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            padding: 160px 0 80px;
-            overflow: hidden;
-        }
-
-        .hero .orb-1 {
-            width: 500px;
-            height: 500px;
-            top: -160px;
-            right: -160px;
-            opacity: 0.2;
-        }
-
-        .hero .orb-2 {
-            width: 400px;
-            height: 400px;
-            top: 50%;
-            left: -160px;
-            opacity: 0.15;
-            animation-delay: 2s;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-            align-items: center;
-        }
-
-        @media (max-width: 1024px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 50px;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .badge-dot {
-            position: relative;
-            width: 8px;
-            height: 8px;
-        }
-
-        .badge-dot::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--neon-orange);
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .badge-dot::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--neon-orange);
-            border-radius: 50%;
-        }
-
-        .badge-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .hero-title {
-            font-size: clamp(48px, 6vw, 80px);
-            font-weight: 700;
-            margin-bottom: 24px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.1s forwards;
-        }
-
-        .hero-subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 540px;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.2s forwards;
-        }
-
-        @media (max-width: 1024px) {
-            .hero-subtitle {
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        /* Hero Form */
-        .hero-form {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.3s forwards;
-        }
-
-        @media (max-width: 640px) {
-            .hero-form {
-                flex-direction: column;
-            }
-        }
-
-        .hero-input {
-            flex: 1;
-            padding: 16px 24px;
-            border-radius: 50px;
-            background: var(--navy-50);
-            border: 1px solid var(--navy-100);
-            color: white;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .hero-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .hero-input:focus {
-            border-color: var(--neon-orange);
-        }
-
-        /* Social Proof */
-        .hero-social-proof {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.4s forwards;
-        }
-
-        @media (max-width: 1024px) {
-            .hero-social-proof {
-                justify-content: center;
-            }
-        }
-
-        .avatars {
-            display: flex;
-        }
-
-        .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #475569, #334155);
-            border: 2px solid var(--navy);
-            margin-left: -8px;
-        }
-
-        .avatar:first-child {
-            margin-left: 0;
-        }
-
-        .social-proof-text {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* Hero Visual */
-        .hero-visual {
-            position: relative;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 0.3s forwards;
-        }
-
-        @media (max-width: 1024px) {
-            .hero-visual {
-                display: none;
-            }
-        }
-
-        .demo-card {
-            border-radius: 24px;
-            padding: 32px;
-        }
-
-        .voice-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .voice-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .voice-match {
-            font-weight: 500;
-            color: var(--neon-orange);
-        }
-
-        .voice-visualizer {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            height: 64px;
-            margin-bottom: 24px;
-        }
-
-        .idea-input {
-            padding: 16px;
-            border-radius: 12px;
-            background: rgba(11, 17, 33, 0.5);
-            border: 1px solid var(--navy-100);
-            margin-bottom: 24px;
-        }
-
-        .idea-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .idea-text {
-            color: white;
-            font-size: 15px;
-        }
-
-        .platforms-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        .platform-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .platform-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            transition: transform 0.2s;
-        }
-
-        .platform-badge:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Floating Cards */
-        .floating-card {
-            position: absolute;
-            padding: 16px;
-            border-radius: 16px;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .floating-card-1 {
-            top: -32px;
-            right: -16px;
-        }
-
-        .floating-card-2 {
-            bottom: -24px;
-            left: -24px;
-            animation-delay: 1s;
-        }
-
-        .floating-inner {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .floating-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .floating-icon.orange {
-            background: rgba(255, 85, 0, 0.1);
-            color: var(--neon-orange);
-        }
-
-        .floating-icon.blue {
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--neon-blue);
-        }
-
-        .floating-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .floating-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        /* ========================================
-           MARQUEE SECTION
-           ======================================== */
-        .marquee-section {
-            padding: 32px 0;
-            border-top: 1px solid var(--navy-100);
-            border-bottom: 1px solid var(--navy-100);
-            overflow: hidden;
-        }
-
-        .marquee-track {
-            display: flex;
-            animation: marquee 25s linear infinite;
-        }
-
-        .marquee-item {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            padding: 0 32px;
-            white-space: nowrap;
-        }
-
-        .marquee-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .marquee-label {
-            font-size: 16px;
-            color: var(--text-muted);
-        }
-
-        .marquee-dot {
-            color: var(--neon-orange);
-            font-size: 18px;
-        }
-
-        /* ========================================
-           HOW IT WORKS SECTION
-           ======================================== */
-        .how-section {
-            padding: 128px 0;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-tag {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--neon-orange);
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: clamp(32px, 4vw, 52px);
-            margin-bottom: 24px;
-        }
-
-        .section-subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        @media (max-width: 1024px) {
-            .steps-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .step-card {
-            border-radius: 20px;
-            padding: 32px;
-            transition: transform 0.3s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .step-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 24px;
-        }
-
-        .step-number {
-            font-family: 'Outfit', sans-serif;
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--navy-100);
-            transition: color 0.3s;
-        }
-
-        .step-card:hover .step-number {
-            color: var(--neon-orange);
-        }
-
-        .step-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(255, 85, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--neon-orange);
-            transition: background 0.3s;
-        }
-
-        .step-card:hover .step-icon {
-            background: rgba(255, 85, 0, 0.2);
-        }
-
-        .step-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .step-desc {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* ========================================
-           FEATURES SECTION (BENTO GRID)
-           ======================================== */
-        .features-section {
-            padding: 128px 0;
-            position: relative;
-        }
-
-        .features-section .radial-gradient {
-            position: absolute;
-            inset: 0;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
-        }
-
-        @media (max-width: 1024px) {
-            .bento-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .feature-card {
-            border-radius: 20px;
-            padding: 32px;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: scale(1.02);
-        }
-
-        .feature-card.large {
-            grid-column: span 8;
-        }
-
-        .feature-card.medium {
-            grid-column: span 4;
-        }
-
-        .feature-card.small {
-            grid-column: span 4;
-        }
-
-        @media (max-width: 1024px) {
-            .feature-card.large,
-            .feature-card.medium,
-            .feature-card.small {
-                grid-column: span 6;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .feature-card.large,
-            .feature-card.medium,
-            .feature-card.small {
-                grid-column: span 1;
-            }
-        }
-
-        .feature-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .feature-icon.highlight {
-            background: var(--neon-orange);
-            color: white;
-        }
-
-        .feature-icon.default {
-            background: rgba(255, 85, 0, 0.1);
-            color: var(--neon-orange);
-        }
-
-        .feature-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .feature-desc {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .feature-stats {
-            display: flex;
-            gap: 32px;
-            margin-top: 32px;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .stat-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        /* ========================================
-           PLATFORMS SECTION
-           ======================================== */
-        .platforms-section {
-            padding: 80px 0;
-        }
-
-        .platforms-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
-        .platforms-header p {
-            font-size: 18px;
-            color: var(--text-secondary);
-        }
-
-        .platforms-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .platform-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 24px;
-            border-radius: 16px;
-            transition: transform 0.2s;
-        }
-
-        .platform-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .platform-card svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .platform-card span {
-            font-weight: 500;
-        }
-
-        /* ========================================
-           PRICING SECTION
-           ======================================== */
-        .pricing-section {
-            padding: 128px 0;
-            position: relative;
-        }
-
-        .pricing-section .radial-gradient {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
-
-        .pricing-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 16px;
-            padding: 4px;
-            border-radius: 50px;
-            margin-bottom: 48px;
-        }
-
-        .toggle-btn {
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 500;
-            background: transparent;
-            color: var(--text-secondary);
-            transition: all 0.3s;
-        }
-
-        .toggle-btn.active {
-            background: var(--neon-orange);
-            color: white;
-        }
-
-        .toggle-btn .save-badge {
-            font-size: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 2px 8px;
-            border-radius: 50px;
-            margin-left: 8px;
-        }
-
-        .pricing-card {
-            max-width: 480px;
-            margin: 0 auto;
-            border-radius: 24px;
-            padding: 40px;
-        }
-
-        .pricing-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 32px;
-        }
-
-        .pricing-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .pricing-amount {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-        }
-
-        .price {
-            font-family: 'Outfit', sans-serif;
-            font-size: 52px;
-            font-weight: 700;
-        }
-
-        .period {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-
-        .billing-note {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .original-price {
-            font-size: 16px;
-            color: var(--text-muted);
-            text-decoration: line-through;
-        }
-
-        .save-text {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--neon-orange);
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            color: var(--text-secondary);
-            font-size: 15px;
-        }
-
-        .pricing-features li svg {
-            width: 20px;
-            height: 20px;
-            color: var(--neon-orange);
-            flex-shrink: 0;
-        }
-
-        .pricing-cta {
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-        }
-
-        .seats-remaining {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 16px;
-        }
-
-        /* ========================================
-           FINAL CTA SECTION
-           ======================================== */
-        .cta-section {
-            padding: 128px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section .orb {
-            width: 600px;
-            height: 600px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.2;
-        }
-
-        .cta-content {
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .cta-title {
-            font-size: clamp(32px, 5vw, 56px);
-            margin-bottom: 24px;
-        }
-
-        .cta-subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            max-width: 640px;
-            margin: 0 auto 40px;
-        }
-
-        .cta-form {
-            display: flex;
-            gap: 16px;
-            max-width: 540px;
-            margin: 0 auto 24px;
-        }
-
-        @media (max-width: 640px) {
-            .cta-form {
-                flex-direction: column;
-            }
-        }
-
-        .cta-input {
-            flex: 1;
-            padding: 16px 24px;
-            border-radius: 50px;
-            background: rgba(11, 17, 33, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .cta-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .cta-input:focus {
-            border-color: var(--neon-orange);
-            outline: none;
-        }
-
-        .cta-disclaimer {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* ========================================
-           FOOTER
-           ======================================== */
-        .footer {
-            padding: 48px 0;
-            border-top: 1px solid var(--navy-100);
-        }
-
-        .footer-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        @media (max-width: 768px) {
-            .footer-inner {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 32px;
-        }
-
-        .footer-links a {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-copy {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* ========================================
-           SUCCESS MESSAGE
-           ======================================== */
-        .success-message {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 24px;
-            border-radius: 50px;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .success-message svg {
-            color: #22c55e;
-        }
-
-        .success-message span {
-            color: #22c55e;
-            font-weight: 500;
-        }
-
-        /* ========================================
-           SCROLL ANIMATIONS (INTERSECTION OBSERVER)
-           ======================================== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Selection styling */
-        ::selection {
-            background: rgba(255, 85, 0, 0.3);
-            color: var(--text-primary);
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--navy-50);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--navy-100);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--navy-200);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuminaPath — Your Voice. Multiplied Everywhere.</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:#fff;color:#0a0a0a;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+:root{
+  --p:#7C3AED;
+  --p2:#9F67FF;
+  --p3:#EDE9FE;
+  --pk:#F3EEFF;
+  --black:#0a0a0a;
+  --gray:#64748B;
+  --border:#E8E8E8;
+  --off:#FAFAFA;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floatAlt{0%,100%{transform:translateY(-6px) rotate(-1deg)}50%{transform:translateY(6px) rotate(1deg)}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes voiceBar{0%,100%{transform:scaleY(.1)}50%{transform:scaleY(1)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.25)}50%{box-shadow:0 0 0 8px rgba(124,58,237,0)}}
+@keyframes spinOrbit{from{transform:rotate(0deg) translateX(90px) rotate(0deg)}to{transform:rotate(360deg) translateX(90px) rotate(-360deg)}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes scanLine{0%{top:-5%}100%{top:105%}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes progressBar{from{width:0%}to{width:94%}}
+
+/* ─── NAVBAR ─── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:18px 0;transition:all .35s}
+.nav.scrolled{background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:13px 0;box-shadow:0 2px 24px rgba(0,0,0,.06)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--p),var(--p2));border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-icon svg{width:18px;height:18px;color:#fff}
+.logo-text{font-size:18px;font-weight:800;color:var(--black);letter-spacing:-.03em}
+.logo-text span{color:var(--p)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{font-size:14px;font-weight:600;color:#1a1a1a;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--black)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.btn-ghost{padding:9px 20px;font-size:14px;font-weight:600;color:var(--black);border:1.5px solid var(--border);border-radius:8px;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{border-color:#aaa}
+.btn-primary{padding:10px 22px;font-size:14px;font-weight:700;background:var(--p);color:#fff;border-radius:8px;text-decoration:none;transition:all .25s;border:none;cursor:pointer}
+.btn-primary:hover{background:#6D28D9;transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,58,237,.35)}
+@media(max-width:768px){.nav-links,.btn-ghost{display:none}}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;background:#fff;position:relative;overflow:hidden}
+/* subtle dot grid */
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#e2e8f0 1px,transparent 1px);background-size:32px 32px;opacity:.5}
+/* soft purple glow top right */
+.hero::after{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,.07) 0%,transparent 70%);border-radius:50%}
+
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;position:relative;z-index:2}
+@media(max-width:1024px){.hero-inner{grid-template-columns:1fr}}
+
+.hero-left{animation:fadeUp .7s cubic-bezier(.16,1,.3,1) both}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:50px;margin-bottom:24px;cursor:default}
+.badge-live{width:7px;height:7px;border-radius:50%;background:var(--p);animation:pulseGlow 2s ease-in-out infinite}
+.hero-badge span{font-size:12px;font-weight:700;color:var(--p);letter-spacing:.02em}
+
+.hero-h1{font-size:clamp(44px,5.5vw,74px);font-weight:900;line-height:1.0;letter-spacing:-.04em;margin-bottom:22px;color:var(--black)}
+.hero-h1 em{font-style:normal;background:linear-gradient(135deg,var(--p),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-h1 .outline{-webkit-text-stroke:2px var(--black);color:transparent}
+
+.hero-sub{font-size:18px;color:#555;line-height:1.75;margin-bottom:36px;max-width:480px}
+.hero-sub strong{color:var(--black);font-weight:700}
+
+.hero-form{display:flex;gap:10px;margin-bottom:24px}
+@media(max-width:560px){.hero-form{flex-direction:column}}
+.email-wrap{flex:1;display:flex;align-items:center;gap:10px;padding:0 16px;background:#fff;border:1.5px solid var(--border);border-radius:10px;transition:border-color .2s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.email-wrap:focus-within{border-color:var(--p);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.email-wrap svg{color:#aaa;flex-shrink:0}
+.email-input{flex:1;padding:14px 0;font-size:15px;color:var(--black);background:none;border:none;outline:none}
+.email-input::placeholder{color:#aaa}
+.btn-hero{padding:14px 26px;background:var(--p);color:#fff;border-radius:10px;font-size:15px;font-weight:700;border:none;cursor:pointer;transition:all .3s;white-space:nowrap}
+.btn-hero:hover{background:#6D28D9;transform:translateY(-2px);box-shadow:0 10px 30px rgba(124,58,237,.4)}
+
+.hero-proof{display:flex;align-items:center;gap:14px}
+.avatars{display:flex}
+.av{width:30px;height:30px;border-radius:50%;border:2px solid #fff;margin-left:-7px}
+.av:first-child{margin-left:0}
+.av1{background:linear-gradient(135deg,#7C3AED,#9F67FF)}
+.av2{background:linear-gradient(135deg,#F59E0B,#FBBF24)}
+.av3{background:linear-gradient(135deg,#10B981,#34D399)}
+.av4{background:linear-gradient(135deg,#EF4444,#F87171)}
+.proof-txt{font-size:13px;color:#666}
+.proof-txt strong{color:var(--black)}
+
+/* HERO RIGHT — PRODUCT MOCKUP */
+.hero-right{position:relative;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) .2s both}
+@media(max-width:1024px){.hero-right{display:none}}
+
+.app-window{background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:0 32px 80px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.04);overflow:hidden;animation:float 7s ease-in-out infinite}
+.app-titlebar{background:var(--off);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.traffic{display:flex;gap:5px}
+.tl{width:11px;height:11px;border-radius:50%}
+.tl:nth-child(1){background:#FF5F57}.tl:nth-child(2){background:#FFBC2E}.tl:nth-child(3){background:#28C840}
+.url-bar{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;color:#aaa;font-family:monospace}
+
+.app-body{padding:20px}
+.app-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.app-title{font-size:14px;font-weight:800;color:var(--black)}
+.voice-score{display:flex;align-items:center;gap:6px;padding:5px 12px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:50px}
+.score-dot{width:6px;height:6px;border-radius:50%;background:var(--p);animation:pulseGlow 2s infinite}
+.score-txt{font-size:12px;font-weight:800;color:var(--p)}
+
+/* animated voice bars */
+.wave-container{display:flex;align-items:center;justify-content:center;gap:4px;height:52px;background:linear-gradient(135deg,#FAFAFA,#F3EEFF);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;padding:12px}
+.wb{width:4px;border-radius:2px;background:linear-gradient(to top,var(--p),var(--p2));transform-origin:bottom;animation:voiceBar .9s ease-in-out infinite}
+.wb:nth-child(1){height:20px;animation-delay:0s}.wb:nth-child(2){height:34px;animation-delay:.07s}.wb:nth-child(3){height:14px;animation-delay:.14s}.wb:nth-child(4){height:44px;animation-delay:.21s}.wb:nth-child(5){height:28px;animation-delay:.28s}.wb:nth-child(6){height:38px;animation-delay:.35s}.wb:nth-child(7){height:18px;animation-delay:.42s}.wb:nth-child(8){height:42px;animation-delay:.49s}.wb:nth-child(9){height:24px;animation-delay:.56s}.wb:nth-child(10){height:32px;animation-delay:.63s}
+
+.idea-input{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.idea-label{font-size:10px;font-weight:800;color:var(--p);letter-spacing:.1em;margin-bottom:6px}
+.idea-text{font-size:13px;color:#333;line-height:1.5}
+.cursor{display:inline-block;width:2px;height:13px;background:var(--p);margin-left:2px;animation:blink 1s infinite;vertical-align:middle}
+
+.plat-section{margin-top:2px}
+.plat-label{font-size:10px;font-weight:700;color:#aaa;letter-spacing:.08em;margin-bottom:8px}
+.plat-row{display:flex;gap:6px;flex-wrap:wrap}
+.plat-tag{padding:4px 11px;border-radius:50px;font-size:11px;font-weight:600;border:1px solid var(--border);color:#666}
+.plat-tag.on{background:var(--pk);border-color:rgba(124,58,237,.3);color:var(--p)}
+
+/* floating cards around mockup */
+.float-card{position:absolute;background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,.1);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.fc1{top:-20px;right:-24px;animation:float 5s ease-in-out infinite}
+.fc2{bottom:-18px;left:-28px;animation:float 6s ease-in-out 1.5s infinite}
+.fc3{top:42%;right:-88px;animation:float 4.5s ease-in-out .8s infinite}
+.fc-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.fc-v{font-size:18px;font-weight:900;color:var(--black);line-height:1}
+.fc-l{font-size:11px;color:#888;margin-top:1px}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{background:var(--black);overflow:hidden;padding:0;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a}
+.marquee-track{display:flex;width:max-content;animation:marquee 22s linear infinite}
+.m-item{display:flex;align-items:center;gap:18px;padding:16px 36px;white-space:nowrap;flex-shrink:0}
+.m-num{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.02em}
+.m-lbl{font-size:13px;color:rgba(255,255,255,.4)}
+.m-dot{color:var(--p);font-size:10px}
+
+/* ─── LOGOS / SOCIAL PROOF ─── */
+.logos-section{padding:56px 0;border-bottom:1px solid var(--border)}
+.logos-label{text-align:center;font-size:12px;font-weight:700;color:#aaa;letter-spacing:.1em;margin-bottom:28px}
+.logos-row{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.logo-plat{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#ccc;transition:color .2s;cursor:default}
+.logo-plat:hover{color:#888}
+.logo-plat svg{width:22px;height:22px;opacity:.4}
+
+/* ─── STATS ─── */
+.stats-section{padding:80px 0;background:var(--off)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.05)}
+@media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-cell{padding:40px 28px;text-align:center;border-right:1px solid var(--border);transition:background .2s}
+.stat-cell:last-child{border-right:none}
+.stat-cell:hover{background:var(--pk)}
+.stat-n{font-size:54px;font-weight:900;line-height:1;letter-spacing:-.04em;color:var(--black);margin-bottom:6px}
+.stat-n span{color:var(--p)}
+.stat-d{font-size:13px;color:#888;line-height:1.4}
+
+/* ─── HOW IT WORKS ─── */
+.how-section{padding:100px 0;background:#fff}
+.sec-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;padding:5px 14px;border-radius:50px;background:var(--pk);color:var(--p);border:1px solid rgba(124,58,237,.15);margin-bottom:14px}
+.sec-title{font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;letter-spacing:-.03em;margin-bottom:14px;color:var(--black)}
+.sec-title em{font-style:normal;background:linear-gradient(135deg,var(--p),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:17px;color:#666;max-width:520px;margin:0 auto;line-height:1.7}
+.sec-head{text-align:center;margin-bottom:64px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+.steps::before{content:'';position:absolute;top:52px;left:calc(16.666% + 16px);right:calc(16.666% + 16px);height:1px;background:linear-gradient(90deg,var(--p),var(--p2));opacity:.3;z-index:0}
+@media(max-width:768px){.steps{grid-template-columns:1fr}.steps::before{display:none}}
+
+.step{background:#fff;border:1px solid var(--border);border-radius:20px;padding:32px 28px;position:relative;z-index:1;transition:all .3s;cursor:default}
+.step:hover{border-color:rgba(124,58,237,.3);box-shadow:0 12px 40px rgba(124,58,237,.1);transform:translateY(-4px)}
+.step-num{width:48px;height:48px;border-radius:14px;background:var(--p);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;font-weight:900;color:#fff}
+.step-title{font-size:20px;font-weight:900;color:#000;margin-bottom:10px;letter-spacing:-.02em}
+.step-desc{font-size:14px;color:#222;line-height:1.7;font-weight:500}
+
+/* ─── FEATURES ─── */
+.features-section{padding:100px 0;background:var(--off)}
+
+.feat-row{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:72px 0;border-bottom:1px solid var(--border)}
+.feat-row:last-child{border-bottom:none}
+.feat-row.flip{direction:rtl}.feat-row.flip>*{direction:ltr}
+@media(max-width:1024px){.feat-row,.feat-row.flip{grid-template-columns:1fr;direction:ltr;gap:40px}}
+
+.feat-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--p);margin-bottom:12px}
+.feat-title{font-size:clamp(26px,3vw,38px);font-weight:900;color:var(--black);margin-bottom:14px;line-height:1.15;letter-spacing:-.025em}
+.feat-title em{font-style:normal;background:linear-gradient(135deg,var(--p),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.feat-desc{font-size:15px;color:#555;line-height:1.8;margin-bottom:24px}
+.feat-checks{display:flex;flex-direction:column;gap:10px}
+.fc{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#444}
+.fck{width:20px;height:20px;border-radius:50%;background:var(--pk);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.fck svg{width:11px;height:11px;color:var(--p);stroke-width:3}
+
+/* MOCKUP CARD BASE */
+.mock{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.09)}
+.mock-bar{background:var(--off);padding:11px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.mdots{display:flex;gap:4px}.md{width:10px;height:10px;border-radius:50%}
+.md:nth-child(1){background:#FF5F57}.md:nth-child(2){background:#FFBC2E}.md:nth-child(3){background:#28C840}
+.mock-title{font-size:11px;color:#aaa;font-family:monospace;margin-left:6px}
+.mock-body{padding:20px}
+
+/* Voice match mockup */
+.vm-score{font-size:52px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-.04em}
+.vm-label{font-size:12px;color:#aaa;margin-top:2px}
+.vm-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:50px;font-size:12px;font-weight:800;color:var(--p);margin-top:12px}
+.vm-wave{display:flex;align-items:center;justify-content:center;gap:5px;height:60px;background:var(--off);border:1px solid var(--border);border-radius:12px;margin:16px 0;padding:14px}
+.vw2{width:5px;border-radius:3px;background:linear-gradient(to top,var(--p),var(--p2));transform-origin:bottom;animation:voiceBar .9s ease-in-out infinite}
+.vw2:nth-child(1){height:24px;animation-delay:0s}.vw2:nth-child(2){height:40px;animation-delay:.09s}.vw2:nth-child(3){height:16px;animation-delay:.18s}.vw2:nth-child(4){height:52px;animation-delay:.27s}.vw2:nth-child(5){height:32px;animation-delay:.36s}.vw2:nth-child(6){height:20px;animation-delay:.45s}.vw2:nth-child(7){height:46px;animation-delay:.54s}.vw2:nth-child(8){height:28px;animation-delay:.63s}
+.trait-row{display:flex;flex-wrap:wrap;gap:6px}
+.trait{padding:4px 12px;border-radius:50px;font-size:12px;background:var(--off);border:1px solid var(--border);color:#555}
+.trait.on{background:var(--pk);border-color:rgba(124,58,237,.25);color:var(--p);font-weight:600}
+
+/* Calendar mockup */
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-month{font-size:14px;font-weight:800;color:var(--black)}
+.cal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.cal-day{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:8px 6px;min-height:72px}
+.cal-day.today{border-color:var(--p);background:var(--pk)}
+.cal-dn{font-size:9px;font-weight:700;color:#aaa;margin-bottom:5px;letter-spacing:.05em}
+.post-pill{font-size:9px;padding:2px 6px;border-radius:4px;margin-bottom:3px;display:block;line-height:1.4;font-weight:600}
+.pp-li{background:rgba(10,102,194,.1);color:#0A66C2}
+.pp-tw{background:rgba(0,0,0,.08);color:#333}
+.pp-ig{background:rgba(228,64,95,.1);color:#E4405F}
+.pp-pu{background:var(--pk);color:var(--p)}
+.done{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:700;color:var(--p);background:var(--pk);padding:2px 5px;border-radius:3px}
+
+/* Analytics mockup */
+.ana-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ana-card{background:var(--off);border:1px solid var(--border);border-radius:12px;padding:14px}
+.ana-lbl{font-size:10px;font-weight:700;color:#aaa;letter-spacing:.07em;margin-bottom:5px}
+.ana-val{font-size:30px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-.03em}
+.ana-chg{font-size:11px;font-weight:700;color:#10B981;margin-top:4px}
+.bars{display:flex;align-items:flex-end;gap:3px;height:28px;margin-top:10px}
+.bar{flex:1;border-radius:2px;background:var(--border)}
+.bar.hi{background:var(--p)}
+
+/* Composer mockup */
+.comp-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--p2));flex-shrink:0}
+.comp-name{font-size:13px;font-weight:700;color:var(--black)}
+.comp-role{font-size:11px;color:#aaa}
+.comp-text-area{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13px;color:#333;line-height:1.65;margin:14px 0;min-height:80px}
+.comp-plats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.cp2{padding:4px 10px;background:#fff;border:1px solid var(--border);border-radius:6px;font-size:11px;color:#666}
+.cp2.on{border-color:var(--p);background:var(--pk);color:var(--p);font-weight:600}
+.comp-btns{display:flex;justify-content:space-between}
+.btn-ai2{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:8px;font-size:12px;font-weight:700;color:var(--p)}
+.btn-pub2{display:flex;align-items:center;gap:5px;padding:8px 16px;background:var(--p);border-radius:8px;font-size:12px;font-weight:700;color:#fff}
+
+/* ─── PLATFORMS ─── */
+.platforms-section{padding:80px 0;background:var(--black)}
+.platforms-section .sec-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.1)}
+.platforms-section .sec-title{color:#fff}
+.plat-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.plat-pill{display:flex;align-items:center;gap:10px;padding:12px 22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);transition:all .3s;cursor:default}
+.plat-pill:hover{background:rgba(124,58,237,.2);border-color:rgba(124,58,237,.4);color:#fff;transform:translateY(-2px)}
+.plat-pill .pico{font-size:18px}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-section{padding:100px 0;background:var(--off)}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:768px){.test-grid{grid-template-columns:1fr}}
+.test-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:32px;transition:all .3s;cursor:default}
+.test-card:hover{border-color:rgba(124,58,237,.25);transform:translateY(-5px);box-shadow:0 16px 48px rgba(124,58,237,.1)}
+.stars{color:#F59E0B;font-size:15px;letter-spacing:2px;margin-bottom:14px}
+.test-q{font-size:15px;color:#444;line-height:1.7;margin-bottom:20px;font-style:italic}
+.test-author{display:flex;align-items:center;gap:10px}
+.test-av{width:38px;height:38px;border-radius:50%;flex-shrink:0}
+.ta1{background:linear-gradient(135deg,var(--p),var(--p2))}
+.ta2{background:linear-gradient(135deg,#F59E0B,#FBBF24)}
+.ta3{background:linear-gradient(135deg,#10B981,#34D399)}
+.test-name{font-size:14px;font-weight:700;color:var(--black)}
+.test-role{font-size:12px;color:#aaa}
+
+/* ─── PRICING ─── */
+.pricing-section{padding:100px 0;background:#fff}
+.price-card{max-width:540px;margin:0 auto;background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:44px;box-shadow:0 24px 64px rgba(0,0,0,.08);position:relative;overflow:hidden}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--p),var(--p2))}
+.price-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.pb1{padding:5px 13px;border-radius:50px;font-size:12px;font-weight:700;background:var(--pk);color:var(--p);border:1px solid rgba(124,58,237,.2)}
+.pb2{padding:5px 13px;border-radius:50px;font-size:12px;font-weight:700;background:#FEF3C7;color:#D97706;border:1px solid rgba(217,119,6,.2)}
+.price-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
+.price-old{font-size:20px;color:#ccc;text-decoration:line-through;font-weight:700}
+.price-big{font-size:72px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-.04em}
+.price-per{font-size:16px;color:#aaa;font-weight:500}
+.save-tag{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:800;display:inline-block}
+.seats-bar{background:var(--off);border:1px solid var(--border);border-radius:12px;padding:16px;margin:20px 0}
+.seats-top{display:flex;justify-content:space-between;margin-bottom:8px}
+.seats-lbl{font-size:13px;color:#666}
+.seats-num{font-size:13px;font-weight:800;color:var(--p)}
+.seats-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.seats-fill{height:100%;width:51%;background:linear-gradient(90deg,var(--p),var(--p2));border-radius:3px;animation:progressBar 1.5s ease-out .5s both}
+.seats-sub{font-size:12px;color:#aaa;margin-top:6px}
+.price-list{list-style:none;margin:20px 0 28px}
+.price-list li{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;color:#444}
+.price-list li:last-child{border-bottom:none}
+.pck{width:20px;height:20px;border-radius:50%;background:var(--pk);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pck svg{width:11px;height:11px;color:var(--p);stroke-width:3}
+.price-cta{width:100%;padding:18px;background:var(--p);color:#fff;border-radius:12px;font-size:17px;font-weight:800;border:none;cursor:pointer;transition:all .3s}
+.price-cta:hover{background:#6D28D9;transform:translateY(-2px);box-shadow:0 12px 36px rgba(124,58,237,.4)}
+.price-note{text-align:center;font-size:13px;color:#aaa;margin-top:12px}
+
+/* ─── FAQ ─── */
+.faq-section{padding:100px 0;background:var(--off)}
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:border-color .25s}
+.faq-item.open{border-color:rgba(124,58,237,.3)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;cursor:pointer;font-size:17px;font-weight:700;color:var(--black);gap:16px}
+.faq-icon{width:28px;height:28px;border-radius:50%;background:var(--off);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;color:#aaa}
+.faq-item.open .faq-icon{background:var(--pk);border-color:rgba(124,58,237,.2);color:var(--p);transform:rotate(45deg)}
+.faq-a{font-size:15px;color:#555;line-height:1.75;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-item.open .faq-a{max-height:200px;padding:0 24px 22px}
+
+/* ─── FINAL CTA ─── */
+.cta-section{padding:120px 0;background:var(--black);position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(124,58,237,.2) 0%,transparent 70%)}
+.cta-inner{text-align:center;position:relative;z-index:2}
+.cta-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;padding:5px 14px;border-radius:50px;background:rgba(124,58,237,.15);color:rgba(156,100,255,.9);border:1px solid rgba(124,58,237,.25);margin-bottom:20px}
+.cta-title{font-size:clamp(40px,5.5vw,68px);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-.04em;margin-bottom:18px}
+.cta-title em{font-style:normal;background:linear-gradient(135deg,var(--p2),#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-size:18px;color:rgba(255,255,255,.5);max-width:460px;margin:0 auto 40px;line-height:1.7}
+.cta-form{display:flex;gap:10px;max-width:480px;margin:0 auto 16px}
+@media(max-width:560px){.cta-form{flex-direction:column}}
+.cta-input{flex:1;padding:15px 18px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;font-size:15px;transition:all .25s}
+.cta-input:focus{background:rgba(255,255,255,.1);border-color:rgba(124,58,237,.5);outline:none}
+.cta-input::placeholder{color:rgba(255,255,255,.3)}
+.cta-btn{padding:15px 26px;background:var(--p);color:#fff;border-radius:10px;font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .3s;white-space:nowrap}
+.cta-btn:hover{background:#7c3aed;transform:translateY(-2px);box-shadow:0 12px 36px rgba(124,58,237,.5)}
+.cta-fine{font-size:13px;color:rgba(255,255,255,.25)}
+
+/* ─── FOOTER ─── */
+.footer{padding:44px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+@media(max-width:768px){.footer-inner{flex-direction:column;text-align:center}}
+.footer-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.footer-logo-icon{width:28px;height:28px;background:var(--p);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.footer-logo-icon svg{width:14px;height:14px;color:#fff}
+.footer-logo-text{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.footer-logo-text span{color:var(--p2)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:rgba(255,255,255,.7)}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.2)}
+
+/* SUCCESS */
+.success-msg{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:10px;color:var(--p);font-weight:700;font-size:15px;width:100%}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="container nav-inner">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <i data-lucide="sparkles"></i>
-                </div>
-                <span class="logo-text">LuminaPath</span>
-            </a>
-            
-            <div class="nav-links">
-                <a href="#how-it-works">How It Works</a>
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-            </div>
-            
-            <a href="#waitlist" class="btn-primary nav-cta">
-                Get Early Access
-                <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
-            </a>
-            
-            <button class="mobile-menu-btn">
-                <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
-            </button>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
+      <span class="logo-text">Lumina<span>Path</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#waitlist" class="btn-ghost">Sign in</a>
+      <a href="#waitlist" class="btn-primary">Join Waitlist →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <div class="badge-live"></div>
+          <span>🔥 247 founding seats remaining</span>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero radial-gradient">
-        <div class="orb orb-orange orb-1"></div>
-        <div class="orb orb-blue orb-2"></div>
-        
-        <div class="container">
-            <div class="hero-grid">
-                <!-- Left Column -->
-                <div class="hero-content">
-                    <div class="hero-badge glass-card">
-                        <div class="badge-dot"></div>
-                        <span class="badge-text">500 Founding Seats Available</span>
-                    </div>
-                    
-                    <h1 class="hero-title">
-                        Your Voice.<br>
-                        <span class="gradient-text">Multiplied.</span>
-                    </h1>
-                    
-                    <p class="hero-subtitle">
-                        AI that captures your unique tone and scales it across 8 platforms. 
-                        One idea becomes 8 authentic posts that sound exactly like you.
-                    </p>
-                    
-                    <form class="hero-form" id="heroForm">
-                        <input type="email" class="hero-input" placeholder="Enter your email" required>
-                        <button type="submit" class="btn-primary">
-                            Claim Your Seat
-                            <i data-lucide="send" style="width: 16px; height: 16px;"></i>
-                        </button>
-                    </form>
-                    
-                    <div class="hero-social-proof">
-                        <div class="avatars">
-                            <div class="avatar"></div>
-                            <div class="avatar"></div>
-                            <div class="avatar"></div>
-                            <div class="avatar"></div>
-                        </div>
-                        <span class="social-proof-text">Join 2,847+ founders on the waitlist</span>
-                    </div>
-                </div>
-                
-                <!-- Right Column - Demo Card -->
-                <div class="hero-visual">
-                    <div class="demo-card glass-card glow-border">
-                        <div class="voice-header">
-                            <span class="voice-label">Voice Match Engine</span>
-                            <span class="voice-match">94% Match</span>
-                        </div>
-                        
-                        <div class="voice-visualizer">
-                            <div class="voice-bar"></div>
-                            <div class="voice-bar"></div>
-                            <div class="voice-bar"></div>
-                            <div class="voice-bar"></div>
-                            <div class="voice-bar"></div>
-                            <div class="voice-bar"></div>
-                            <div class="voice-bar"></div>
-                        </div>
-                        
-                        <div class="idea-input">
-                            <div class="idea-label">Your idea</div>
-                            <p class="idea-text">"Just closed our first enterprise deal after 6 months of grinding..."</p>
-                        </div>
-                        
-                        <div class="platforms-label">Generated for 8 platforms</div>
-                        <div class="platform-badges">
-                            <div class="platform-badge glass-card">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                                <span>LinkedIn</span>
-                            </div>
-                            <div class="platform-badge glass-card">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                <span>X</span>
-                            </div>
-                            <div class="platform-badge glass-card">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.858-6.433 2.523-8.484C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.181.408-2.136 1.41-2.849 1.31-.933 3.323-1.191 4.99-.642-.034-.601-.166-1.101-.39-1.492-.545-.95-1.64-1.473-2.994-1.43-.958.03-1.849.327-2.507.836l-1.1-1.663c.961-.735 2.29-1.175 3.742-1.226 1.39-.054 2.86.343 3.94 1.064 1.398.933 2.166 2.378 2.287 4.297.063.992-.065 1.97-.382 2.91 1.57.915 2.403 2.29 2.403 4.003 0 .848-.168 1.707-.502 2.555-.508 1.291-1.405 2.403-2.59 3.212-1.474 1.007-3.37 1.538-5.636 1.579-.052 0-.103 0-.155 0zm-1.792-5.89c.971-.054 1.68-.413 2.108-.973.406-.532.63-1.334.666-2.388-1.174-.33-2.552-.2-3.408.407-.442.314-.67.711-.64 1.12.03.412.27.794.676 1.075.493.342 1.243.601 2.21.688-.538.059-1.093.08-1.612.07z"/></svg>
-                                <span>Threads</span>
-                            </div>
-                            <div class="platform-badge glass-card">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#E4405F"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
-                                <span>Instagram</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Floating Cards -->
-                    <div class="floating-card floating-card-1 glass-card">
-                        <div class="floating-inner">
-                            <div class="floating-icon orange">
-                                <i data-lucide="clock" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            <div>
-                                <div class="floating-value">10 min</div>
-                                <div class="floating-label">per week</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="floating-card floating-card-2 glass-card">
-                        <div class="floating-inner">
-                            <div class="floating-icon blue">
-                                <i data-lucide="zap" style="width: 20px; height: 20px;"></i>
-                            </div>
-                            <div>
-                                <div class="floating-value">8 posts</div>
-                                <div class="floating-label">from 1 idea</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <h1 class="hero-h1">
+          Your Voice.<br>
+          <em>Multiplied</em><br>
+          <span class="outline">Everywhere.</span>
+        </h1>
+        <p class="hero-sub">AI that learns your <strong>exact tone</strong> and publishes to <strong>8 platforms</strong> in 30 seconds. Sound like you — everywhere your audience lives.</p>
+        <form class="hero-form" id="heroForm">
+          <div class="email-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <input type="email" class="email-input" placeholder="Enter your email address" required>
+          </div>
+          <button type="submit" class="btn-hero">Get Early Access →</button>
+        </form>
+        <div class="hero-proof">
+          <div class="avatars"><div class="av av1"></div><div class="av av2"></div><div class="av av3"></div><div class="av av4"></div></div>
+          <span class="proof-txt"><strong>2,847+ founders</strong> already on the waitlist</span>
         </div>
-    </section>
+      </div>
 
-    <!-- Marquee Section -->
-    <section class="marquee-section">
-        <div class="marquee-track">
-            <div class="marquee-item">
-                <span class="marquee-value">2,847+</span>
-                <span class="marquee-label">Founders Waiting</span>
-                <span class="marquee-dot">✦</span>
+      <div class="hero-right">
+        <div style="position:relative">
+          <div class="app-window">
+            <div class="app-titlebar">
+              <div class="traffic"><div class="tl"></div><div class="tl"></div><div class="tl"></div></div>
+              <div class="url-bar">app.luminapath.com</div>
             </div>
-            <div class="marquee-item">
-                <span class="marquee-value">94%</span>
-                <span class="marquee-label">Voice Match Rate</span>
-                <span class="marquee-dot">✦</span>
+            <div class="app-body">
+              <div class="app-top">
+                <span class="app-title">LuminaPath AI</span>
+                <div class="voice-score"><div class="score-dot"></div><span class="score-txt">Voice Match: 94%</span></div>
+              </div>
+              <div class="wave-container">
+                <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
+              </div>
+              <div class="idea-input">
+                <div class="idea-label">YOUR IDEA</div>
+                <div class="idea-text">"Just closed our first enterprise deal after 6 months of grinding..."<span class="cursor"></span></div>
+              </div>
+              <div class="plat-section">
+                <div class="plat-label">GENERATING FOR 8 PLATFORMS</div>
+                <div class="plat-row">
+                  <div class="plat-tag on">LinkedIn</div>
+                  <div class="plat-tag on">X / Twitter</div>
+                  <div class="plat-tag on">Instagram</div>
+                  <div class="plat-tag">TikTok</div>
+                  <div class="plat-tag on">Threads</div>
+                </div>
+              </div>
             </div>
-            <div class="marquee-item">
-                <span class="marquee-value">8x</span>
-                <span class="marquee-label">Content Output</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-item">
-                <span class="marquee-value">10 min</span>
-                <span class="marquee-label">Per Week</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-item">
-                <span class="marquee-value">0</span>
-                <span class="marquee-label">Writer's Block</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <!-- Duplicate for seamless loop -->
-            <div class="marquee-item">
-                <span class="marquee-value">2,847+</span>
-                <span class="marquee-label">Founders Waiting</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-item">
-                <span class="marquee-value">94%</span>
-                <span class="marquee-label">Voice Match Rate</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-item">
-                <span class="marquee-value">8x</span>
-                <span class="marquee-label">Content Output</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-item">
-                <span class="marquee-value">10 min</span>
-                <span class="marquee-label">Per Week</span>
-                <span class="marquee-dot">✦</span>
-            </div>
-            <div class="marquee-item">
-                <span class="marquee-value">0</span>
-                <span class="marquee-label">Writer's Block</span>
-                <span class="marquee-dot">✦</span>
-            </div>
+          </div>
+          <!-- Floating stat cards -->
+          <div class="float-card fc1">
+            <div class="fc-icon" style="background:rgba(124,58,237,.1);font-size:18px">⚡</div>
+            <div><div class="fc-v">10 min</div><div class="fc-l">per week</div></div>
+          </div>
+          <div class="float-card fc2">
+            <div class="fc-icon" style="background:rgba(16,185,129,.1);font-size:18px">✦</div>
+            <div><div class="fc-v">8 posts</div><div class="fc-l">from 1 idea</div></div>
+          </div>
+          <div class="float-card fc3">
+            <div class="fc-icon" style="background:rgba(245,158,11,.1);font-size:18px">🎯</div>
+            <div><div class="fc-v">94%</div><div class="fc-l">voice match</div></div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- How It Works Section -->
-    <section class="how-section" id="how-it-works">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-tag">How It Works</span>
-                <h2 class="section-title">
-                    From Blank Page to <span class="gradient-text">Everywhere</span>
-                </h2>
-                <p class="section-subtitle">Four simple steps. One powerful workflow. Zero content anxiety.</p>
-            </div>
-            
-            <div class="steps-grid">
-                <div class="step-card glass-card reveal">
-                    <div class="step-header">
-                        <span class="step-number">01</span>
-                        <div class="step-icon">
-                            <i data-lucide="sparkles" style="width: 24px; height: 24px;"></i>
-                        </div>
-                    </div>
-                    <h3 class="step-title">Share Your Style</h3>
-                    <p class="step-desc">Paste a few posts or tweets. Our AI analyzes your unique voice patterns, vocabulary, and tone.</p>
-                </div>
-                
-                <div class="step-card glass-card reveal">
-                    <div class="step-header">
-                        <span class="step-number">02</span>
-                        <div class="step-icon">
-                            <i data-lucide="zap" style="width: 24px; height: 24px;"></i>
-                        </div>
-                    </div>
-                    <h3 class="step-title">Drop Your Idea</h3>
-                    <p class="step-desc">Type any thought, story, or insight. A single sentence is enough to spark 8 pieces of content.</p>
-                </div>
-                
-                <div class="step-card glass-card reveal">
-                    <div class="step-header">
-                        <span class="step-number">03</span>
-                        <div class="step-icon">
-                            <i data-lucide="globe" style="width: 24px; height: 24px;"></i>
-                        </div>
-                    </div>
-                    <h3 class="step-title">Watch It Multiply</h3>
-                    <p class="step-desc">Get platform-optimized posts for LinkedIn, X, Threads, Instagram, TikTok, YouTube, Facebook, and Bluesky.</p>
-                </div>
-                
-                <div class="step-card glass-card reveal">
-                    <div class="step-header">
-                        <span class="step-number">04</span>
-                        <div class="step-icon">
-                            <i data-lucide="send" style="width: 24px; height: 24px;"></i>
-                        </div>
-                    </div>
-                    <h3 class="step-title">Approve & Publish</h3>
-                    <p class="step-desc">Review, tweak if needed, and schedule across all platforms in one click.</p>
-                </div>
-            </div>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="m-item"><span class="m-num">2,847+</span><span class="m-lbl">Founders Waiting</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">94%</span><span class="m-lbl">Voice Match</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">8×</span><span class="m-lbl">Content Output</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">30s</span><span class="m-lbl">To Generate</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">8</span><span class="m-lbl">Platforms</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">2hrs</span><span class="m-lbl">Saved Daily</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">$49</span><span class="m-lbl">Founding Price</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">2,847+</span><span class="m-lbl">Founders Waiting</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">94%</span><span class="m-lbl">Voice Match</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">8×</span><span class="m-lbl">Content Output</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">30s</span><span class="m-lbl">To Generate</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">8</span><span class="m-lbl">Platforms</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">2hrs</span><span class="m-lbl">Saved Daily</span><span class="m-dot">✦</span></div>
+    <div class="m-item"><span class="m-num">$49</span><span class="m-lbl">Founding Price</span><span class="m-dot">✦</span></div>
+  </div>
+</div>
+
+<!-- LOGOS -->
+<section class="logos-section">
+  <div class="wrap">
+    <div class="logos-label">PUBLISHES NATIVELY TO</div>
+    <div class="logos-row">
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X / Twitter</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>Instagram</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.77a4.85 4.85 0 0 1-1.01-.08z"/></svg>TikTok</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.5 12C2.5 6.75 6.75 2.5 12 2.5s9.5 4.25 9.5 9.5-4.25 9.5-9.5 9.5S2.5 17.25 2.5 12zm9.5-3.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>Threads</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</div>
+      <div class="logo-plat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>GitHub</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="stat-n"><span>30</span>s</div><div class="stat-d">Generate 8 posts</div></div>
+      <div class="stat-cell"><div class="stat-n"><span>94</span>%</div><div class="stat-d">Voice match score</div></div>
+      <div class="stat-cell"><div class="stat-n"><span>8</span>×</div><div class="stat-d">More content output</div></div>
+      <div class="stat-cell"><div class="stat-n"><span>2</span>hrs</div><div class="stat-d">Saved every day</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">HOW IT WORKS</div>
+      <h2 class="sec-title">From idea to <em>everywhere</em><br>in 3 steps</h2>
+      <p class="sec-sub">No content burnout. No blank page anxiety. One workflow that does it all.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3 class="step-title">Train Your Voice</h3>
+        <p class="step-desc">Paste a few existing posts. Our Voice Match Engine analyzes your vocabulary, tone, and personality — achieving 94% accuracy in minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3 class="step-title">Drop One Idea</h3>
+        <p class="step-desc">One sentence. One story. One shower thought. That's enough to generate a full week of content across every platform you're on.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3 class="step-title">Approve &amp; Publish</h3>
+        <p class="step-desc">Review 8 platform-native posts, tweak anything, schedule across all channels in one click. Done in under 10 minutes a week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="wrap">
+
+    <!-- Voice Match -->
+    <div class="feat-row">
+      <div>
+        <span class="feat-eyebrow">VOICE MATCH ENGINE</span>
+        <h3 class="feat-title">AI that writes like <em>you,</em><br>not like AI</h3>
+        <p class="feat-desc">Our Voice Match Engine reads your existing posts, learns your patterns, and generates content that sounds exactly like you — not the generic AI copy everyone can spot instantly.</p>
+        <div class="feat-checks">
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Learns your vocabulary & sentence patterns</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Matches your exact tone — casual, bold, or professional</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>94% voice match accuracy on first generation</div>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section" id="features">
-        <div class="radial-gradient"></div>
-        <div class="container" style="position: relative; z-index: 10;">
-            <div class="section-header reveal">
-                <span class="section-tag">Features</span>
-                <h2 class="section-title">
-                    Built Different. <span class="gradient-text">For Real Founders.</span>
-                </h2>
-            </div>
-            
-            <div class="bento-grid">
-                <div class="feature-card glass-card glow-border large reveal">
-                    <div class="feature-header">
-                        <div class="feature-icon highlight">
-                            <i data-lucide="sparkles" style="width: 28px; height: 28px;"></i>
-                        </div>
-                        <div>
-                            <h3 class="feature-title">Voice Match Engine</h3>
-                            <p class="feature-desc">Our AI doesn't just write—it becomes you. Every post maintains your authentic voice, quirks, and personality.</p>
-                        </div>
-                    </div>
-                    <div class="feature-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">94%</span>
-                            <span class="stat-label">Voice Match</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">100%</span>
-                            <span class="stat-label">Your Style</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="feature-card glass-card medium reveal">
-                    <div class="feature-header">
-                        <div class="feature-icon default">
-                            <i data-lucide="zap" style="width: 28px; height: 28px;"></i>
-                        </div>
-                        <div>
-                            <h3 class="feature-title">8-in-1 Repurposing</h3>
-                            <p class="feature-desc">One idea. Eight platforms. Zero extra effort.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="feature-card glass-card small reveal">
-                    <div class="feature-header">
-                        <div class="feature-icon default">
-                            <i data-lucide="shield" style="width: 28px; height: 28px;"></i>
-                        </div>
-                        <div>
-                            <h3 class="feature-title">Privacy First</h3>
-                            <p class="feature-desc">Your data never trains public models. Your voice stays yours.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="feature-card glass-card small reveal">
-                    <div class="feature-header">
-                        <div class="feature-icon default">
-                            <i data-lucide="clock" style="width: 28px; height: 28px;"></i>
-                        </div>
-                        <div>
-                            <h3 class="feature-title">Schedule & Forget</h3>
-                            <p class="feature-desc">Queue weeks of content in one session. We handle the rest.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="feature-card glass-card small reveal">
-                    <div class="feature-header">
-                        <div class="feature-icon default">
-                            <i data-lucide="bar-chart-3" style="width: 28px; height: 28px;"></i>
-                        </div>
-                        <div>
-                            <h3 class="feature-title">Performance Analytics</h3>
-                            <p class="feature-desc">Track what resonates. Double down on what works.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-title">Voice Match Engine</span></div>
+        <div class="mock-body">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div><div class="vm-score">94%</div><div class="vm-label">Voice Match Score</div></div>
+            <div class="vm-badge">✓ Calibrated</div>
+          </div>
+          <div class="vm-wave"><div class="vw2"></div><div class="vw2"></div><div class="vw2"></div><div class="vw2"></div><div class="vw2"></div><div class="vw2"></div><div class="vw2"></div><div class="vw2"></div></div>
+          <div style="font-size:10px;font-weight:700;color:#aaa;letter-spacing:.08em;margin-bottom:8px">DETECTED VOICE TRAITS</div>
+          <div class="trait-row"><div class="trait on">Direct</div><div class="trait on">Founder-led</div><div class="trait on">Story-driven</div><div class="trait">Humorous</div><div class="trait on">Data-backed</div><div class="trait on">Bold</div></div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Platforms Section -->
-    <section class="platforms-section">
-        <div class="container">
-            <div class="platforms-header reveal">
-                <p>One click. All platforms. Zero copy-paste.</p>
-            </div>
-            
-            <div class="platforms-grid reveal">
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    <span>LinkedIn</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    <span>X / Twitter</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="white"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.858-6.433 2.523-8.484C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.181.408-2.136 1.41-2.849 1.31-.933 3.323-1.191 4.99-.642-.034-.601-.166-1.101-.39-1.492-.545-.95-1.64-1.473-2.994-1.43-.958.03-1.849.327-2.507.836l-1.1-1.663c.961-.735 2.29-1.175 3.742-1.226 1.39-.054 2.86.343 3.94 1.064 1.398.933 2.166 2.378 2.287 4.297.063.992-.065 1.97-.382 2.91 1.57.915 2.403 2.29 2.403 4.003 0 .848-.168 1.707-.502 2.555-.508 1.291-1.405 2.403-2.59 3.212-1.474 1.007-3.37 1.538-5.636 1.579-.052 0-.103 0-.155 0z"/></svg>
-                    <span>Threads</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="#E4405F"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
-                    <span>Instagram</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="#00F2EA"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-                    <span>TikTok</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    <span>YouTube</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    <span>Facebook</span>
-                </div>
-                <div class="platform-card glass-card">
-                    <svg viewBox="0 0 24 24" fill="#00A8E1"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.32 1.83 0 2.22 0 3.076v17.987c0 .857.32 1.247.902 1.512.659.299 1.664.62 4.3-1.24 2.752-1.941 5.71-5.88 6.798-7.994zm0 0c1.087 2.114 4.046 6.053 6.798 7.995 2.636 1.86 3.641 1.538 4.3 1.239.582-.265.902-.655.902-1.512V3.076c0-.857-.32-1.247-.902-1.512-.659-.299-1.664-.62-4.3 1.24C16.046 4.746 13.088 8.686 12 10.8z"/></svg>
-                    <span>Bluesky</span>
-                </div>
-            </div>
+    <!-- Calendar -->
+    <div class="feat-row flip">
+      <div>
+        <span class="feat-eyebrow">CONTENT CALENDAR</span>
+        <h3 class="feat-title">Schedule a full week<br>in <em>10 minutes</em></h3>
+        <p class="feat-desc">Visual calendar across all 8 platforms. See everything at a glance, drag to reschedule, and batch-plan weeks of content in one focused session.</p>
+        <div class="feat-checks">
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Visual calendar across all 8 platforms</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>AI picks optimal posting times automatically</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Batch schedule entire weeks at once</div>
         </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing-section" id="pricing">
-        <div class="radial-gradient"></div>
-        <div class="container" style="position: relative; z-index: 10;">
-            <div class="section-header reveal">
-                <span class="section-tag">Founding Member Pricing</span>
-                <h2 class="section-title">
-                    Lock In Your Rate. <span class="gradient-text">Forever.</span>
-                </h2>
-                <p class="section-subtitle">Price increases to $79/mo after launch. Get in early and keep this rate for life.</p>
-                
-                <div class="pricing-toggle glass-card" style="margin-top: 32px;">
-                    <button class="toggle-btn" data-billing="monthly">Monthly</button>
-                    <button class="toggle-btn active" data-billing="yearly">
-                        Yearly
-                        <span class="save-badge">Save 40%</span>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="pricing-card glass-card glow-border reveal">
-                <div class="pricing-header">
-                    <div>
-                        <div class="pricing-label">Founding Member</div>
-                        <div class="pricing-amount">
-                            <span class="price" id="priceAmount">$29</span>
-                            <span class="period">/month</span>
-                        </div>
-                        <div class="billing-note" id="billingNote">Billed annually ($348/year)</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div class="original-price">$79/mo</div>
-                        <div class="save-text" id="saveText">Save 63%</div>
-                    </div>
-                </div>
-                
-                <ul class="pricing-features">
-                    <li>
-                        <i data-lucide="check"></i>
-                        Unlimited AI-generated posts
-                    </li>
-                    <li>
-                        <i data-lucide="check"></i>
-                        8 platform optimization
-                    </li>
-                    <li>
-                        <i data-lucide="check"></i>
-                        Voice learning engine
-                    </li>
-                    <li>
-                        <i data-lucide="check"></i>
-                        Auto-scheduling
-                    </li>
-                    <li>
-                        <i data-lucide="check"></i>
-                        Performance analytics
-                    </li>
-                    <li>
-                        <i data-lucide="check"></i>
-                        Priority support
-                    </li>
-                    <li>
-                        <i data-lucide="check"></i>
-                        Lifetime price lock
-                    </li>
-                </ul>
-                
-                <a href="#waitlist" class="btn-primary pricing-cta">
-                    Claim Your Founding Seat
-                </a>
-                
-                <p class="seats-remaining">500 founding seats · 247 remaining</p>
-            </div>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-title">Content Calendar — March 2026</span></div>
+        <div class="mock-body">
+          <div class="cal-header"><span class="cal-month">March 2026</span><div style="display:flex;gap:5px"><div style="padding:3px 10px;background:var(--pk);color:var(--p);font-size:11px;font-weight:700;border-radius:6px">← Prev</div><div style="padding:3px 10px;background:var(--pk);color:var(--p);font-size:11px;font-weight:700;border-radius:6px">Next →</div></div></div>
+          <div class="cal-grid">
+            <div class="cal-day"><div class="cal-dn">MON 3</div><span class="post-pill pp-li">LinkedIn</span><div class="done">✓ Done</div></div>
+            <div class="cal-day today"><div class="cal-dn">TUE 4</div><span class="post-pill pp-tw">X Thread</span><span class="post-pill pp-ig">Instagram</span></div>
+            <div class="cal-day"><div class="cal-dn">WED 5</div><span class="post-pill pp-li">LinkedIn</span><span class="post-pill pp-pu">Threads</span></div>
+            <div class="cal-day"><div class="cal-dn">THU 6</div><span class="post-pill pp-tw">X Post</span><div class="done">✓ Done</div></div>
+            <div class="cal-day"><div class="cal-dn">FRI 7</div><span class="post-pill pp-ig">Instagram</span><span class="post-pill pp-li">LinkedIn</span></div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Final CTA Section -->
-    <section class="cta-section" id="waitlist">
-        <div class="orb orb-orange"></div>
-        <div class="container">
-            <div class="cta-content reveal">
-                <h2 class="cta-title">
-                    Ready to <span class="gradient-text">Multiply Your Voice?</span>
-                </h2>
-                <p class="cta-subtitle">
-                    Join thousands of founders who are done with content burnout. 
-                    Get early access and lock in your founding member rate.
-                </p>
-                
-                <form class="cta-form" id="ctaForm">
-                    <input type="email" class="cta-input" placeholder="Enter your email" required>
-                    <button type="submit" class="btn-primary">
-                        Get Early Access
-                        <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
-                    </button>
-                </form>
-                
-                <p class="cta-disclaimer">No spam. No credit card required. Cancel anytime.</p>
-            </div>
+    <!-- Analytics -->
+    <div class="feat-row">
+      <div>
+        <span class="feat-eyebrow">ANALYTICS DASHBOARD</span>
+        <h3 class="feat-title">Track growth across<br><em>every platform</em></h3>
+        <p class="feat-desc">Followers, impressions, engagement, and views — all unified in one dashboard. Know exactly which content is working and double down on it.</p>
+        <div class="feat-checks">
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Unified analytics across all 8 platforms</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Top performing post identification</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Engagement trend graphs over time</div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-inner">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <i data-lucide="sparkles"></i>
-                    </div>
-                    <span class="logo-text">LuminaPath</span>
-                </a>
-                
-                <div class="footer-links">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Contact</a>
-                </div>
-                
-                <p class="footer-copy">© 2025 LuminaPath. All rights reserved.</p>
-            </div>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-title">Analytics Overview</span></div>
+        <div class="mock-body">
+          <div class="ana-grid">
+            <div class="ana-card"><div class="ana-lbl">FOLLOWERS</div><div class="ana-val">2,847</div><div class="ana-chg">↑ +8.6%</div><div class="bars"><div class="bar" style="height:40%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:45%"></div><div class="bar hi" style="height:70%"></div><div class="bar hi" style="height:85%"></div><div class="bar hi" style="height:100%"></div></div></div>
+            <div class="ana-card"><div class="ana-lbl">IMPRESSIONS</div><div class="ana-val">13.9K</div><div class="ana-chg">↑ +14.2%</div><div class="bars"><div class="bar" style="height:35%"></div><div class="bar" style="height:50%"></div><div class="bar hi" style="height:65%"></div><div class="bar hi" style="height:80%"></div><div class="bar hi" style="height:100%"></div></div></div>
+            <div class="ana-card"><div class="ana-lbl">ENGAGEMENTS</div><div class="ana-val">1,247</div><div class="ana-chg">↑ +251%</div><div class="bars"><div class="bar" style="height:20%"></div><div class="bar" style="height:40%"></div><div class="bar hi" style="height:65%"></div><div class="bar hi" style="height:85%"></div><div class="bar hi" style="height:100%"></div></div></div>
+            <div class="ana-card"><div class="ana-lbl">PROFILE VIEWS</div><div class="ana-val">3,621</div><div class="ana-chg">↑ +32.1%</div><div class="bars"><div class="bar" style="height:30%"></div><div class="bar" style="height:50%"></div><div class="bar hi" style="height:70%"></div><div class="bar hi" style="height:88%"></div><div class="bar hi" style="height:100%"></div></div></div>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+    <!-- Composer -->
+    <div class="feat-row flip">
+      <div>
+        <span class="feat-eyebrow">AI COMPOSER</span>
+        <h3 class="feat-title">Write, edit, publish —<br><em>all in one place</em></h3>
+        <p class="feat-desc">The AI composer generates your post in your voice, you review and tweak it, then publish to every platform without leaving the app. That simple.</p>
+        <div class="feat-checks">
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>One-click generation in your exact voice</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Inline AI suggestions to improve any post</div>
+          <div class="fc"><div class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Publish to all 8 platforms simultaneously</div>
+        </div>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-title">AI Composer</span></div>
+        <div class="mock-body">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="comp-av"></div><div><div class="comp-name">Your Profile</div><div class="comp-role">Founder · LuminaPath</div></div></div>
+          <div class="comp-text-area">Just closed our first enterprise deal after 6 months of grinding. Here's what nobody tells you about B2B sales...<span class="cursor"></span></div>
+          <div style="font-size:10px;font-weight:700;color:#aaa;letter-spacing:.07em;margin-bottom:8px">PUBLISHING TO</div>
+          <div class="comp-plats"><div class="cp2 on">LinkedIn</div><div class="cp2 on">X / Twitter</div><div class="cp2 on">Threads</div><div class="cp2">Instagram</div><div class="cp2 on">TikTok</div></div>
+          <div class="comp-btns"><div class="btn-ai2">✦ Improve with AI</div><div class="btn-pub2">→ Publish Now</div></div>
+        </div>
+      </div>
+    </div>
 
-        // Navigation scroll effect
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
+  </div>
+</section>
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+<!-- PLATFORMS -->
+<section class="platforms-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">PLATFORMS</div>
+      <h2 class="sec-title" style="color:#fff">One click. <em>Everywhere.</em></h2>
+      <p class="sec-sub" style="color:rgba(255,255,255,.45)">Every platform gets natively formatted content — never just a copy-paste job.</p>
+    </div>
+    <div class="plat-grid">
+      <div class="plat-pill"><span class="pico">💼</span>LinkedIn</div>
+      <div class="plat-pill"><span class="pico">✖️</span>X / Twitter</div>
+      <div class="plat-pill"><span class="pico">📸</span>Instagram</div>
+      <div class="plat-pill"><span class="pico">🎵</span>TikTok</div>
+      <div class="plat-pill"><span class="pico">📺</span>YouTube</div>
+      <div class="plat-pill"><span class="pico">📘</span>Facebook</div>
+      <div class="plat-pill"><span class="pico">🧵</span>Threads</div>
+      <div class="plat-pill"><span class="pico">🦋</span>Bluesky</div>
+    </div>
+  </div>
+</section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">TESTIMONIALS</div>
+      <h2 class="sec-title">Loved by founders <em>worldwide</em></h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-q">"I was spending 3 hours a week on content. LuminaPath cut it to 15 minutes. The posts actually sound like me — my team can't tell the difference."</p><div class="test-author"><div class="test-av ta1"></div><div><div class="test-name">Marcus T.</div><div class="test-role">SaaS Founder · 12K LinkedIn</div></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-q">"The voice matching is insane. I pasted 10 old posts and it nailed my style instantly. This is the tool I didn't know I was waiting for."</p><div class="test-author"><div class="test-av ta2"></div><div><div class="test-name">Priya S.</div><div class="test-role">CEO, B2B Agency · 6 Platforms</div></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-q">"Finally a tool that understands multi-platform isn't copy-paste. Each post feels native. My engagement went up 3x in the first month."</p><div class="test-author"><div class="test-av ta3"></div><div><div class="test-name">James K.</div><div class="test-role">Startup Founder · 8 Platforms</div></div></div></div>
+    </div>
+  </div>
+</section>
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">PRICING</div>
+      <h2 class="sec-title">Simple, honest <em>pricing</em></h2>
+      <p class="sec-sub">Lock in founding member pricing forever. Price goes up after 500 seats fill.</p>
+    </div>
+    <div class="price-card">
+      <div class="price-badges"><span class="pb1">⚡ Founding Member</span><span class="pb2">🔥 50% OFF Forever</span></div>
+      <div class="price-top">
+        <div>
+          <div style="font-size:13px;color:#aaa;margin-bottom:4px">Founding Member Price</div>
+          <div style="display:flex;align-items:baseline;gap:10px"><span class="price-old">$99</span><span class="price-big">$49</span><span class="price-per">/month</span></div>
+          <div style="font-size:13px;color:#aaa;margin-top:4px">Cancel anytime · No credit card required</div>
+        </div>
+        <div style="text-align:right"><span class="save-tag">Save 50%</span><div style="font-size:12px;color:#aaa;margin-top:6px">Regular: $99/mo</div></div>
+      </div>
+      <div class="seats-bar">
+        <div class="seats-top"><span class="seats-lbl">🔒 Founding seats remaining</span><span class="seats-num">247 / 500 left</span></div>
+        <div class="seats-track"><div class="seats-fill"></div></div>
+        <div class="seats-sub">253 founders have already claimed their seat</div>
+      </div>
+      <ul class="price-list">
+        <li><div class="pck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Unlimited AI-generated posts in your voice</li>
+        <li><div class="pck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>8 platform optimization — natively formatted</li>
+        <li><div class="pck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Voice Match Engine — learns your exact style</li>
+        <li><div class="pck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Content calendar & auto-scheduling</li>
+        <li><div class="pck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Unified analytics dashboard</li>
+        <li><div class="pck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>🔒 Price locked at $49/mo forever</li>
+      </ul>
+      <button class="price-cta" id="pricingBtn">Claim Your Founding Seat →</button>
+      <p class="price-note">🔒 No credit card required · Cancel anytime · Price locks in forever</p>
+    </div>
+  </div>
+</section>
 
-        // Pricing toggle
-        const toggleBtns = document.querySelectorAll('.toggle-btn');
-        const priceAmount = document.getElementById('priceAmount');
-        const billingNote = document.getElementById('billingNote');
-        const saveText = document.getElementById('saveText');
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">FAQ</div>
+      <h2 class="sec-title">Got <em>questions?</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What makes LuminaPath different?<div class="faq-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-a">Most tools generate generic AI content. LuminaPath's Voice Match Engine learns YOUR specific tone — then generates content that sounds exactly like you. Every platform gets natively formatted posts, not copy-paste.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Which platforms are supported?<div class="faq-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-a">LinkedIn, X/Twitter, Instagram, TikTok, YouTube, Facebook, Threads, and Bluesky. Each gets content formatted for its unique style and algorithm — never just a copy-paste.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does voice learning work?<div class="faq-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-a">Paste 5–10 of your existing posts. Our AI analyzes your vocabulary, sentence structure, and tone — achieving 94% voice match within minutes. The more you use it, the better it gets.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">When does LuminaPath launch?<div class="faq-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-a">Launching very soon. Founding members get first access the moment we go live, plus their $49/mo rate locked forever — even when we raise prices post-launch.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there a free trial?<div class="faq-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="faq-a">Join the waitlist now for free — no credit card required. Founding members get full access from day one at the locked $49/mo rate.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        toggleBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                toggleBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const billing = btn.dataset.billing;
-                if (billing === 'yearly') {
-                    priceAmount.textContent = '$29';
-                    billingNote.textContent = 'Billed annually ($348/year)';
-                    saveText.textContent = 'Save 63%';
-                } else {
-                    priceAmount.textContent = '$49';
-                    billingNote.textContent = 'Billed monthly';
-                    saveText.textContent = 'Save 38%';
-                }
-            });
-        });
+<!-- CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="wrap">
+    <div class="cta-inner">
+      <div class="cta-tag">JOIN THE WAITLIST</div>
+      <h2 class="cta-title">Ready to multiply<br>your <em>voice?</em></h2>
+      <p class="cta-sub">Join 2,847+ founders who are done with content burnout. Lock in your founding rate before seats run out.</p>
+      <form class="cta-form" id="ctaForm">
+        <input type="email" class="cta-input" placeholder="Enter your email address" required>
+        <button type="submit" class="cta-btn">Claim Your Seat →</button>
+      </form>
+      <p class="cta-fine">🔒 No spam · No credit card · Cancel anytime</p>
+    </div>
+  </div>
+</section>
 
-        // Form submissions
-        const heroForm = document.getElementById('heroForm');
-        const ctaForm = document.getElementById('ctaForm');
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <a href="#" class="footer-logo">
+      <div class="footer-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
+      <span class="footer-logo-text">Lumina<span>Path</span></span>
+    </a>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+    <p class="footer-copy">© 2026 LuminaPath · Empowers Your Brand With AI</p>
+  </div>
+</footer>
 
-        function handleFormSubmit(form, e) {
-            e.preventDefault();
-            const email = form.querySelector('input[type="email"]').value;
-            if (!email) return;
-            
-            // Replace form with success message
-            form.innerHTML = `
-                <div class="success-message" style="width: 100%;">
-                    <i data-lucide="check"></i>
-                    <span>You're on the list! Check your inbox.</span>
-                </div>
-            `;
-            lucide.createIcons();
-        }
+<script>
+// Nav scroll
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList[window.scrollY>50?'add':'remove']('scrolled')});
 
-        heroForm.addEventListener('submit', (e) => handleFormSubmit(heroForm, e));
-        ctaForm.addEventListener('submit', (e) => handleFormSubmit(ctaForm, e));
+// FAQ
+document.querySelectorAll('.faq-q').forEach(function(q){
+  q.addEventListener('click',function(){
+    var item=q.parentElement,isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});
+    if(!isOpen)item.classList.add('open');
+  });
+});
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+// Forms
+function handleForm(form){
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=form.querySelector('input[type="email"]').value;
+    if(!email)return;
+    form.innerHTML='<div class="success-msg">🎉 You\'re on the list! We\'ll be in touch soon.</div>';
+  });
+}
+var hf=document.getElementById('heroForm'),cf=document.getElementById('ctaForm');
+if(hf)handleForm(hf);if(cf)handleForm(cf);
+
+// Pricing -> waitlist
+var pb=document.getElementById('pricingBtn');
+if(pb)pb.addEventListener('click',function(){document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var h=a.getAttribute('href');
+    if(h==='#')return;
+    e.preventDefault();
+    var t=document.querySelector(h);
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
 </body>
 </html>
