@@ -425,8 +425,115 @@ h1.hero-h1 .outline{-webkit-text-stroke:2.5px var(--black);color:transparent;fon
 /* ═══ SCROLL REVEAL ═══ */
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ WAITLIST FORM ═══ */
+.wl-form{width:100%;max-width:520px;margin:0 auto}
+.wl-row{display:flex;gap:8px;width:100%}
+.wl-input{flex:1;padding:14px 18px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s;min-width:0;background:#fff;color:#0a0a0a}
+.wl-input:focus{border-color:var(--p)}
+.wl-btn{background:var(--p);color:#fff;border:none;border-radius:12px;padding:14px 22px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'DM Sans',sans-serif}
+.wl-btn:hover{background:var(--p2);transform:translateY(-1px)}
+.wl-msg{margin-top:10px;font-size:13px;font-weight:500;min-height:20px;text-align:center}
+.wl-msg.ok{color:#16a34a}.wl-msg.err{color:#dc2626}
+.wl-dark .wl-input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#fff}
+.wl-dark .wl-input::placeholder{color:rgba(255,255,255,.35)}
+.wl-dark .wl-input:focus{border-color:rgba(255,255,255,.5)}
+.wl-dark .wl-msg.ok{color:#4ade80}.wl-dark .wl-msg.err{color:#f87171}
+
+/* ═══ MOBILE — COMPREHENSIVE ═══ */
+@media(max-width:768px){
+  /* Nav hamburger */
+  .nav-links{display:none!important}
+  .btn-ghost{display:none!important}
+  .nav-cta .btn-fill{font-size:13px;padding:9px 16px}
+  
+  /* Hero */
+  .hero{padding:100px 0 60px}
+  .hero-inner{grid-template-columns:1fr!important;gap:40px;text-align:center}
+  .hero-right{display:none!important}
+  .hero-badge{margin:0 auto 20px}
+  .hero-h1{font-size:clamp(36px,10vw,52px)!important}
+  .hero-sub{font-size:16px;margin:0 auto 32px}
+  .hero-actions{justify-content:center;flex-wrap:wrap;gap:12px}
+  .hero-actions .btn-fill,.hero-actions .btn-ghost{width:100%;justify-content:center}
+  .hero-proof{justify-content:center}
+  
+  /* Waitlist form */
+  .wl-row{flex-direction:column}
+  .wl-btn{width:100%;text-align:center}
+  .cta-beehiiv{max-width:100%;padding:0 4px}
+  
+  /* Platform grid */
+  .plat-grid{grid-template-columns:repeat(2,1fr)!important}
+  
+  /* What you get */
+  .wyg-grid{grid-template-columns:1fr!important}
+  
+  /* Stats */
+  .stats-grid{grid-template-columns:repeat(2,1fr)!important}
+  .stat-cell{padding:28px 16px}
+  .stat-n{font-size:clamp(36px,8vw,48px)}
+  
+  /* Platforms types */
+  .plat-types-grid{grid-template-columns:1fr!important}
+  
+  /* Intelligence section */
+  .intel-grid{grid-template-columns:1fr!important}
+  
+  /* How it works */
+  .steps-grid{grid-template-columns:1fr!important}
+  .steps-grid::before{display:none!important}
+  
+  /* Features */
+  .feat-row,.feat-row.flip{grid-template-columns:1fr!important;direction:ltr!important;gap:32px!important}
+  .feat-visual{display:none}
+  
+  /* Testimonials */
+  .test-grid{grid-template-columns:1fr!important}
+  
+  /* Pricing */
+  .plans-grid{grid-template-columns:1fr!important;max-width:100%!important}
+  .plan-card{max-width:100%}
+  
+  /* FAQ */
+  .faq-q{font-size:15px;padding:18px 44px 18px 18px}
+  .faq-a{font-size:14px}
+  
+  /* CTA section */
+  .cta-h2{font-size:clamp(32px,9vw,52px)!important}
+  .cta-sub{font-size:15px;margin-bottom:28px}
+  
+  /* Footer */
+  .footer-in{flex-direction:column!important;text-align:center!important;gap:16px}
+  .f-links{flex-wrap:wrap;justify-content:center;gap:16px}
+  
+  /* Section padding */
+  .plat-section,.stats-section,.wyg-section,.intel-section,.steps-section,.feat-section,.test-section,.plans-section,.faq-section,.cta-section{padding:64px 0}
+  
+  /* Section headings */
+  .sec-h{font-size:clamp(28px,7vw,40px)!important}
+  .sec-sub{font-size:15px}
+  
+  /* Chatbot */
+  .chat-btn{bottom:20px;right:20px;width:50px;height:50px}
+  .chat-bubble{right:20px;bottom:86px;max-width:calc(100vw - 40px)}
+  
+  /* Marquee — disable cursor:none on mobile */
+  body{cursor:auto}
+  .cur-dot,.cur-ring{display:none}
+}
+
+@media(max-width:480px){
+  .hero-h1{font-size:32px!important}
+  .hero-sub{font-size:14px}
+  .plan-price{font-size:48px!important}
+  .stats-grid{grid-template-columns:1fr!important}
+  .stat-cell:nth-child(2){border-right:none;border-top:1px solid var(--border)}
+  .wl-input{font-size:14px;padding:12px 14px}
+  .wl-btn{padding:12px 18px;font-size:14px}
+}
 </style>
-<script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+
 </head>
 <body>
 
@@ -486,7 +593,13 @@ h1.hero-h1 .outline{-webkit-text-stroke:2.5px var(--black);color:transparent;fon
           One idea. 30 seconds. <strong>8 platforms growing organically</strong> — in your exact voice. While you focus on everything else.
         </p>
         <div class="beehiiv-wrap">
-          <iframe src="https://subscribe-forms.beehiiv.com/bddebd93-0521-4c19-a742-9143ecb9604a" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width:100%;max-width:520px;height:80px;border-radius:10px;background:transparent;border:none;display:block;"></iframe>
+          <div class="wl-form" id="wlForm1">
+  <div class="wl-row">
+    <input type="email" class="wl-input" id="wlEmail1" placeholder="Enter your email address..." autocomplete="email">
+    <button class="wl-btn" onclick="joinWaitlist('wlEmail1','wlMsg1')">Join Waitlist →</button>
+  </div>
+  <div class="wl-msg" id="wlMsg1"></div>
+</div>
         </div>
         <div class="hero-proof">
           <div class="avatars">
@@ -1046,7 +1159,13 @@ h1.hero-h1 .outline{-webkit-text-stroke:2.5px var(--black);color:transparent;fon
       <h2 class="cta-h2">The tool you've been<br>waiting for <em>your whole life.</em></h2>
       <p class="cta-sub">Every creator. Every founder. Every business that's ever struggled to stay consistent, sound authentic, and grow without burning out — this was built for you. LuminaPath is the fuel for your engine. The light when content creation feels dark. Join the waitlist. Lock your founding rate. And never worry about content again.</p>
       <div class="cta-beehiiv">
-        <iframe src="https://subscribe-forms.beehiiv.com/bddebd93-0521-4c19-a742-9143ecb9604a" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width:100%;height:80px;border-radius:10px;background:transparent;border:none;display:block;"></iframe>
+        <div class="wl-form wl-dark" id="wlForm2">
+  <div class="wl-row">
+    <input type="email" class="wl-input" id="wlEmail2" placeholder="Enter your email address..." autocomplete="email">
+    <button class="wl-btn" onclick="joinWaitlist('wlEmail2','wlMsg2')">Get Early Access →</button>
+  </div>
+  <div class="wl-msg" id="wlMsg2"></div>
+</div>
       </div>
       <p class="cta-fine">🔒 No spam · No credit card · Cancel anytime · Founding rates locked forever</p>
     </div>
@@ -1121,6 +1240,55 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     var el=document.querySelector(t);
     if(el)el.scrollIntoView({behavior:'smooth'});
   });
+});
+</script>
+
+<script>
+async function joinWaitlist(inputId, msgId) {
+  const input = document.getElementById(inputId);
+  const msg = document.getElementById(msgId);
+  const email = input.value.trim();
+  
+  if (!email || !email.includes('@')) {
+    msg.textContent = 'Please enter a valid email address.';
+    msg.className = 'wl-msg err';
+    return;
+  }
+  
+  const btn = input.nextElementSibling;
+  btn.textContent = 'Joining...';
+  btn.disabled = true;
+  
+  try {
+    const res = await fetch('https://command.luminapath.ca/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source: 'landing-page' })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      msg.textContent = "You're on the list! We'll be in touch soon. 🎉";
+      msg.className = 'wl-msg ok';
+      input.value = '';
+      btn.textContent = 'Joined ✓';
+    } else {
+      throw new Error(data.error || 'Something went wrong');
+    }
+  } catch (e) {
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.className = 'wl-msg err';
+    btn.textContent = 'Join Waitlist →';
+    btn.disabled = false;
+  }
+}
+
+// Allow Enter key
+document.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter' && e.target.classList.contains('wl-input')) {
+    const formId = e.target.id;
+    const msgId = formId.replace('Email', 'Msg');
+    joinWaitlist(formId, msgId);
+  }
 });
 </script>
 </body>
