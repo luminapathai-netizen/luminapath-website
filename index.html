@@ -56,9 +56,6 @@ img{display:block}
 .btn-primary span{position:relative;background:linear-gradient(to right,#a855f7,#ec4899);color:#fff;font-weight:700;font-size:18px;padding:16px 32px;border-radius:9999px;display:flex;align-items:center;gap:8px}
 .btn-ghost{color:rgba(255,255,255,.7);font-weight:500;font-size:18px;padding:16px 32px;border-radius:9999px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:8px;transition:border-color .2s,color .2s}
 .btn-ghost:hover{border-color:rgba(255,255,255,.3);color:#fff}
-.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%)}
-.scroll-box{width:24px;height:40px;border-radius:12px;border:2px solid rgba(255,255,255,.2);display:flex;justify-content:center;padding-top:8px}
-.scroll-bar{width:4px;height:8px;background:rgba(255,255,255,.4);border-radius:2px;animation:scrollAnim 1.5s ease-in-out infinite}
  
 /* WAITLIST */
 .waitlist-box{max-width:480px;margin:0 auto}
@@ -181,7 +178,6 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
 }
  
 @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
-@keyframes scrollAnim{0%,100%{opacity:0;transform:translateY(0)}50%{opacity:1;transform:translateY(6px)}}
 </style>
 </head>
 <body>
@@ -254,7 +250,6 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       </div>
     </div>
   </div>
-  <div class="scroll-indicator"><div class="scroll-box"><div class="scroll-bar"></div></div></div>
 </section>
  
 <!-- FEATURES -->
@@ -442,7 +437,7 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Which platforms are supported?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>LinkedIn, X/Twitter, Instagram, TikTok, YouTube, Facebook, Threads, and Bluesky. Each gets content written natively for its algorithm.</p></div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Is the founding rate really locked forever?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Yes. Your price never increases &mdash; even as we add features and raise prices for new members.</p></div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel anytime?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Absolutely. Cancel anytime, no questions asked. If you return later, you keep your founding rate.</p></div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How do I contact support?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Email us at support@luminapath.ca &mdash; we respond within 24 hours. Telegram support is available to all founding members.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How do I contact support?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Email us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4a7a1a4a4bba6a094b8a1b9bdbab5a4b5a0bcfab7b5">[email&#160;protected]</a> &mdash; we respond within 24 hours. Telegram support is available to all founding members.</p></div></div>
     </div>
   </div>
 </section>
@@ -490,21 +485,21 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </div>
-      <a href="mailto:support@luminapath.ca" class="footer-contact">support@luminapath.ca</a>
+      <a href="/cdn-cgi/l/email-protection#42313732322d3036022e372f2b2c233223362a6c2123" class="footer-contact"><span class="__cf_email__" data-cfemail="a6d5d3d6d6c9d4d2e6cad3cbcfc8c7d6c7d2ce88c5c7">[email&#160;protected]</span></a>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 LuminaPath. All rights reserved.</p>
       <div class="footer-legal">
         <a href="/privacy-policy.html">Privacy Policy</a>
         <a href="/terms-of-service.html">Terms of Service</a>
-        <a href="mailto:support@luminapath.ca">Contact</a>
+        <a href="/cdn-cgi/l/email-protection#2a595f5a5a45585e6a465f4743444b5a4b5e4204494b">Contact</a>
       </div>
       <p>Launching April 7, 2026</p>
     </div>
   </div>
 </footer>
  
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // NAV
 var nav=document.getElementById('nav');
 var hamburger=document.getElementById('hamburger');
