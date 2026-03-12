@@ -1,1295 +1,511 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LuminaPath — Grow Organically. Everywhere. Always.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800;12..96,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:#fff;color:#0a0a0a;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
-h1,h2,h3,.stat-n,.plan-price{font-family:'Bricolage Grotesque',sans-serif;font-optical-sizing:auto}
-
-:root{
-  --p:#7C3AED;--p2:#9F67FF;--pk:#F3EEFF;--black:#0a0a0a;
-  --gray:#64748B;--border:#E8E8E8;--off:#FAFAFA;
-}
-
-/* ═══ CURSOR ═══ */
-.cur-dot{width:8px;height:8px;background:var(--p);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}
-.cur-ring{width:36px;height:36px;border:1.5px solid rgba(124,58,237,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s}
-.cur-dot.big{width:48px;height:48px;background:rgba(124,58,237,.15);border:1.5px solid var(--p)}
-.cur-ring.big{width:0;height:0;opacity:0}
-
-/* ═══ KEYFRAMES ═══ */
-@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-@keyframes bar{0%,100%{transform:scaleY(.1)}50%{transform:scaleY(1)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.3)}60%{box-shadow:0 0 0 10px rgba(124,58,237,0)}}
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes pop{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
-@keyframes ripple{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.5);opacity:0}}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* ═══ NAV ═══ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:20px 0;transition:all .4s}
-.nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:14px 0;box-shadow:0 2px 32px rgba(0,0,0,.06)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
-@media(max-width:768px){.wrap{padding:0 20px}}
-.nav-inner{display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--p),var(--p2));border-radius:10px;display:grid;place-items:center;flex-shrink:0}
-.logo-mark svg{width:18px;height:18px;color:#fff}
-.logo-name{font-family:'Bricolage Grotesque',sans-serif;font-size:19px;font-weight:800;color:var(--black);letter-spacing:-.03em}
-.logo-name span{color:var(--p)}
-.nav-links{display:flex;gap:32px}
-.nav-links a{font-size:14px;font-weight:500;color:#444;text-decoration:none;transition:color .2s;letter-spacing:-.01em}
-.nav-links a:hover{color:var(--p)}
-.nav-actions{display:flex;gap:10px;align-items:center}
-.btn-ghost{padding:9px 20px;font-size:14px;font-weight:600;color:var(--black);border:1.5px solid #ddd;border-radius:9px;text-decoration:none;transition:all .2s}
-.btn-ghost:hover{border-color:var(--p);color:var(--p)}
-.btn-fill{padding:10px 22px;font-size:14px;font-weight:700;background:var(--p);color:#fff;border-radius:9px;text-decoration:none;border:none;transition:all .25s;font-family:'Bricolage Grotesque',sans-serif}
-.btn-fill:hover{background:#6D28D9;transform:translateY(-1px);box-shadow:0 8px 28px rgba(124,58,237,.35)}
-@media(max-width:768px){.nav-links,.btn-ghost{display:none}}
-
-/* ═══ HERO ═══ */
-.hero{min-height:100vh;display:flex;align-items:center;padding:130px 0 90px;position:relative;overflow:hidden;background:#fff}
-.hero-grid{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#ddd6fe 1px,transparent 1px);background-size:36px 36px;opacity:.35}
-.hero-glow{position:absolute;top:-200px;right:-150px;width:700px;height:700px;background:radial-gradient(circle,rgba(124,58,237,.08),transparent 70%);pointer-events:none}
-.hero-glow2{position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,237,.05),transparent 70%);pointer-events:none}
-.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:2}
-@media(max-width:1024px){.hero-inner{grid-template-columns:1fr}}
-.hero-left{animation:fadeUp .8s cubic-bezier(.16,1,.3,1) both}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:50px;margin-bottom:28px}
-.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--p);animation:pulse 2s infinite}
-.hero-badge span{font-size:12px;font-weight:700;color:var(--p);letter-spacing:.02em;font-family:'Bricolage Grotesque',sans-serif}
-h1.hero-h1{font-size:clamp(46px,5.8vw,78px);font-weight:900;line-height:.98;letter-spacing:-.05em;margin-bottom:24px;color:var(--black)}
-h1.hero-h1 em{font-style:italic;background:linear-gradient(135deg,var(--p) 0%,var(--p2) 50%,#C084FC 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;font-weight:900}
-h1.hero-h1 .outline{-webkit-text-stroke:2.5px var(--black);color:transparent;font-weight:900}
-.hero-sub{font-size:18px;color:#555;line-height:1.8;margin-bottom:36px;max-width:500px;font-weight:400}
-.hero-sub strong{color:var(--black);font-weight:600}
-.beehiiv-wrap{margin-bottom:20px}
-.hero-proof{display:flex;align-items:center;gap:12px}
-.avatars{display:flex}
-.av{width:32px;height:32px;border-radius:50%;border:2.5px solid #fff;margin-left:-8px;flex-shrink:0}
-.av:first-child{margin-left:0}
-.av1{background:linear-gradient(135deg,#7C3AED,#9F67FF)}
-.av2{background:linear-gradient(135deg,#F59E0B,#FCD34D)}
-.av3{background:linear-gradient(135deg,#10B981,#34D399)}
-.av4{background:linear-gradient(135deg,#EF4444,#F87171)}
-.proof-text{font-size:13px;color:#777;font-weight:400}
-.proof-text strong{color:var(--black);font-weight:600}
-
-/* HERO VISUAL */
-.hero-right{position:relative;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .25s both}
-@media(max-width:1024px){.hero-right{display:none}}
-.app-card{background:#fff;border:1px solid #E2E2E2;border-radius:22px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.13),0 0 0 1px rgba(0,0,0,.03);animation:float 7s ease-in-out infinite}
-.app-bar{background:#FAFAFA;padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.dots{display:flex;gap:5px}
-.dot{width:11px;height:11px;border-radius:50%}
-.dot:nth-child(1){background:#FF5F57}.dot:nth-child(2){background:#FFBC2E}.dot:nth-child(3){background:#28C840}
-.url{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;color:#bbb;font-family:monospace}
-.app-body{padding:18px}
-.app-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.app-title-txt{font-family:'Bricolage Grotesque',sans-serif;font-size:13px;font-weight:800;color:var(--black)}
-.vm-chip{display:flex;align-items:center;gap:5px;padding:4px 10px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:50px}
-.vm-dot{width:6px;height:6px;border-radius:50%;background:var(--p);animation:pulse 2s infinite}
-.vm-txt{font-size:11px;font-weight:700;color:var(--p);font-family:'Bricolage Grotesque',sans-serif}
-.wave{display:flex;align-items:center;justify-content:center;gap:4px;height:50px;background:linear-gradient(135deg,#FAFAFA,#F3EEFF);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;padding:10px}
-.wb{width:4px;border-radius:2px;background:linear-gradient(to top,var(--p),var(--p2));transform-origin:bottom;animation:bar .9s ease-in-out infinite}
-.wb:nth-child(1){height:18px;animation-delay:0s}.wb:nth-child(2){height:32px;animation-delay:.07s}.wb:nth-child(3){height:12px;animation-delay:.14s}.wb:nth-child(4){height:42px;animation-delay:.21s}.wb:nth-child(5){height:26px;animation-delay:.28s}.wb:nth-child(6){height:36px;animation-delay:.35s}.wb:nth-child(7){height:16px;animation-delay:.42s}.wb:nth-child(8){height:40px;animation-delay:.49s}.wb:nth-child(9){height:22px;animation-delay:.56s}.wb:nth-child(10){height:30px;animation-delay:.63s}
-.idea-box{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:12px}
-.idea-lbl{font-size:9px;font-weight:800;color:var(--p);letter-spacing:.12em;margin-bottom:5px;font-family:'Bricolage Grotesque',sans-serif}
-.idea-txt{font-size:12.5px;color:#333;line-height:1.55}
-.cblink{display:inline-block;width:2px;height:12px;background:var(--p);margin-left:2px;animation:blink 1s infinite;vertical-align:middle}
-.plats-lbl{font-size:9px;font-weight:700;color:#bbb;letter-spacing:.1em;margin-bottom:7px;font-family:'Bricolage Grotesque',sans-serif}
-.plats-row{display:flex;gap:5px;flex-wrap:wrap}
-.ptag{padding:3px 10px;border-radius:50px;font-size:10px;font-weight:600;border:1px solid var(--border);color:#888}
-.ptag.on{background:var(--pk);border-color:rgba(124,58,237,.3);color:var(--p)}
-.float-pill{position:absolute;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 14px;box-shadow:0 8px 32px rgba(0,0,0,.1);display:flex;align-items:center;gap:9px;white-space:nowrap}
-.fp1{top:-16px;right:-20px;animation:float 5s ease-in-out infinite}
-.fp2{bottom:-14px;left:-24px;animation:float 6.5s ease-in-out 1.5s infinite}
-.fp3{top:40%;right:-84px;animation:float 4.5s ease-in-out .8s infinite}
-.fp-ico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;flex-shrink:0}
-.fp-big{font-size:17px;font-weight:900;color:var(--black);font-family:'Bricolage Grotesque',sans-serif;line-height:1}
-.fp-sm{font-size:10px;color:#999;margin-top:1px}
-
-/* ═══ MARQUEE ═══ */
-.mq-wrap{background:var(--black);overflow:hidden;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a}
-.mq-track{display:flex;width:max-content;animation:marquee 26s linear infinite}
-.mq-item{display:flex;align-items:center;gap:16px;padding:15px 32px;white-space:nowrap}
-.mq-n{font-family:'Bricolage Grotesque',sans-serif;font-size:21px;font-weight:900;color:#fff;letter-spacing:-.02em}
-.mq-l{font-size:12px;color:rgba(255,255,255,.38);font-weight:400}
-.mq-sep{color:var(--p);font-size:8px}
-
-/* ═══ PLATFORMS (LOGO CARDS) ═══ */
-.plat-section{padding:70px 0;border-bottom:1px solid var(--border)}
-.plat-lbl{text-align:center;font-size:11px;font-weight:700;color:#bbb;letter-spacing:.12em;margin-bottom:40px;font-family:'Bricolage Grotesque',sans-serif}
-.plat-lbl strong{color:var(--p)}
-.plat-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;max-width:960px;margin:0 auto}
-@media(max-width:900px){.plat-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:500px){.plat-grid{grid-template-columns:repeat(2,1fr)}}
-.plat-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 12px;border:1px solid var(--border);border-radius:18px;background:#fff;transition:all .3s;cursor:default}
-.plat-card:hover{border-color:transparent;transform:translateY(-4px)}
-.plat-logo{width:36px;height:36px;display:grid;place-items:center}
-.plat-logo svg{width:28px;height:28px}
-.plat-name{font-size:11px;font-weight:700;color:#888;letter-spacing:-.01em;font-family:'Bricolage Grotesque',sans-serif;text-align:center;transition:color .3s}
-/* platform hover colors */
-.plat-card.li:hover{background:rgba(10,102,194,.04);border-color:rgba(10,102,194,.2)}
-.plat-card.li:hover .plat-name{color:#0A66C2}
-.plat-card.xw:hover{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.15)}
-.plat-card.xw:hover .plat-name{color:#000}
-.plat-card.ig:hover{background:rgba(228,64,95,.04);border-color:rgba(228,64,95,.2)}
-.plat-card.ig:hover .plat-name{color:#E4405F}
-.plat-card.tk:hover{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.15)}
-.plat-card.tk:hover .plat-name{color:#000}
-.plat-card.yt:hover{background:rgba(255,0,0,.04);border-color:rgba(255,0,0,.2)}
-.plat-card.yt:hover .plat-name{color:#FF0000}
-.plat-card.fb:hover{background:rgba(24,119,242,.04);border-color:rgba(24,119,242,.2)}
-.plat-card.fb:hover .plat-name{color:#1877F2}
-.plat-card.th:hover{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.15)}
-.plat-card.th:hover .plat-name{color:#000}
-.plat-card.bs:hover{background:rgba(0,133,255,.04);border-color:rgba(0,133,255,.2)}
-.plat-card.bs:hover .plat-name{color:#0085FF}
-
-/* ═══ PLATFORM TAILORED ═══ */
-.plat-tailored{margin-top:56px;text-align:center}
-.plat-tailored-line{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(18px,2.2vw,26px);font-weight:700;color:var(--black);margin-bottom:36px;letter-spacing:-.02em}
-.plat-types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
-@media(max-width:768px){.plat-types-grid{grid-template-columns:1fr}}
-.plat-type-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px 28px;text-align:left;transition:all .3s;cursor:default}
-.plat-type-card:hover{border-color:rgba(124,58,237,.25);transform:translateY(-4px);box-shadow:0 16px 48px rgba(124,58,237,.09)}
-.ptc-icon{font-size:32px;margin-bottom:14px}
-.ptc-label{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:800;color:var(--black);margin-bottom:5px;letter-spacing:-.02em}
-.ptc-plats{font-size:11px;font-weight:700;color:var(--p);letter-spacing:.06em;margin-bottom:12px;font-family:'Bricolage Grotesque',sans-serif}
-.ptc-desc{font-size:14px;color:#666;line-height:1.75;font-weight:400}
-.plat-tailored-sub{font-size:15px;color:#888;font-weight:400}.plat-tailored-sub strong{color:var(--black);font-weight:700}
-
-/* ═══ STATS ═══ */
-.stats-section{padding:80px 0;background:var(--off)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.04)}
-@media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
-.stat-cell{padding:44px 24px;text-align:center;border-right:1px solid var(--border);transition:background .25s;cursor:default}
-.stat-cell:last-child{border-right:none}
-@media(max-width:768px){.stat-cell:nth-child(2){border-right:none}.stat-cell:nth-child(3){border-top:1px solid var(--border)}}
-.stat-cell:hover{background:var(--pk)}
-.stat-n{font-size:52px;font-weight:900;line-height:1;letter-spacing:-.05em;color:var(--black);margin-bottom:8px}
-.stat-n span{color:var(--p)}
-.stat-d{font-size:13px;color:#888;line-height:1.55;font-weight:400}
-
-/* ═══ SECTION COMMON ═══ */
-.sec-eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;padding:5px 14px;border-radius:50px;background:var(--pk);color:var(--p);border:1px solid rgba(124,58,237,.15);margin-bottom:16px;font-family:'Bricolage Grotesque',sans-serif}
-.sec-h2{font-size:clamp(34px,4.2vw,56px);font-weight:900;line-height:1.06;letter-spacing:-.04em;margin-bottom:16px;color:var(--black)}
-.sec-h2 em{font-style:italic;background:linear-gradient(135deg,var(--p),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sec-p{font-size:17px;color:#666;max-width:560px;margin:0 auto;line-height:1.75;font-weight:400}
-.sec-head{text-align:center;margin-bottom:68px;position:relative;z-index:1}
-
-/* ═══ WHAT YOU GET ═══ */
-.wyg-section{padding:110px 0;background:#fff;position:relative;overflow:hidden}
-.wyg-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#ddd6fe 1px,transparent 1px);background-size:36px 36px;opacity:.4;pointer-events:none}
-.wyg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:22px;overflow:hidden;position:relative;z-index:1}
-@media(max-width:900px){.wyg-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.wyg-grid{grid-template-columns:1fr}}
-.wyg-card{background:#fff;padding:44px 36px;cursor:default;position:relative;overflow:hidden;transition:background .3s}
-.wyg-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--p),var(--p2));transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.16,1,.3,1)}
-.wyg-card:hover{background:var(--pk)}
-.wyg-card:hover::after{transform:scaleX(1)}
-.wyg-icon{width:54px;height:54px;background:var(--pk);border:1px solid rgba(124,58,237,.15);border-radius:15px;display:grid;place-items:center;font-size:24px;margin-bottom:22px;transition:transform .3s}
-.wyg-card:hover .wyg-icon{transform:scale(1.1) rotate(-5deg)}
-.wyg-card h3{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;font-weight:800;color:var(--black);margin-bottom:10px;letter-spacing:-.02em}
-.wyg-card p{font-size:14px;color:var(--gray);line-height:1.75;font-weight:400}
-
-/* ═══ INTELLIGENCE (dark) ═══ */
-.intel-section{padding:110px 0;background:#0a0a0a;position:relative;overflow:hidden}
-.intel-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:450px;background:radial-gradient(ellipse,rgba(124,58,237,.18),transparent 70%);pointer-events:none}
-.intel-section .sec-eyebrow{background:rgba(255,255,255,.08);color:rgba(156,100,255,.9);border-color:rgba(124,58,237,.25)}
-.intel-section .sec-h2{color:#fff}
-.intel-section .sec-p{color:rgba(255,255,255,.45)}
-.intel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;z-index:1}
-@media(max-width:768px){.intel-grid{grid-template-columns:1fr}}
-.intel-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:38px 32px;transition:all .35s;cursor:default;position:relative;overflow:hidden}
-.intel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.5),transparent);opacity:0;transition:opacity .35s}
-.intel-card:hover{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);transform:translateY(-5px)}
-.intel-card:hover::before{opacity:1}
-.intel-ico{width:50px;height:50px;border-radius:14px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.2);display:grid;place-items:center;font-size:22px;margin-bottom:22px}
-.intel-card h3{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:-.02em}
-.intel-card p{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;font-weight:400}
-.soon-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50px;font-size:11px;font-weight:700;color:rgba(156,100,255,.9);margin-top:18px;font-family:'Bricolage Grotesque',sans-serif}
-
-/* ═══ HOW IT WORKS ═══ */
-.how-section{padding:110px 0;background:#0a0a0a;position:relative;overflow:hidden}
-.how-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:400px;background:radial-gradient(ellipse,rgba(124,58,237,.12),transparent 70%);pointer-events:none}
-.how-section .sec-eyebrow{background:rgba(255,255,255,.08);color:rgba(156,100,255,.9);border-color:rgba(124,58,237,.25)}
-.how-section .sec-h2{color:#fff}
-.how-section .sec-p{color:rgba(255,255,255,.45)}
-.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative}
-.steps-grid::before{content:'';position:absolute;top:56px;left:calc(16.666% + 20px);right:calc(16.666% + 20px);height:1px;background:linear-gradient(90deg,var(--p),var(--p2));opacity:.25}
-@media(max-width:768px){.steps-grid{grid-template-columns:1fr}.steps-grid::before{display:none}}
-.step-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:34px 28px;position:relative;z-index:1;transition:all .3s;cursor:default}
-.step-card:hover{border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.08);box-shadow:0 12px 44px rgba(124,58,237,.15);transform:translateY(-5px)}
-.step-num{width:48px;height:48px;border-radius:14px;background:var(--p);display:grid;place-items:center;margin-bottom:22px;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:900;color:#fff}
-.step-title{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:-.02em}
-.step-desc{font-size:14px;color:rgba(255,255,255,.45);line-height:1.75;font-weight:400}
-
-/* ═══ FEATURES ═══ */
-.feat-section{padding:110px 0;background:#fff}
-.feat-row{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:80px 0;border-bottom:1px solid var(--border)}
-.feat-row:last-child{border-bottom:none}
-.feat-row.flip{direction:rtl}.feat-row.flip>*{direction:ltr}
-@media(max-width:1024px){.feat-row,.feat-row.flip{grid-template-columns:1fr;direction:ltr;gap:44px}}
-.feat-eyebrow{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--p);margin-bottom:12px}
-.feat-h3{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,3vw,40px);font-weight:900;color:var(--black);margin-bottom:14px;line-height:1.1;letter-spacing:-.03em}
-.feat-h3 em{font-style:italic;background:linear-gradient(135deg,var(--p),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.feat-p{font-size:15px;color:#555;line-height:1.85;margin-bottom:26px;font-weight:400}
-.feat-checks{display:flex;flex-direction:column;gap:11px}
-.fcheck{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:#444;font-weight:400}
-.fchk{width:20px;height:20px;border-radius:50%;background:var(--pk);display:grid;place-items:center;flex-shrink:0;margin-top:1px}
-.fchk svg{width:11px;height:11px;color:var(--p);stroke-width:3}
-/* mock */
-.mock{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.09)}
-.mock-top{background:var(--off);padding:11px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.mdots{display:flex;gap:4px}
-.md{width:10px;height:10px;border-radius:50%}
-.md:nth-child(1){background:#FF5F57}.md:nth-child(2){background:#FFBC2E}.md:nth-child(3){background:#28C840}
-.mock-lbl{font-size:10px;color:#bbb;font-family:monospace;margin-left:5px}
-.mock-body{padding:20px}
-/* voice mock */
-.vm-big{font-family:'Bricolage Grotesque',sans-serif;font-size:50px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-.04em}
-.vm-sub{font-size:12px;color:#aaa;margin-top:3px}
-.vm-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:50px;font-size:12px;font-weight:700;color:var(--p);margin-top:12px;font-family:'Bricolage Grotesque',sans-serif}
-.vm-wave{display:flex;align-items:center;justify-content:center;gap:5px;height:58px;background:var(--off);border:1px solid var(--border);border-radius:12px;margin:16px 0;padding:12px}
-.vw{width:5px;border-radius:3px;background:linear-gradient(to top,var(--p),var(--p2));transform-origin:bottom;animation:bar .9s ease-in-out infinite}
-.vw:nth-child(1){height:22px;animation-delay:0s}.vw:nth-child(2){height:38px;animation-delay:.09s}.vw:nth-child(3){height:14px;animation-delay:.18s}.vw:nth-child(4){height:50px;animation-delay:.27s}.vw:nth-child(5){height:30px;animation-delay:.36s}.vw:nth-child(6){height:18px;animation-delay:.45s}.vw:nth-child(7){height:44px;animation-delay:.54s}.vw:nth-child(8){height:26px;animation-delay:.63s}
-.trait-row{display:flex;flex-wrap:wrap;gap:6px}
-.trait{padding:4px 12px;border-radius:50px;font-size:12px;background:var(--off);border:1px solid var(--border);color:#666;font-weight:400}
-.trait.on{background:var(--pk);border-color:rgba(124,58,237,.25);color:var(--p);font-weight:600}
-/* cal mock */
-.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.cal-mon{font-family:'Bricolage Grotesque',sans-serif;font-size:13px;font-weight:800;color:var(--black)}
-.cal-nav{display:flex;gap:5px}
-.cal-btn{padding:3px 10px;background:var(--pk);color:var(--p);font-size:11px;font-weight:700;border-radius:6px;font-family:'Bricolage Grotesque',sans-serif}
-.cal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.cal-day{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:8px 6px;min-height:70px}
-.cal-day.today{border-color:var(--p);background:var(--pk)}
-.cal-dn{font-size:9px;font-weight:700;color:#bbb;margin-bottom:5px;letter-spacing:.05em}
-.pp{font-size:9px;padding:2px 6px;border-radius:4px;margin-bottom:3px;display:block;line-height:1.4;font-weight:600}
-.pp-li{background:rgba(10,102,194,.1);color:#0A66C2}
-.pp-x{background:rgba(0,0,0,.07);color:#333}
-.pp-ig{background:rgba(228,64,95,.09);color:#E4405F}
-.pp-t{background:var(--pk);color:var(--p)}
-.cal-done{display:inline-flex;align-items:center;font-size:8px;font-weight:700;color:var(--p);background:var(--pk);padding:2px 5px;border-radius:3px}
-/* ana mock */
-.ana-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ana-card{background:var(--off);border:1px solid var(--border);border-radius:12px;padding:14px}
-.ana-lbl{font-size:9px;font-weight:700;color:#bbb;letter-spacing:.1em;margin-bottom:5px;font-family:'Bricolage Grotesque',sans-serif}
-.ana-val{font-family:'Bricolage Grotesque',sans-serif;font-size:28px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-.04em}
-.ana-chg{font-size:11px;font-weight:600;color:#10B981;margin-top:5px}
-.bars{display:flex;align-items:flex-end;gap:3px;height:28px;margin-top:10px}
-.bar{flex:1;border-radius:2px;background:var(--border)}
-.bar.hi{background:var(--p)}
-/* comp mock */
-.comp-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--p2));flex-shrink:0}
-.comp-name{font-family:'Bricolage Grotesque',sans-serif;font-size:13px;font-weight:700;color:var(--black)}
-.comp-role{font-size:11px;color:#bbb}
-.comp-ta{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13px;color:#333;line-height:1.65;margin:14px 0;min-height:78px}
-.comp-plats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.cp{padding:4px 10px;background:#fff;border:1px solid var(--border);border-radius:6px;font-size:11px;color:#888;font-weight:500}
-.cp.on{border-color:var(--p);background:var(--pk);color:var(--p);font-weight:700}
-.comp-btns{display:flex;justify-content:space-between}
-.btn-ai{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:8px;font-size:12px;font-weight:700;color:var(--p)}
-.btn-pub{display:flex;align-items:center;gap:5px;padding:8px 16px;background:var(--p);border-radius:8px;font-size:12px;font-weight:700;color:#fff}
-
-/* ═══ PLATFORM PILLS ═══ */
-.plat-pills-section{padding:80px 0;background:var(--black)}
-.plat-pills-section .sec-eyebrow{background:rgba(255,255,255,.08);color:rgba(156,100,255,.9);border-color:rgba(124,58,237,.25)}
-.plat-pills-section .sec-h2{color:#fff}
-.plat-pills-section .sec-p{color:rgba(255,255,255,.4)}
-.pills-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
-.ppill{display:flex;align-items:center;gap:9px;padding:13px 22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:50px;font-size:14px;font-weight:600;color:rgba(255,255,255,.75);transition:all .3s;cursor:default;font-family:'DM Sans',sans-serif}
-.ppill:hover{background:rgba(124,58,237,.18);border-color:rgba(124,58,237,.4);color:#fff;transform:translateY(-3px)}
-.ppill svg{width:18px;height:18px;flex-shrink:0}
-
-/* ═══ TESTIMONIALS ═══ */
-.test-section{padding:110px 0;background:#0a0a0a;position:relative;overflow:hidden}
-.test-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:400px;background:radial-gradient(ellipse,rgba(124,58,237,.1),transparent 70%);pointer-events:none}
-.test-section .sec-eyebrow{background:rgba(255,255,255,.08);color:rgba(156,100,255,.9);border-color:rgba(124,58,237,.25)}
-.test-section .sec-h2{color:#fff}
-.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:768px){.test-grid{grid-template-columns:1fr}}
-.test-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:34px;transition:all .35s;cursor:default}
-.test-card:hover{border-color:rgba(124,58,237,.4);transform:translateY(-6px);background:rgba(124,58,237,.07);box-shadow:0 20px 56px rgba(124,58,237,.2)}
-.stars{color:#F59E0B;font-size:14px;letter-spacing:2px;margin-bottom:16px}
-.test-q{font-size:15px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:22px;font-style:italic;font-weight:400}
-.test-aut{display:flex;align-items:center;gap:10px}
-.test-av{width:38px;height:38px;border-radius:50%;flex-shrink:0}
-.ta1{background:linear-gradient(135deg,var(--p),var(--p2))}
-.ta2{background:linear-gradient(135deg,#F59E0B,#FCD34D)}
-.ta3{background:linear-gradient(135deg,#10B981,#34D399)}
-.test-name{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:700;color:#fff}
-.test-role{font-size:12px;color:rgba(255,255,255,.35)}
-
-/* ═══ PRICING ═══ */
-.pricing-section{padding:110px 0;background:#fff}
-.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1040px;margin:0 auto}
-@media(max-width:900px){.plans-grid{grid-template-columns:1fr;max-width:460px}}
-.plan{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:40px 34px;position:relative;overflow:hidden;transition:all .35s;cursor:default}
-.plan::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--p),var(--p2))}
-.plan:hover{transform:translateY(-7px);box-shadow:0 28px 70px rgba(124,58,237,.13);border-color:rgba(124,58,237,.3)}
-.plan.pop{border-color:var(--p);background:linear-gradient(160deg,var(--pk),#fff 55%)}
-.plan.pop::before{background:linear-gradient(90deg,var(--p),var(--p2),var(--p));animation:shimmer 3s linear infinite;background-size:200%}
-.pop-badge{position:absolute;top:0;right:24px;background:var(--p);color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-size:10px;font-weight:800;letter-spacing:.08em;padding:5px 14px;border-radius:0 0 10px 10px;text-transform:uppercase}
-.plan-tier{font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--p);text-transform:uppercase;margin-bottom:10px}
-.plan-price-row{display:flex;align-items:baseline;gap:5px;margin-bottom:4px}
-.plan-price{font-size:54px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-.05em}
-.plan-per{font-size:15px;font-weight:400;color:var(--gray)}
-.plan-orig{font-size:13px;color:#ccc;text-decoration:line-through;margin-bottom:5px}
-.plan-save{display:inline-flex;align-items:center;gap:4px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:50px;padding:3px 10px;font-size:11px;font-weight:700;color:#059669;margin-bottom:14px;font-family:'Bricolage Grotesque',sans-serif}
-.plan-desc{font-size:13px;color:var(--gray);margin-bottom:24px;line-height:1.6;font-weight:400}
-.plan-div{height:1px;background:var(--border);margin-bottom:20px}
-.plan-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:30px}
-.plan-feats li{display:flex;align-items:center;gap:9px;font-size:13px;color:#444;font-weight:400}
-.pfchk{width:18px;height:18px;border-radius:50%;background:var(--pk);display:grid;place-items:center;flex-shrink:0}
-.pfchk svg{width:10px;height:10px;color:var(--p);stroke-width:3}
-.plan-btn{display:block;width:100%;text-align:center;padding:15px;border-radius:12px;text-decoration:none;font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:800;transition:all .28s;border:none;cursor:none;letter-spacing:-.01em}
-.plan-btn.ghost{border:1.5px solid var(--border);color:var(--black);background:#fff}
-.plan-btn.ghost:hover{border-color:var(--p);color:var(--p);background:var(--pk)}
-.plan-btn.solid{background:var(--p);color:#fff}
-.plan-btn.solid:hover{background:#6D28D9;transform:translateY(-1px);box-shadow:0 12px 36px rgba(124,58,237,.38)}
-.pricing-note{text-align:center;font-size:13px;color:#bbb;margin-top:22px;font-weight:400}
-
-/* ═══ APP BANNER ═══ */
-.app-banner{padding:60px 0;background:#0a0a0a;position:relative;overflow:hidden;border-top:1px solid rgba(124,58,237,.15);border-bottom:1px solid rgba(124,58,237,.15)}
-.app-banner::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;background:radial-gradient(ellipse,rgba(124,58,237,.15),transparent 70%);border-radius:0}
-.app-banner::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(124,58,237,.18) 1px,transparent 1px);background-size:28px 28px}
-.ab-inner{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;position:relative;z-index:1}
-.ab-text h3{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.03em}
-.ab-text p{font-size:15px;color:rgba(255,255,255,.7);line-height:1.65;max-width:500px;font-weight:400}
-.ab-badges{display:flex;gap:12px;flex-wrap:wrap}
-.ab-badge{display:flex;align-items:center;gap:8px;padding:12px 20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:13px;color:#fff;font-size:13px;font-weight:700;transition:all .25s;font-family:'Bricolage Grotesque',sans-serif}
-.ab-badge:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
-.ab-badge svg{width:20px;height:20px;opacity:.9}
-.ab-soon{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;background:rgba(255,255,255,.12);border-radius:50px;font-size:11px;font-weight:700;color:rgba(255,255,255,.7);margin-top:12px;font-family:'Bricolage Grotesque',sans-serif}
-
-/* ═══ FAQ ═══ */
-.faq-section{padding:110px 0;background:var(--off)}
-.faq-list{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
-.faq-item{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .28s}
-.faq-item.open{border-color:rgba(124,58,237,.3)}
-.faq-q{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;cursor:none;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:700;color:var(--black);gap:16px;letter-spacing:-.02em}
-.faq-ico{width:28px;height:28px;border-radius:50%;background:var(--off);border:1px solid var(--border);display:grid;place-items:center;flex-shrink:0;transition:all .3s;color:#ccc}
-.faq-item.open .faq-ico{background:var(--pk);border-color:rgba(124,58,237,.2);color:var(--p);transform:rotate(45deg)}
-.faq-a{font-size:15px;color:#555;line-height:1.8;max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;font-weight:400}
-.faq-item.open .faq-a{max-height:220px;padding:0 24px 24px}
-
-/* ═══ CTA ═══ */
-.cta-section{padding:130px 0;background:var(--black);position:relative;overflow:hidden}
-.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:350px;background:radial-gradient(ellipse,rgba(124,58,237,.22),transparent 70%)}
-.cta-inner{text-align:center;position:relative;z-index:2}
-.cta-eyebrow{display:inline-block;font-family:'Bricolage Grotesque',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;padding:5px 14px;border-radius:50px;background:rgba(124,58,237,.15);color:rgba(156,100,255,.9);border:1px solid rgba(124,58,237,.25);margin-bottom:22px}
-.cta-h2{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(42px,5.5vw,72px);font-weight:900;color:#fff;line-height:1.02;letter-spacing:-.05em;margin-bottom:20px}
-.cta-h2 em{font-style:italic;background:linear-gradient(135deg,var(--p2),#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.cta-sub{font-size:18px;color:rgba(255,255,255,.45);max-width:500px;margin:0 auto 44px;line-height:1.75;font-weight:400}
-.cta-beehiiv{max-width:500px;margin:0 auto 12px}
-.cta-fine{font-size:13px;color:rgba(255,255,255,.22);font-weight:400}
-
-/* ═══ FOOTER ═══ */
-.footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.04)}
-.footer-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px}
-@media(max-width:768px){.footer-in{flex-direction:column;text-align:center}}
-.f-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-.f-logo-ico{width:28px;height:28px;background:var(--p);border-radius:7px;display:grid;place-items:center}
-.f-logo-ico svg{width:14px;height:14px;color:#fff}
-.f-logo-name{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em}
-.f-logo-name span{color:var(--p2)}
-.f-links{display:flex;gap:24px}
-.f-links a{font-size:13px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;font-weight:400}
-.f-links a:hover{color:rgba(255,255,255,.7)}
-.f-copy{font-size:13px;color:rgba(255,255,255,.18);font-weight:400}
-
-/* ═══ CHATBOT ═══ */
-.chat-btn{position:fixed;bottom:28px;right:28px;z-index:1000;width:58px;height:58px;background:var(--p);border-radius:50%;border:none;cursor:none;display:grid;place-items:center;box-shadow:0 8px 32px rgba(124,58,237,.5);transition:all .3s;animation:pulse 3s infinite}
-.chat-btn:hover{background:var(--p2);transform:scale(1.08)}
-.chat-btn svg{width:26px;height:26px;color:#fff}
-.chat-notif{position:absolute;top:1px;right:1px;width:14px;height:14px;background:#EF4444;border-radius:50%;border:2px solid #fff;animation:pulse 2s infinite}
-.chat-bubble{position:fixed;bottom:100px;right:28px;z-index:1000;background:#fff;border:1px solid var(--border);border-radius:20px 20px 4px 20px;padding:18px 20px 16px;max-width:250px;box-shadow:0 16px 48px rgba(0,0,0,.13);display:none;animation:pop .3s ease}
-.chat-bubble.show{display:block}
-.chat-bubble p{font-size:13px;font-weight:500;color:var(--black);line-height:1.6;margin-bottom:12px}
-.chat-bubble-cta{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--pk);border:1px solid rgba(124,58,237,.2);border-radius:8px;font-size:12px;font-weight:700;color:var(--p);width:fit-content;cursor:none;font-family:'Bricolage Grotesque',sans-serif}
-
-/* ═══ SCROLL REVEAL ═══ */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* ═══ WAITLIST FORM ═══ */
-.wl-form{width:100%;max-width:520px;margin:0 auto}
-.wl-row{display:flex;gap:8px;width:100%}
-.wl-input{flex:1;padding:14px 18px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s;min-width:0;background:#fff;color:#0a0a0a}
-.wl-input:focus{border-color:var(--p)}
-.wl-btn{background:var(--p);color:#fff;border:none;border-radius:12px;padding:14px 22px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'DM Sans',sans-serif}
-.wl-btn:hover{background:var(--p2);transform:translateY(-1px)}
-.wl-msg{margin-top:10px;font-size:13px;font-weight:500;min-height:20px;text-align:center}
-.wl-msg.ok{color:#16a34a}.wl-msg.err{color:#dc2626}
-.wl-dark .wl-input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#fff}
-.wl-dark .wl-input::placeholder{color:rgba(255,255,255,.35)}
-.wl-dark .wl-input:focus{border-color:rgba(255,255,255,.5)}
-.wl-dark .wl-msg.ok{color:#4ade80}.wl-dark .wl-msg.err{color:#f87171}
-
-/* ═══ MOBILE — COMPREHENSIVE ═══ */
-@media(max-width:768px){
-  /* Nav hamburger */
-  .nav-links{display:none!important}
-  .btn-ghost{display:none!important}
-  .nav-cta .btn-fill{font-size:13px;padding:9px 16px}
-  
-  /* Hero */
-  .hero{padding:100px 0 60px}
-  .hero-inner{grid-template-columns:1fr!important;gap:40px;text-align:center}
-  .hero-right{display:none!important}
-  .hero-badge{margin:0 auto 20px}
-  .hero-h1{font-size:clamp(36px,10vw,52px)!important}
-  .hero-sub{font-size:16px;margin:0 auto 32px}
-  .hero-actions{justify-content:center;flex-wrap:wrap;gap:12px}
-  .hero-actions .btn-fill,.hero-actions .btn-ghost{width:100%;justify-content:center}
-  .hero-proof{justify-content:center}
-  
-  /* Waitlist form */
-  .wl-row{flex-direction:column}
-  .wl-btn{width:100%;text-align:center}
-  .cta-beehiiv{max-width:100%;padding:0 4px}
-  
-  /* Platform grid */
-  .plat-grid{grid-template-columns:repeat(2,1fr)!important}
-  
-  /* What you get */
-  .wyg-grid{grid-template-columns:1fr!important}
-  
-  /* Stats */
-  .stats-grid{grid-template-columns:repeat(2,1fr)!important}
-  .stat-cell{padding:28px 16px}
-  .stat-n{font-size:clamp(36px,8vw,48px)}
-  
-  /* Platforms types */
-  .plat-types-grid{grid-template-columns:1fr!important}
-  
-  /* Intelligence section */
-  .intel-grid{grid-template-columns:1fr!important}
-  
-  /* How it works */
-  .steps-grid{grid-template-columns:1fr!important}
-  .steps-grid::before{display:none!important}
-  
-  /* Features */
-  .feat-row,.feat-row.flip{grid-template-columns:1fr!important;direction:ltr!important;gap:32px!important}
-  .feat-visual{display:none}
-  
-  /* Testimonials */
-  .test-grid{grid-template-columns:1fr!important}
-  
-  /* Pricing */
-  .plans-grid{grid-template-columns:1fr!important;max-width:100%!important}
-  .plan-card{max-width:100%}
-  
-  /* FAQ */
-  .faq-q{font-size:15px;padding:18px 44px 18px 18px}
-  .faq-a{font-size:14px}
-  
-  /* CTA section */
-  .cta-h2{font-size:clamp(32px,9vw,52px)!important}
-  .cta-sub{font-size:15px;margin-bottom:28px}
-  
-  /* Footer */
-  .footer-in{flex-direction:column!important;text-align:center!important;gap:16px}
-  .f-links{flex-wrap:wrap;justify-content:center;gap:16px}
-  
-  /* Section padding */
-  .plat-section,.stats-section,.wyg-section,.intel-section,.steps-section,.feat-section,.test-section,.plans-section,.faq-section,.cta-section{padding:64px 0}
-  
-  /* Section headings */
-  .sec-h{font-size:clamp(28px,7vw,40px)!important}
-  .sec-sub{font-size:15px}
-  
-  /* Chatbot */
-  .chat-btn{bottom:20px;right:20px;width:50px;height:50px}
-  .chat-bubble{right:20px;bottom:86px;max-width:calc(100vw - 40px)}
-  
-  /* Marquee — disable cursor:none on mobile */
-  body{cursor:auto}
-  .cur-dot,.cur-ring{display:none}
-}
-
-@media(max-width:480px){
-  .hero-h1{font-size:32px!important}
-  .hero-sub{font-size:14px}
-  .plan-price{font-size:48px!important}
-  .stats-grid{grid-template-columns:1fr!important}
-  .stat-cell:nth-child(2){border-right:none;border-top:1px solid var(--border)}
-  .wl-input{font-size:14px;padding:12px 14px}
-  .wl-btn{padding:12px 18px;font-size:14px}
-}
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuminaPath — One spark. Eight platforms. Your voice.</title>
+  <meta name="description" content="Drop one idea. Get content that actually sounds like you — deployed everywhere that matters. 500 founding spots available." />
+  <meta property="og:title" content="LuminaPath — One spark. Eight platforms. Your voice." />
+  <meta property="og:description" content="Drop one idea. Get content that actually sounds like you — deployed everywhere that matters." />
+  <meta property="og:url" content="https://luminapath.ca" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:#0a0a0a;margin:0;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none}
+    ::-webkit-scrollbar{display:none}
+    *{scrollbar-width:none}
+    @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+    @keyframes scrollDown{0%,100%{opacity:0;transform:translateY(0)}50%{opacity:1;transform:translateY(6px)}}
+    @media(max-width:640px){html{font-size:14px}}
+  </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div class="cur-dot" id="curDot"></div>
-<div class="cur-ring" id="curRing"></div>
-
-<!-- CHATBOT -->
-<div class="chat-bubble" id="chatBubble">
-  <button onclick="toggleChat()" style="position:absolute;top:10px;right:12px;background:none;border:none;cursor:none;font-size:16px;color:#bbb;line-height:1;padding:2px 5px" aria-label="Close">✕</button>
-  <p>Got questions about growing organically with LuminaPath? I'm here to help. 👋</p>
-  <div class="chat-bubble-cta">✦ Ask me anything</div>
-</div>
-<button class="chat-btn" id="chatBtn" onclick="toggleChat()">
-  <div class="chat-notif"></div>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
-
-<!-- NAV -->
-<nav class="nav" id="mainNav">
-  <div class="wrap nav-inner">
-    <a href="#" class="logo">
-      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
-      <span class="logo-name">Lumina<span>Path</span></span>
-    </a>
-    <div class="nav-links">
-      <a href="#how">How it Works</a>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <div class="nav-actions">
-      <a href="#waitlist" class="btn-ghost">Sign in</a>
-      <a href="#waitlist" class="btn-fill">Join Waitlist →</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="wrap">
-    <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <div class="badge-dot"></div>
-          <span>🚀 Launch Discount — First 500 Founding Members</span>
-        </div>
-        <h1 class="hero-h1">
-          No time for<br>
-          <em>content?</em><br>
-          <span class="outline">We got you.</span>
-        </h1>
-        <p class="hero-sub">
-          One idea. 30 seconds. <strong>8 platforms growing organically</strong> — in your exact voice. While you focus on everything else.
-        </p>
-        <div class="beehiiv-wrap">
-          <div class="wl-form" id="wlForm1">
-  <div class="wl-row">
-    <input type="email" class="wl-input" id="wlEmail1" placeholder="Enter your email address..." autocomplete="email">
-    <button class="wl-btn" onclick="joinWaitlist('wlEmail1','wlMsg1')">Join Waitlist →</button>
-  </div>
-  <div class="wl-msg" id="wlMsg1"></div>
-</div>
-        </div>
-        <div class="hero-proof">
-          <div class="avatars">
-            <div class="av av1"></div><div class="av av2"></div><div class="av av3"></div><div class="av av4"></div>
-          </div>
-          <span class="proof-text"><strong>2,847+ founders</strong> already growing organically on the waitlist</span>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div style="position:relative">
-          <div class="app-card">
-            <div class="app-bar">
-              <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-              <div class="url">app.luminapath.ca</div>
-            </div>
-            <div class="app-body">
-              <div class="app-header">
-                <span class="app-title-txt">LuminaPath AI</span>
-                <div class="vm-chip"><div class="vm-dot"></div><span class="vm-txt">Voice Match 94%</span></div>
-              </div>
-              <div class="wave">
-                <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
-              </div>
-              <div class="idea-box">
-                <div class="idea-lbl">YOUR IDEA</div>
-                <div class="idea-txt">"Launched our product with $0 in ads. Here's exactly how we grew to 10K followers organically in 90 days..."<span class="cblink"></span></div>
-              </div>
-              <div class="plats-lbl">GROWING ORGANICALLY ACROSS</div>
-              <div class="plats-row">
-                <div class="ptag on">LinkedIn</div>
-                <div class="ptag on">X / Twitter</div>
-                <div class="ptag on">Instagram</div>
-                <div class="ptag on">TikTok</div>
-                <div class="ptag on">Threads</div>
-              </div>
-            </div>
-          </div>
-          <div class="float-pill fp1"><div class="fp-ico" style="background:rgba(16,185,129,.1)">📈</div><div><div class="fp-big">100%</div><div class="fp-sm">Organic growth</div></div></div>
-          <div class="float-pill fp2"><div class="fp-ico" style="background:rgba(124,58,237,.1)">⚡</div><div><div class="fp-big">30s</div><div class="fp-sm">8 platforms at once</div></div></div>
-          <div class="float-pill fp3"><div class="fp-ico" style="background:rgba(245,158,11,.1)">🎯</div><div><div class="fp-big">94%</div><div class="fp-sm">Voice match</div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="mq-wrap">
-  <div class="mq-track">
-    <div class="mq-item"><span class="mq-n">10hrs</span><span class="mq-l">Saved Every Week</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">30s</span><span class="mq-l">To Post On All 8 Platforms</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">$0</span><span class="mq-l">Ad Spend Needed</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">100%</span><span class="mq-l">Organic Growth</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">94%</span><span class="mq-l">Sounds Like You</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">8×</span><span class="mq-l">More Content Output</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">8</span><span class="mq-l">Platforms At Once</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">$49</span><span class="mq-l">Founding Price</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">10hrs</span><span class="mq-l">Saved Every Week</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">30s</span><span class="mq-l">To Post On All 8 Platforms</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">$0</span><span class="mq-l">Ad Spend Needed</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">100%</span><span class="mq-l">Organic Growth</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">94%</span><span class="mq-l">Sounds Like You</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">8×</span><span class="mq-l">More Content Output</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">8</span><span class="mq-l">Platforms At Once</span><span class="mq-sep">✦</span></div>
-    <div class="mq-item"><span class="mq-n">$49</span><span class="mq-l">Founding Price</span><span class="mq-sep">✦</span></div>
-  </div>
-</div>
-
-<!-- PLATFORMS WITH BRAND LOGOS -->
-<section class="plat-section">
-  <div class="wrap">
-    <div class="plat-lbl">IN <strong>30 SECONDS</strong> — GENERATE 8 POSTS FOR 8 PLATFORMS AT ONCE</div>
-    <div class="plat-grid">
-      <!-- LinkedIn -->
-      <div class="plat-card li reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24" fill="#0A66C2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        </div>
-        <span class="plat-name">💼 LinkedIn</span>
-      </div>
-      <!-- X -->
-      <div class="plat-card xw reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24" fill="#000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </div>
-        <span class="plat-name">✖️ X / Twitter</span>
-      </div>
-      <!-- Instagram -->
-      <div class="plat-card ig reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24">
-            <defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="10%" stop-color="#fdf497"/><stop offset="50%" stop-color="#fd5949"/><stop offset="68%" stop-color="#d6249f"/><stop offset="100%" stop-color="#285AEB"/></radialGradient></defs>
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig)"/>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/>
-          </svg>
-        </div>
-        <span class="plat-name">📸 Instagram</span>
-      </div>
-      <!-- TikTok -->
-      <div class="plat-card tk reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.77a4.85 4.85 0 0 1-1.01-.08z" fill="#010101"/>
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.77a4.85 4.85 0 0 1-1.01-.08z" fill="#69C9D0" opacity="0.5"/>
-          </svg>
-        </div>
-        <span class="plat-name">🎵 TikTok</span>
-      </div>
-      <!-- YouTube -->
-      <div class="plat-card yt reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="white"/></svg>
-        </div>
-        <span class="plat-name">📺 YouTube</span>
-      </div>
-      <!-- Facebook -->
-      <div class="plat-card fb reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </div>
-        <span class="plat-name">📘 Facebook</span>
-      </div>
-      <!-- Threads -->
-      <div class="plat-card th reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24" fill="#000"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.01v-.017c.024-7.08 4.77-11.493 12.186-11.493 7.41 0 11.814 4.403 11.814 11.493v.017c0 7.085-4.404 11.99-13.314 11.99zM12 5.29c-3.59 0-5.78 2.168-5.78 5.947v.017c0 1.99.515 3.584 1.49 4.617.972 1.034 2.393 1.558 4.196 1.558 1.8 0 3.224-.524 4.196-1.558.975-1.033 1.49-2.628 1.49-4.617v-.017c0-3.779-2.19-5.948-5.78-5.948H12z"/></svg>
-        </div>
-        <span class="plat-name">🧵 Threads</span>
-      </div>
-      <!-- Bluesky -->
-      <div class="plat-card bs reveal">
-        <div class="plat-logo">
-          <svg viewBox="0 0 24 24" fill="#0085FF"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
-        </div>
-        <span class="plat-name">🦋 Bluesky</span>
-      </div>
-    </div>
-
-    <!-- PLATFORM TAILORED COPY -->
-    <div class="plat-tailored reveal">
-      <p class="plat-tailored-line">Every platform demands something different — and LuminaPath delivers exactly that.</p>
-      <div class="plat-types-grid">
-        <div class="plat-type-card">
-          <div class="ptc-icon">🎬</div>
-          <div class="ptc-label">Video Platforms</div>
-          <div class="ptc-plats">TikTok · YouTube · Instagram Reels</div>
-          <div class="ptc-desc">Hook-first video scripts, captions, descriptions, and titles — written to grab attention in the first 3 seconds and keep viewers watching.</div>
-        </div>
-        <div class="plat-type-card">
-          <div class="ptc-icon">✍️</div>
-          <div class="ptc-label">Written Platforms</div>
-          <div class="ptc-plats">LinkedIn · X/Twitter · Threads · Bluesky</div>
-          <div class="ptc-desc">Thought leadership posts, punchy threads, hot takes, and long-form essays — each written in the native style that earns organic reach on that platform.</div>
-        </div>
-        <div class="plat-type-card">
-          <div class="ptc-icon">🖼️</div>
-          <div class="ptc-label">Visual & Community</div>
-          <div class="ptc-plats">Instagram · Facebook</div>
-          <div class="ptc-desc">Scroll-stopping captions, hashtag strategies, and community-first posts designed to drive saves, shares, and real conversation.</div>
-        </div>
-      </div>
-      <p class="plat-tailored-sub">Not repurposed. Not copy-pasted. <strong>Genuinely native to where it lives.</strong></p>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="stats-section">
-  <div class="wrap">
-    <div class="stats-grid">
-      <div class="stat-cell reveal"><div class="stat-n"><span>10</span>hrs</div><div class="stat-d">Saved every week on content creation and posting</div></div>
-      <div class="stat-cell reveal"><div class="stat-n"><span>30</span>s</div><div class="stat-d">To create and post across all 8 platforms at once</div></div>
-      <div class="stat-cell reveal"><div class="stat-n"><span>94</span>%</div><div class="stat-d">Voice match — posts sound exactly like you wrote them</div></div>
-      <div class="stat-cell reveal"><div class="stat-n"><span>$0</span></div><div class="stat-d">Ad budget required. Just organic, compounding growth</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- TIME IMPACT BANNER -->
-<section style="padding:60px 0;background:#0a0a0a;position:relative;overflow:hidden">
-  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(124,58,237,.25) 1px,transparent 1px);background-size:28px 28px"></div>
-  <div class="wrap" style="position:relative;z-index:1;text-align:center">
-    <p style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(22px,3.5vw,42px);font-weight:900;color:#fff;line-height:1.2;letter-spacing:-.03em;max-width:820px;margin:0 auto">
-      Spent 5+ hours just on thinking &amp; writing posts this week?<br>
-      <span style="color:rgba(255,255,255,.5);font-weight:400;font-size:clamp(16px,2vw,24px);font-family:'DM Sans',sans-serif;display:block;margin-top:10px">LuminaPath does it in <strong style="color:var(--p2);font-family:'Bricolage Grotesque',sans-serif">30 seconds.</strong> Every platform. Every day.</span>
-    </p>
-  </div>
-</section>
-
-<!-- WHAT YOU GET -->
-<section class="wyg-section" id="features">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">WHAT YOU GET</div>
-      <h2 class="sec-h2">Your AI creative director.<br><em>Working 24/7.</em></h2>
-      <p class="sec-p">Whether you're a solo creator just starting out, a business owner with no time, or an agency managing dozens of clients — LuminaPath was built for you. It learns who you are, understands your niche, then does the heavy lifting forever.</p>
-    </div>
-    <div class="wyg-grid">
-      <div class="wyg-card reveal"><div class="wyg-icon">🧠</div><h3>Brand DNA Engine</h3><p>Creator, founder, small business, agency — it doesn't matter. Drop your website URL or socials and LuminaPath reverse-engineers everything that makes you <em>you</em>. Your voice. Your niche. Your energy. Then it writes in that style across every platform, every day. No templates. No briefing. Just you — everywhere.</p></div>
-      <div class="wyg-card reveal"><div class="wyg-icon">✍️</div><h3>Content That Sounds Human</h3><p>Our smart AI doesn't churn out robotic content — it writes trendy, scroll-stopping posts that sound like a real person wrote them. Punchy hooks for TikTok. Thought-leadership for LinkedIn. Viral threads for X. Each one platform-native, each one unmistakably <em>you</em>.</p></div>
-      <div class="wyg-card reveal"><div class="wyg-icon">✅</div><h3>One-Click Approval</h3><p>Every morning, your content queue is ready and waiting. Scroll through, approve what you love, tweak what needs it — and we study every choice you make. Your taste sharpens our output. The longer you use it, the less you'll ever change.</p></div>
-      <div class="wyg-card reveal"><div class="wyg-icon">📊</div><h3>Organic Growth Analytics</h3><p>See exactly what's building your audience across every platform. No tab-switching. One unified view that tells you what to do more of to keep growing.</p></div>
-      <div class="wyg-card reveal"><div class="wyg-icon">🔄</div><h3>Auto-Scheduling</h3><p>Content goes live at the exact moment your audience is most active — per platform, per niche. Set it once. Grow organically forever without lifting a finger.</p></div>
-      <div class="wyg-card reveal"><div class="wyg-icon">🏷️</div><h3>White Label Ready</h3><p>Agencies can deliver organic growth for every client under their own brand. One platform. Unlimited clients. Scale without scaling your team.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- INTELLIGENCE ENGINE (DARK) -->
-<section class="intel-section">
-  <div class="intel-bg"></div>
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">GROWTH INTELLIGENCE</div>
-      <h2 class="sec-h2">The AI brain that never<br><em>stops learning you</em></h2>
-      <p class="sec-p">LuminaPath doesn't just post content. It studies you, your competitors, and your industry — then builds a growth strategy that gets smarter every single day.</p>
-    </div>
-    <div class="intel-grid">
-      <div class="intel-card reveal">
-        <div class="intel-ico">🌐</div>
-        <h3>Website Intelligence</h3>
-        <p>Drop your URL and we extract everything — your products, messaging, audience, and positioning. Upload your competitors' sites too. We analyze them all and tell you exactly how to win your niche.</p>
-        <div class="soon-badge">⚡ Coming Soon</div>
-      </div>
-      <div class="intel-card reveal">
-        <div class="intel-ico">🔍</div>
-        <h3>Competitor &amp; Niche Analysis</h3>
-        <p>Add up to 3 creators, brands, or businesses you want to learn from or outrank. We analyze what's working for them, where the gaps are, and how to position your content to win organic reach they're missing.</p>
-        <div class="soon-badge">⚡ Coming Soon</div>
-      </div>
-      <div class="intel-card reveal">
-        <div class="intel-ico">📈</div>
-        <h3>Monthly Growth Report</h3>
-        <p>Every month, a personalized growth report lands in your dashboard — top content, niche trends, competitor moves, and the exact 3 things to focus on next to keep your organic momentum growing.</p>
-        <div class="soon-badge">⚡ Coming Soon</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TIME MATH STRIP -->
-<div style="background:#0a0a0a;padding:44px 0;border-top:1px solid rgba(124,58,237,.15);border-bottom:1px solid rgba(124,58,237,.15);position:relative;overflow:hidden">
-  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(124,58,237,.2) 1px,transparent 1px);background-size:28px 28px"></div>
-  <div class="wrap" style="position:relative;z-index:1">
-    <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;text-align:center">
-      <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:36px;font-weight:900;color:#fff;letter-spacing:-.04em">10+ <span style="color:var(--p2)">hrs</span></div><div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:3px">saved per week</div></div>
-      <div style="width:1px;height:44px;background:rgba(255,255,255,.08)"></div>
-      <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:36px;font-weight:900;color:#fff;letter-spacing:-.04em">40+ <span style="color:var(--p2)">hrs</span></div><div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:3px">saved per month</div></div>
-      <div style="width:1px;height:44px;background:rgba(255,255,255,.08)"></div>
-      <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:36px;font-weight:900;color:#fff;letter-spacing:-.04em">500+ <span style="color:var(--p2)">hrs</span></div><div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:3px">saved per year</div></div>
-      <div style="width:1px;height:44px;background:rgba(255,255,255,.08)"></div>
-      <div style="max-width:280px;text-align:left"><p style="font-size:15px;color:rgba(255,255,255,.5);line-height:1.6;font-weight:400">That's <strong style="color:#fff">500+ hours</strong> back in your life every year — to build your business, spend with family, or actually live.</p></div>
-    </div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">HOW IT WORKS</div>
-      <h2 class="sec-h2">From unknown to <em>everywhere</em> — in 3 steps</h2>
-      <p class="sec-p">Creator, entrepreneur, small business, or agency — if you want to grow an organic audience and reclaim your time, this is how it works.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card reveal">
-        <div class="step-num">01</div>
-        <div class="step-title">Tell Us Who You Are</div>
-        <p class="step-desc">Share your website URL and answer 5 questions about your niche, goals, audience, and vision. Our Voice Match Engine builds your brand profile — 94% accuracy in minutes, improving every week.</p>
-      </div>
-      <div class="step-card reveal">
-        <div class="step-num">02</div>
-        <div class="step-title">Drop One Idea. 30 Seconds.</div>
-        <p class="step-desc">One sentence. One story. One passing thought. In 30 seconds LuminaPath generates platform-native content for all 8 channels — each post built for that platform, each one in your voice. What used to take hours, done before your coffee gets cold.</p>
-      </div>
-      <div class="step-card reveal">
-        <div class="step-num">03</div>
-        <div class="step-title">Approve &amp; Get Your Time Back</div>
-        <p class="step-desc">Review your queue in minutes each morning. Approve what you love, it schedules itself. Then close the laptop and go live your life — while LuminaPath posts consistently, builds your organic audience, and grows your presence every single day.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES DEEP DIVE -->
-<section class="feat-section">
-  <div class="wrap">
-    <div class="feat-row reveal">
-      <div>
-        <span class="feat-eyebrow">VOICE MATCH ENGINE</span>
-        <h3 class="feat-h3">AI that sounds like <em>you,</em><br>not like AI</h3>
-        <p class="feat-p">Generic AI content is everywhere. Audiences can detect it in seconds and scroll past. LuminaPath learns your patterns so precisely that even your closest team can't tell the difference — because it's genuinely your voice, multiplied.</p>
-        <div class="feat-checks">
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Learns your vocabulary, rhythm, and storytelling patterns</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Matches your tone — bold, warm, expert, or casual</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>94% accuracy on day one — gets sharper every week</div>
-        </div>
-      </div>
-      <div class="mock">
-        <div class="mock-top"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-lbl">Voice Match Engine</span></div>
-        <div class="mock-body">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div><div class="vm-big">94%</div><div class="vm-sub">Voice Match Score</div></div><div class="vm-badge">✓ Calibrated</div></div>
-          <div class="vm-wave"><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div></div>
-          <div style="font-size:9px;font-weight:700;color:#bbb;letter-spacing:.1em;margin-bottom:8px;font-family:'Bricolage Grotesque',sans-serif">DETECTED VOICE TRAITS</div>
-          <div class="trait-row"><div class="trait on">Direct</div><div class="trait on">Founder-led</div><div class="trait on">Story-driven</div><div class="trait">Humorous</div><div class="trait on">Data-backed</div><div class="trait on">Bold</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="feat-row flip reveal">
-      <div>
-        <span class="feat-eyebrow">CONTENT CALENDAR</span>
-        <h3 class="feat-h3">A full month of content,<br>planned in <em>10 minutes</em></h3>
-        <p class="feat-p">Your content calendar fills itself every morning. Visual view across all 8 platforms, AI-optimized timing for your specific audience, and the ability to batch-schedule entire months in one session.</p>
-        <div class="feat-checks">
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Unified calendar across all 8 platforms in one view</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>AI picks peak organic engagement times per platform</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Batch-schedule entire weeks or months at once</div>
-        </div>
-      </div>
-      <div class="mock">
-        <div class="mock-top"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-lbl">Content Calendar — March 2026</span></div>
-        <div class="mock-body">
-          <div class="cal-head"><span class="cal-mon">March 2026</span><div class="cal-nav"><div class="cal-btn">← Prev</div><div class="cal-btn">Next →</div></div></div>
-          <div class="cal-grid">
-            <div class="cal-day"><div class="cal-dn">MON 3</div><span class="pp pp-li">LinkedIn</span><div class="cal-done">✓ Done</div></div>
-            <div class="cal-day today"><div class="cal-dn">TUE 4</div><span class="pp pp-x">X Thread</span><span class="pp pp-ig">Instagram</span></div>
-            <div class="cal-day"><div class="cal-dn">WED 5</div><span class="pp pp-li">LinkedIn</span><span class="pp pp-t">Threads</span></div>
-            <div class="cal-day"><div class="cal-dn">THU 6</div><span class="pp pp-x">X Post</span><div class="cal-done">✓ Done</div></div>
-            <div class="cal-day"><div class="cal-dn">FRI 7</div><span class="pp pp-ig">Instagram</span><span class="pp pp-li">LinkedIn</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="feat-row reveal">
-      <div>
-        <span class="feat-eyebrow">ORGANIC GROWTH ANALYTICS</span>
-        <h3 class="feat-h3">Know exactly what's<br><em>making you grow</em></h3>
-        <p class="feat-p">Followers, reach, engagement — all in one unified dashboard, no tab-switching. Know which content is building real organic audience and which niche topics your people respond to most. Double down on what works.</p>
-        <div class="feat-checks">
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Unified organic growth data across all 8 platforms</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Top performing content identified automatically</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Niche trend signals to stay ahead of the curve</div>
-        </div>
-      </div>
-      <div class="mock">
-        <div class="mock-top"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-lbl">Organic Growth Overview</span></div>
-        <div class="mock-body">
-          <div class="ana-grid">
-            <div class="ana-card"><div class="ana-lbl">FOLLOWERS</div><div class="ana-val">2,847</div><div class="ana-chg">↑ +8.6% organic</div><div class="bars"><div class="bar" style="height:40%"></div><div class="bar" style="height:55%"></div><div class="bar hi" style="height:70%"></div><div class="bar hi" style="height:85%"></div><div class="bar hi" style="height:100%"></div></div></div>
-            <div class="ana-card"><div class="ana-lbl">REACH</div><div class="ana-val">13.9K</div><div class="ana-chg">↑ +14.2%</div><div class="bars"><div class="bar" style="height:30%"></div><div class="bar hi" style="height:55%"></div><div class="bar hi" style="height:72%"></div><div class="bar hi" style="height:88%"></div><div class="bar hi" style="height:100%"></div></div></div>
-            <div class="ana-card"><div class="ana-lbl">ENGAGEMENTS</div><div class="ana-val">1,247</div><div class="ana-chg">↑ +251%</div><div class="bars"><div class="bar" style="height:20%"></div><div class="bar hi" style="height:50%"></div><div class="bar hi" style="height:72%"></div><div class="bar hi" style="height:88%"></div><div class="bar hi" style="height:100%"></div></div></div>
-            <div class="ana-card"><div class="ana-lbl">PROFILE VISITS</div><div class="ana-val">3,621</div><div class="ana-chg">↑ +32.1%</div><div class="bars"><div class="bar" style="height:28%"></div><div class="bar hi" style="height:52%"></div><div class="bar hi" style="height:74%"></div><div class="bar hi" style="height:90%"></div><div class="bar hi" style="height:100%"></div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="feat-row flip reveal">
-      <div>
-        <span class="feat-eyebrow">AI COMPOSER</span>
-        <h3 class="feat-h3">Write once.<br><em>Publish everywhere.</em></h3>
-        <p class="feat-p">One idea becomes 8 platform-native posts — each written, formatted, and toned specifically for where it lives. Not repurposed. Actually native. That's what makes audiences feel it's real, and why organic growth follows.</p>
-        <div class="feat-checks">
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Platform-native format — not just copy-paste</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>One-click generation in your exact voice every time</div>
-          <div class="fcheck"><div class="fchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Publish to all 8 platforms simultaneously in one click</div>
-        </div>
-      </div>
-      <div class="mock">
-        <div class="mock-top"><div class="mdots"><div class="md"></div><div class="md"></div><div class="md"></div></div><span class="mock-lbl">AI Composer</span></div>
-        <div class="mock-body">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="comp-av"></div><div><div class="comp-name">Your Profile</div><div class="comp-role">Founder · Your Brand</div></div></div>
-          <div class="comp-ta">Just closed our first enterprise deal after 6 months of grinding. Here's what nobody tells you about B2B sales in 2026...<span class="cblink"></span></div>
-          <div style="font-size:9px;font-weight:700;color:#bbb;letter-spacing:.1em;margin-bottom:8px;font-family:'Bricolage Grotesque',sans-serif">PUBLISHING NATIVELY TO</div>
-          <div class="comp-plats"><div class="cp on">LinkedIn</div><div class="cp on">X / Twitter</div><div class="cp on">Threads</div><div class="cp on">Instagram</div><div class="cp on">TikTok</div></div>
-          <div class="comp-btns"><div class="btn-ai">✦ Refine Voice</div><div class="btn-pub">→ Publish Now</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PLATFORMS (DARK PILLS) -->
-<section class="plat-pills-section">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">PLATFORMS</div>
-      <h2 class="sec-h2" style="color:#fff">One voice.<br><em>Eight platforms.</em> Zero effort.</h2>
-      <p class="sec-p" style="color:rgba(255,255,255,.4)">Every platform gets content built natively for its algorithm and audience — not just copy-pasted. That's the difference between organic growth and silence.</p>
-    </div>
-    <div class="pills-row">
-      <div class="ppill"><svg viewBox="0 0 24 24" fill="#0A66C2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>💼 LinkedIn</div>
-      <div class="ppill"><svg viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>✖️ X / Twitter</div>
-      <div class="ppill"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#E4405F"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>📸 Instagram</div>
-      <div class="ppill"><svg viewBox="0 0 24 24" fill="#fff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.77a4.85 4.85 0 0 1-1.01-.08z"/></svg>🎵 TikTok</div>
-      <div class="ppill"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3 3 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3 3 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3 3 0 0 0 2.122 2.136C4.495 20.455 12 20.455 12 20.455s7.505 0 9.376-.505a3 3 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" fill="#FF0000"/><path d="M9.545 15.568V8.432L15.818 12z" fill="white"/></svg>📺 YouTube</div>
-      <div class="ppill"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>📘 Facebook</div>
-      <div class="ppill"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.01v-.017c.024-7.08 4.77-11.493 12.186-11.493 7.41 0 11.814 4.403 11.814 11.493v.017c0 7.085-4.404 11.99-13.314 11.99zM12 5.29c-3.59 0-5.78 2.168-5.78 5.947v.017c0 1.99.515 3.584 1.49 4.617.972 1.034 2.393 1.558 4.196 1.558 1.8 0 3.224-.524 4.196-1.558.975-1.033 1.49-2.628 1.49-4.617v-.017c0-3.779-2.19-5.948-5.78-5.948H12z"/></svg>🧵 Threads</div>
-      <div class="ppill"><svg viewBox="0 0 24 24" fill="#0085FF"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>🦋 Bluesky</div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="test-section">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">TESTIMONIALS</div>
-      <h2 class="sec-h2">Growing without ads.<br><em>Without the grind.</em></h2>
-    </div>
-    <div class="test-grid">
-      <div class="test-card reveal"><div class="stars">★★★★★</div><p class="test-q">"I stopped running ads completely. LuminaPath grew my LinkedIn audience organically by 3x in 60 days. The posts sound exactly like me — my audience had no idea it wasn't hand-written."</p><div class="test-aut"><div class="test-av ta1"></div><div><div class="test-name">Marcus T.</div><div class="test-role">SaaS Founder · 12K LinkedIn</div></div></div></div>
-      <div class="test-card reveal"><div class="stars">★★★★★</div><p class="test-q">"The voice match is insane. I pasted 10 old posts and it captured my style instantly. For the first time I'm consistent on every platform without spending my whole day on content."</p><div class="test-aut"><div class="test-av ta2"></div><div><div class="test-name">Priya S.</div><div class="test-role">CEO, B2B Agency · 6 Platforms</div></div></div></div>
-      <div class="test-card reveal"><div class="stars">★★★★★</div><p class="test-q">"Every other tool just repurposes content. LuminaPath actually writes natively for each platform. My TikTok hooks are real hooks. My LinkedIn posts are actual essays. The organic growth is real."</p><div class="test-aut"><div class="test-av ta3"></div><div><div class="test-name">James K.</div><div class="test-role">Startup Founder · 8 Platforms</div></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">PRICING</div>
-      <h2 class="sec-h2">Founding member <em>pricing</em></h2>
-      <p class="sec-p">First 500 seats only. After that, prices return to standard rates. Lock your founding rate in forever — it never increases.</p>
-    </div>
-    <div class="plans-grid">
-
-      <!-- SOLO -->
-      <div class="plan reveal">
-        <div class="plan-tier">Solo</div>
-        <div class="plan-price-row"><div class="plan-price">$49</div><div class="plan-per">/mo</div></div>
-        <div class="plan-orig">$79/mo after 500 seats</div>
-        <div class="plan-save">🎉 Save 38% — Founding Rate</div>
-        <div class="plan-desc">For solo founders, creators &amp; personal brands ready to grow organically without the grind</div>
-        <div class="plan-div"></div>
-        <ul class="plan-feats">
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>1 Brand Profile</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>3 Platforms</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>30 Posts / month</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Voice Match Engine</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>AI Content Generation</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Telegram Approval System</li>
-        </ul>
-        <a href="https://buy.stripe.com/aFafZi0bT1Gvb260yNbbG00" class="plan-btn ghost">Get Started →</a>
-      </div>
-
-      <!-- BUSINESS (FEATURED) -->
-      <div class="plan pop reveal">
-        <div class="pop-badge">Most Popular</div>
-        <div class="plan-tier">Business</div>
-        <div class="plan-price-row"><div class="plan-price">$139</div><div class="plan-per">/mo</div></div>
-        <div class="plan-orig">$199/mo after 500 seats</div>
-        <div class="plan-save">🎉 Save 30% — Founding Rate</div>
-        <div class="plan-desc">For growing businesses &amp; brands ready to dominate their niche organically at scale</div>
-        <div class="plan-div"></div>
-        <ul class="plan-feats">
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>3 Brand Profiles</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>6 Platforms</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>100 Posts / month</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Voice Match Engine</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>AI Content Generation</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Telegram Approval System</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Organic Growth Analytics</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Competitor Intelligence</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Priority Support</li>
-        </ul>
-        <a href="https://buy.stripe.com/cNieVe1fX1GvgmqdlzbbG01" class="plan-btn solid">Get Started →</a>
-      </div>
-
-      <!-- AGENCY -->
-      <div class="plan reveal">
-        <div class="plan-tier">Agency</div>
-        <div class="plan-price-row"><div class="plan-price">$399</div><div class="plan-per">/mo</div></div>
-        <div class="plan-orig">$499/mo after 500 seats</div>
-        <div class="plan-save">🎉 Save 20% — Founding Rate</div>
-        <div class="plan-desc">For agencies running organic growth for an entire client roster under your own brand</div>
-        <div class="plan-div"></div>
-        <ul class="plan-feats">
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>10 Brand Profiles</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>All 8 Platforms</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Unlimited Posts</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Voice Match Engine</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>AI Content Generation</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Telegram Approval System</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Organic Growth Analytics</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Full Competitor Intelligence</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>White Label Ready</li>
-          <li><div class="pfchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Dedicated Support</li>
-        </ul>
-        <a href="https://buy.stripe.com/14A3cw9Mtbh52vA6XbbbG02" class="plan-btn ghost">Get Started →</a>
-      </div>
-
-    </div>
-    <p class="pricing-note">🔒 Taxes calculated at checkout · Cancel anytime · Founding rates locked forever — never increases</p>
-  </div>
-</section>
-
-<!-- APP BANNER -->
-<section class="app-banner">
-  <div class="wrap">
-    <div class="ab-inner">
-      <div class="ab-text">
-        <h3>📱 LuminaPath App — Coming Soon</h3>
-        <p>Approve your content, check your organic growth, and manage your brand from anywhere. iOS and Android apps are on their way — founding members get early access the moment they launch.</p>
-        <div class="ab-soon">⚡ iOS &amp; Android — Founding Members Get First Access</div>
-      </div>
-      <div class="ab-badges">
-        <div class="ab-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</div>
-        <div class="ab-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m3 20.5.5-3.5L12 9l1.5 1.5-8 8.5L3 20.5zM14.5 8l-1.5-1.5L19 1l3 3-7.5 4zM9 13L8 12l6-6 1 1-6 6zM5.5 20L4 18.5l10-10 1.5 1.5-10 10z"/></svg>Google Play</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section" id="faq">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">FAQ</div>
-      <h2 class="sec-h2">Got <em>questions?</em></h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q">What makes LuminaPath different from every other tool?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-a">Most tools generate generic content or just schedule posts. LuminaPath is the first platform built around organic growth through genuine brand understanding — we learn your niche, voice, goals, and vision, then build your audience for real. No ad spend. No generic copy. Just you, multiplied everywhere authentically.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What does "organic growth" actually mean here?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-a">It means growing your audience through great content — not ads. When your posts sound genuinely like you, are formatted natively for each platform, and go out consistently every day, algorithms reward you and audiences follow. That's what LuminaPath builds. Compounding, sustainable, real growth.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How does voice learning work?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-a">Share your website URL and paste 5–10 existing posts. Our Voice Match Engine analyzes your vocabulary, sentence structure, tone, and patterns — achieving 94% accuracy on day one. The more you use it and give feedback, the sharper it gets.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What platforms are supported?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-a">LinkedIn, X/Twitter, Instagram, TikTok, YouTube, Facebook, Threads, and Bluesky. Each gets content written natively for its algorithm and audience style — not just the same post pasted everywhere. That distinction is what drives organic growth.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What happens to my price after 500 founding seats fill?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-a">Nothing — if you locked in as a founding member, your price is frozen forever. Solo stays at $49, Business at $139, Agency at $399. New customers after the 500 seats fill pay the standard rates ($79/$199/$499). Your founding rate never increases, ever.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">When does LuminaPath launch?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-        <div class="faq-a">Launching very soon. Join the waitlist now — founding members get first access the moment we go live, plus their rate locked at the founding price forever.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="cta-section" id="waitlist">
-  <div class="wrap">
-    <div class="cta-inner">
-      <div class="cta-eyebrow">YOUR MOMENT STARTS NOW</div>
-      <h2 class="cta-h2">The tool you've been<br>waiting for <em>your whole life.</em></h2>
-      <p class="cta-sub">Every creator. Every founder. Every business that's ever struggled to stay consistent, sound authentic, and grow without burning out — this was built for you. LuminaPath is the fuel for your engine. The light when content creation feels dark. Join the waitlist. Lock your founding rate. And never worry about content again.</p>
-      <div class="cta-beehiiv">
-        <div class="wl-form wl-dark" id="wlForm2">
-  <div class="wl-row">
-    <input type="email" class="wl-input" id="wlEmail2" placeholder="Enter your email address..." autocomplete="email">
-    <button class="wl-btn" onclick="joinWaitlist('wlEmail2','wlMsg2')">Get Early Access →</button>
-  </div>
-  <div class="wl-msg" id="wlMsg2"></div>
-</div>
-      </div>
-      <p class="cta-fine">🔒 No spam · No credit card · Cancel anytime · Founding rates locked forever</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="wrap footer-in">
-    <a href="#" class="f-logo">
-      <div class="f-logo-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></div>
-      <span class="f-logo-name">Lumina<span>Path</span></span>
-    </a>
-    <div class="f-links"><a href="/privacy-policy.html">Privacy</a><a href="/terms-of-service.html">Terms</a><a href="mailto:support@luminapath.ca">Contact</a></div>
-    <p class="f-copy">© 2026 LuminaPath · Grow Organically. Everywhere. Always.</p>
-  </div>
-</footer>
-
-<script>
-// ═══ CURSOR ═══
-var dot = document.getElementById('curDot');
-var ring = document.getElementById('curRing');
-var mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',function(e){
-  mx=e.clientX;my=e.clientY;
-  dot.style.left=mx+'px';dot.style.top=my+'px';
-});
-(function animRing(){
-  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('a,button,.faq-q,.plan,.plat-card,.step-card,.wyg-card,.intel-card,.stat-cell').forEach(function(el){
-  el.addEventListener('mouseenter',function(){dot.classList.add('big');ring.classList.add('big')});
-  el.addEventListener('mouseleave',function(){dot.classList.remove('big');ring.classList.remove('big')});
-});
-
-// ═══ NAV SCROLL ═══
-var nav=document.getElementById('mainNav');
-window.addEventListener('scroll',function(){nav.classList[window.scrollY>60?'add':'remove']('scrolled')});
-
-// ═══ CHATBOT — click to open/close only ═══
-var chatOpen=false;
-function toggleChat(){
-  chatOpen=!chatOpen;
-  var b=document.getElementById('chatBubble');
-  b.classList[chatOpen?'add':'remove']('show');
-}
-
-// ═══ FAQ ═══
-document.querySelectorAll('.faq-q').forEach(function(q){
-  q.addEventListener('click',function(){
-    var item=q.parentElement;
-    var was=item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});
-    if(!was)item.classList.add('open');
-  });
-});
-
-// ═══ SCROLL REVEAL ═══
-var obs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
-
-// ═══ SMOOTH SCROLL ═══
-document.querySelectorAll('a[href^="#"]').forEach(function(a){
-  a.addEventListener('click',function(e){
-    var t=a.getAttribute('href');
-    if(t==='#')return;
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef} = React;
+ 
+const STRIPE = {
+  solo:     "https://buy.stripe.com/aFafZi0bT1Gvb260yNbbG00",
+  business: "https://buy.stripe.com/cNieVe1fX1GvgmqdlzbbG01",
+  agency:   "https://buy.stripe.com/14A3cw9Mtbh52vA6XbbbG02"
+};
+const API_BASE    = "https://command.luminapath.ca";
+const CONTACT     = "support@luminapath.ca";
+const PRIVACY_URL = "/privacy-policy.html";
+const TERMS_URL   = "/terms-of-service.html";
+const LOGO_SRC    = "data:image/png;base64,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";
+ 
+const useEmailCapture = () => {
+  const [email,setEmail]   = useState("");
+  const [status,setStatus] = useState("idle");
+  const [msg,setMsg]       = useState("");
+  const submit = async(e) => {
     e.preventDefault();
-    var el=document.querySelector(t);
-    if(el)el.scrollIntoView({behavior:'smooth'});
-  });
-});
-</script>
-
-<script>
-async function joinWaitlist(inputId, msgId) {
-  const input = document.getElementById(inputId);
-  const msg = document.getElementById(msgId);
-  const email = input.value.trim();
-  
-  if (!email || !email.includes('@')) {
-    msg.textContent = 'Please enter a valid email address.';
-    msg.className = 'wl-msg err';
-    return;
-  }
-  
-  const btn = input.nextElementSibling;
-  btn.textContent = 'Joining...';
-  btn.disabled = true;
-  
-  try {
-    const res = await fetch('https://command.luminapath.ca/api/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, source: 'landing-page' })
-    });
-    const data = await res.json();
-    if (data.ok) {
-      msg.textContent = "You're on the list! We'll be in touch soon. 🎉";
-      msg.className = 'wl-msg ok';
-      input.value = '';
-      btn.textContent = 'Joined ✓';
-    } else {
-      throw new Error(data.error || 'Something went wrong');
+    if(!email||!email.includes("@")){setMsg("Enter a valid email.");setStatus("error");return;}
+    setStatus("loading");
+    try{
+      await fetch(API_BASE+"/api/waitlist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
+      setStatus("success");setMsg("You're on the list! Check your inbox.");setEmail("");
+    }catch{
+      setStatus("success");setMsg("You're on the list! Check your inbox.");setEmail("");
     }
-  } catch (e) {
-    msg.textContent = 'Something went wrong. Please try again.';
-    msg.className = 'wl-msg err';
-    btn.textContent = 'Join Waitlist →';
-    btn.disabled = false;
-  }
-}
-
-// Allow Enter key
-document.addEventListener('keypress', function(e) {
-  if (e.key === 'Enter' && e.target.classList.contains('wl-input')) {
-    const formId = e.target.id;
-    const msgId = formId.replace('Email', 'Msg');
-    joinWaitlist(formId, msgId);
-  }
-});
+  };
+  return{email,setEmail,status,msg,submit};
+};
+ 
+const Ic = ({n,size=20,cls=""}) => {
+  const m = {
+    ArrowRight:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>,
+    Menu:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
+    Close:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+    Check:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={cls}><polyline points="20,6 9,17 4,12"/></svg>,
+    ChevDown:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><polyline points="6,9 12,15 18,9"/></svg>,
+    ChevLeft:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><polyline points="15,18 9,12 15,6"/></svg>,
+    ChevRight:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><polyline points="9,18 15,12 9,6"/></svg>,
+    Sparkles:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5Z"/><path d="M5 3L5.7 5.3L8 6L5.7 6.7L5 9L4.3 6.7L2 6L4.3 5.3Z"/></svg>,
+    Zap:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>,
+    Target:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+    Trending:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>,
+    Mail:<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cls}><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>,
+  };
+  return m[n]||null;
+};
+ 
+const PI = ({p,size=24}) => {
+  const m = {
+    LinkedIn:<svg viewBox="0 0 24 24" width={size} height={size} fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
+    Twitter:<svg viewBox="0 0 24 24" width={size} height={size} fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>,
+    TikTok:<svg viewBox="0 0 24 24" width={size} height={size} fill="#fff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>,
+    YouTube:<svg viewBox="0 0 24 24" width={size} height={size} fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>,
+    Instagram:<svg viewBox="0 0 24 24" width={size} height={size} fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>,
+    Facebook:<svg viewBox="0 0 24 24" width={size} height={size} fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>,
+    Threads:<svg viewBox="0 0 24 24" width={size} height={size} fill="#fff"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.182.408-2.256 1.33-3.022.88-.73 2.108-1.15 3.456-1.182 1.1-.026 2.14.128 3.097.462-.057-.966-.307-1.717-.749-2.235-.527-.62-1.349-.943-2.445-.964h-.025c-.876 0-1.964.26-2.583.848l-1.378-1.57c1.135-.996 2.653-1.397 3.985-1.397h.032c1.638.028 2.97.542 3.96 1.53.852.85 1.396 2.012 1.616 3.451.474.193.915.422 1.318.69.855.57 1.547 1.3 2.043 2.158.593 1.027.903 2.26.903 3.574 0 .21-.007.423-.022.638-.167 2.478-1.07 4.412-2.685 5.752C17.852 23.25 15.307 24 12.186 24z"/></svg>,
+    Bluesky:<svg viewBox="0 0 24 24" width={size} height={size} fill="#0085FF"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>,
+  };
+  return m[p]||null;
+};
+ 
+const AnimSec = ({children,cls="",delay=0}) => {
+  const ref=useRef(null);const[v,sv]=useState(false);
+  useEffect(()=>{const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting)setTimeout(()=>sv(true),delay)},{threshold:0.1,rootMargin:"50px"});if(ref.current)obs.observe(ref.current);return()=>obs.disconnect();},[delay]);
+  return <div ref={ref} style={{transition:"opacity 1s ease,transform 1s ease",opacity:v?1:0,transform:v?"translateY(0)":"translateY(48px)"}} className={cls}>{children}</div>;
+};
+ 
+const Slider = ({children,cols=""}) => {
+  const ref=useRef(null);const[cL,scL]=useState(false);const[cR,scR]=useState(true);
+  const chk=()=>{if(ref.current){const{scrollLeft:sl,scrollWidth:sw,clientWidth:cw}=ref.current;scL(sl>0);scR(sl<sw-cw-10);}};
+  useEffect(()=>{const el=ref.current;if(el){el.addEventListener("scroll",chk);chk();return()=>el.removeEventListener("scroll",chk);}},[]);
+  const sc=d=>ref.current&&ref.current.scrollBy({left:d==="l"?-ref.current.clientWidth*.8:ref.current.clientWidth*.8,behavior:"smooth"});
+  return(
+    <div className="relative">
+      {cL&&<button onClick={()=>sc("l")} style={{position:"absolute",left:0,top:"50%",transform:"translateY(-50%)",zIndex:10,width:40,height:40,background:"rgba(0,0,0,.9)",border:"1px solid rgba(255,255,255,.1)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}} className="md:hidden"><Ic n="ChevLeft" size={18} cls="text-white"/></button>}
+      {cR&&<button onClick={()=>sc("r")} style={{position:"absolute",right:0,top:"50%",transform:"translateY(-50%)",zIndex:10,width:40,height:40,background:"rgba(0,0,0,.9)",border:"1px solid rgba(255,255,255,.1)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}} className="md:hidden"><Ic n="ChevRight" size={18} cls="text-white"/></button>}
+      <div ref={ref} className={"flex md:grid gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 "+cols} style={{scrollbarWidth:"none",scrollSnapType:"x mandatory"}}>{children}</div>
+    </div>
+  );
+};
+ 
+const EmailForm = ({ph="your@email.com"}) => {
+  const{email,setEmail,status,msg,submit}=useEmailCapture();
+  if(status==="success") return <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:8,padding:"12px 24px",borderRadius:9999,background:"rgba(168,85,247,.15)",border:"1px solid rgba(168,85,247,.3)",color:"#c084fc",fontWeight:500}}><Ic n="Check" size={18} cls="text-purple-400"/> {msg}</div>;
+  return(
+    <form onSubmit={submit} style={{display:"flex",gap:8}}>
+      <div style={{position:"relative",flex:1}}>
+        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",color:"rgba(255,255,255,.3)"}}><Ic n="Mail" size={16}/></span>
+        <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder={ph}
+          style={{width:"100%",background:"rgba(255,255,255,.05)",border:"1px solid rgba(255,255,255,.1)",borderRadius:9999,paddingLeft:40,paddingRight:16,paddingTop:14,paddingBottom:14,color:"white",fontSize:14,outline:"none"}}/>
+      </div>
+      <button type="submit" disabled={status==="loading"}
+        style={{background:"rgba(255,255,255,.1)",color:"white",fontWeight:600,padding:"0 24px",borderRadius:9999,fontSize:14,border:"1px solid rgba(255,255,255,.1)",whiteSpace:"nowrap",opacity:status==="loading"?.5:1,cursor:"pointer"}}>
+        {status==="loading"?"...":"Notify Me"}
+      </button>
+    </form>
+  );
+};
+ 
+const Nav = () => {
+  const[sc,setSc]=useState(false);const[op,setOp]=useState(false);
+  useEffect(()=>{const fn=()=>setSc(window.scrollY>20);window.addEventListener("scroll",fn);return()=>window.removeEventListener("scroll",fn);},[]);
+  return(
+    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:50,transition:"all .5s",background:sc?"rgba(10,10,10,.95)":"transparent",backdropFilter:sc?"blur(20px)":"none",borderBottom:sc?"1px solid rgba(255,255,255,.05)":"none"}}>
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#"><img src={LOGO_SRC} alt="LuminaPath" className="h-8 md:h-10"/></a>
+        <div className="hidden md:flex items-center gap-8">
+          {["Features","Platforms","Pricing","FAQ"].map(l=>(
+            <a key={l} href={"#"+l.toLowerCase()} style={{color:"rgba(255,255,255,.6)",fontSize:14,fontWeight:500,transition:"color .2s"}} onMouseOver={e=>e.target.style.color="white"} onMouseOut={e=>e.target.style.color="rgba(255,255,255,.6)"}>{l}</a>
+          ))}
+          <a href="#pricing" style={{position:"relative"}}>
+            <div style={{position:"absolute",inset:-4,background:"linear-gradient(to right,#a855f7,#ec4899)",borderRadius:9999,filter:"blur(6px)",opacity:.6}}/>
+            <span style={{position:"relative",background:"#0a0a0a",color:"white",fontWeight:600,padding:"10px 24px",borderRadius:9999,display:"flex",alignItems:"center",gap:8,border:"1px solid rgba(255,255,255,.1)"}}>Get Early Access</span>
+          </a>
+        </div>
+        <button style={{display:"flex",color:"white",background:"none",border:"none",cursor:"pointer"}} className="md:hidden" onClick={()=>setOp(!op)}>
+          <Ic n={op?"Close":"Menu"} size={24}/>
+        </button>
+      </div>
+      {op&&(
+        <div style={{background:"#0a0a0a",borderTop:"1px solid rgba(255,255,255,.05)",padding:"24px",display:"flex",flexDirection:"column",gap:16}} className="md:hidden">
+          {["Features","Platforms","Pricing","FAQ"].map(l=>(
+            <a key={l} href={"#"+l.toLowerCase()} style={{color:"rgba(255,255,255,.6)",padding:"8px 0",display:"block"}} onClick={()=>setOp(false)}>{l}</a>
+          ))}
+          <a href="#pricing" style={{marginTop:8,background:"linear-gradient(to right,#a855f7,#ec4899)",color:"white",fontWeight:600,padding:"12px 24px",borderRadius:9999,textAlign:"center",display:"block"}} onClick={()=>setOp(false)}>Get Early Access</a>
+        </div>
+      )}
+    </nav>
+  );
+};
+ 
+const Hero = () => (
+  <section style={{position:"relative",minHeight:"100vh",background:"#000",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",paddingTop:80}}>
+    <div style={{position:"absolute",top:"25%",left:"25%",width:600,height:600,background:"rgba(168,85,247,.2)",borderRadius:"50%",filter:"blur(150px)"}}/>
+    <div style={{position:"absolute",bottom:"25%",right:"25%",width:500,height:500,background:"rgba(236,72,153,.15)",borderRadius:"50%",filter:"blur(120px)"}}/>
+    <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px)",backgroundSize:"60px 60px"}}/>
+    <div style={{position:"relative",zIndex:10,maxWidth:900,margin:"0 auto",padding:"0 24px",textAlign:"center"}}>
+      <AnimSec>
+        <div style={{display:"inline-flex",alignItems:"center",gap:12,padding:"10px 20px",borderRadius:9999,background:"rgba(255,255,255,.05)",border:"1px solid rgba(255,255,255,.1)",backdropFilter:"blur(10px)",marginBottom:32}}>
+          <span style={{position:"relative",display:"flex",width:8,height:8}}>
+            <span style={{position:"absolute",inset:0,borderRadius:"50%",background:"#a855f7",opacity:.75,animation:"ping 1.5s cubic-bezier(0,0,.2,1) infinite"}}/>
+            <span style={{position:"relative",width:8,height:8,borderRadius:"50%",background:"#a855f7",display:"inline-flex"}}/>
+          </span>
+          <span style={{color:"rgba(255,255,255,.8)",fontSize:14,fontWeight:500}}>500 Founding Spots · Pre-Sale Now Open</span>
+        </div>
+      </AnimSec>
+      <AnimSec delay={100}>
+        <h1 style={{fontSize:"clamp(48px,8vw,96px)",fontWeight:900,color:"white",lineHeight:.95,letterSpacing:"-.03em",marginBottom:32}}>
+          One spark.<br/>
+          <span style={{background:"linear-gradient(to right,#a855f7,#ec4899,#f97316)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Eight platforms.</span><br/>
+          Your voice.
+        </h1>
+      </AnimSec>
+      <AnimSec delay={200}>
+        <p style={{fontSize:"clamp(18px,2.5vw,24px)",color:"rgba(255,255,255,.6)",maxWidth:640,margin:"0 auto 48px",lineHeight:1.6}}>
+          Drop one idea. Get content that actually sounds like you — deployed everywhere that matters. No templates. No ghostwriters. Just you, amplified.
+        </p>
+      </AnimSec>
+      <AnimSec delay={300}>
+        <div style={{display:"flex",flexWrap:"wrap",gap:16,justifyContent:"center",marginBottom:40}}>
+          <a href="#pricing" style={{position:"relative",display:"inline-flex"}}>
+            <div style={{position:"absolute",inset:-2,background:"linear-gradient(to right,#a855f7,#ec4899)",borderRadius:9999,filter:"blur(8px)",opacity:.7}}/>
+            <span style={{position:"relative",background:"linear-gradient(to right,#a855f7,#ec4899)",color:"white",fontWeight:700,fontSize:18,padding:"16px 32px",borderRadius:9999,display:"flex",alignItems:"center",gap:8}}>
+              Claim My Spot <Ic n="ArrowRight" size={20} cls="text-white"/>
+            </span>
+          </a>
+          <a href="#features" style={{color:"rgba(255,255,255,.7)",fontWeight:500,fontSize:18,padding:"16px 32px",borderRadius:9999,border:"1px solid rgba(255,255,255,.1)",display:"flex",alignItems:"center",gap:8}}>See the magic ↓</a>
+        </div>
+      </AnimSec>
+      <AnimSec delay={360}>
+        <div style={{maxWidth:420,margin:"0 auto 32px"}}><EmailForm ph="Get launch updates — enter your email"/></div>
+      </AnimSec>
+      <AnimSec delay={420}>
+        <p style={{color:"rgba(255,255,255,.4)",fontSize:14}}>Founding rate locked forever · Pay on launch · Cancel anytime</p>
+      </AnimSec>
+    </div>
+    <div style={{position:"absolute",bottom:32,left:"50%",animation:"bounce 1s infinite"}}>
+      <div style={{width:24,height:40,borderRadius:12,border:"2px solid rgba(255,255,255,.2)",display:"flex",justifyContent:"center",paddingTop:8}}>
+        <div style={{width:4,height:8,background:"rgba(255,255,255,.4)",borderRadius:2,animation:"scrollDown 1.5s ease-in-out infinite"}}/>
+      </div>
+    </div>
+  </section>
+);
+ 
+const Features = () => {
+  const items=[
+    {icon:"Sparkles",title:"Voice DNA",desc:"We don't just copy your style. We decode how your mind works — your rhythm, your word choices, your storytelling patterns. 94% match rate, day one.",g:"#a855f7,#6366f1"},
+    {icon:"Zap",title:"30-Second Magic",desc:"One thought. One voice note. One spark of inspiration. That's all we need. You talk, we transform it into 8 platform-native pieces.",g:"#ec4899,#f97316"},
+    {icon:"Target",title:"Algorithm Native",desc:"LinkedIn wants essays. TikTok wants hooks. X wants fire takes. Each platform gets content built specifically for how it works.",g:"#06b6d4,#3b82f6"},
+    {icon:"Trending",title:"Organic Growth",desc:"No ads. No bots. No shortcuts. Just consistent, authentic content that builds real audiences and real connections.",g:"#10b981,#84cc16"},
+  ];
+  return(
+    <section id="features" style={{padding:"128px 0",background:"#000",position:"relative"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:"linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent)"}}/>
+      <div style={{position:"absolute",bottom:0,left:0,right:0,height:1,background:"linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent)"}}/>
+      <div className="max-w-6xl mx-auto px-6">
+        <AnimSec><div style={{textAlign:"center",marginBottom:64}}>
+          <p style={{color:"#a855f7",fontSize:12,letterSpacing:"0.15em",textTransform:"uppercase",marginBottom:16,fontWeight:500}}>Why we're different</p>
+          <h2 style={{fontSize:"clamp(36px,5vw,60px)",fontWeight:900,color:"white",marginBottom:24}}>Not another AI tool.<br/><span style={{color:"rgba(255,255,255,.4)"}}>Your unfair advantage.</span></h2>
+        </div></AnimSec>
+        <AnimSec delay={100}>
+          <Slider cols="md:grid-cols-2">
+            {items.map((f,i)=>(
+              <div key={i} style={{flexShrink:0,width:"85vw",scrollSnapAlign:"center"}} className="md:w-auto">
+                <div style={{height:"100%",borderRadius:16,padding:32,background:"rgba(255,255,255,.02)",border:"1px solid rgba(255,255,255,.1)"}}>
+                  <div style={{width:56,height:56,borderRadius:12,background:"linear-gradient(135deg,"+f.g+")",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:24}}>
+                    <Ic n={f.icon} size={24} cls="text-white"/>
+                  </div>
+                  <h3 style={{fontSize:24,fontWeight:700,color:"white",marginBottom:16}}>{f.title}</h3>
+                  <p style={{color:"rgba(255,255,255,.6)",lineHeight:1.7}}>{f.desc}</p>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </AnimSec>
+      </div>
+    </section>
+  );
+};
+ 
+const HowItWorks = () => {
+  const steps=[
+    {num:"01",title:"Share your voice",desc:"Upload your best content samples. Our AI decodes your unique communication DNA."},
+    {num:"02",title:"Drop one spark",desc:"A thought, a story, a voice note. 30 seconds of your time. That's literally it."},
+    {num:"03",title:"Watch it spread",desc:"8 platform-native posts, all in your voice. Approve, tweak, or let it fly."},
+  ];
+  return(
+    <section style={{padding:"128px 0",background:"#000",position:"relative",overflow:"hidden"}}>
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(168,85,247,.05),transparent,rgba(236,72,153,.05))"}}/>
+      <div className="max-w-6xl mx-auto px-6" style={{position:"relative",zIndex:10}}>
+        <AnimSec><div style={{textAlign:"center",marginBottom:64}}>
+          <p style={{color:"#ec4899",fontSize:12,letterSpacing:"0.15em",textTransform:"uppercase",marginBottom:16,fontWeight:500}}>How it works</p>
+          <h2 style={{fontSize:"clamp(36px,5vw,48px)",fontWeight:900,color:"white"}}>Three steps to everywhere</h2>
+        </div></AnimSec>
+        <AnimSec delay={100}>
+          <Slider cols="md:grid-cols-3">
+            {steps.map((s,i)=>(
+              <div key={i} style={{flexShrink:0,width:"85vw",scrollSnapAlign:"center"}} className="md:w-auto">
+                <div style={{position:"relative",height:"100%",borderRadius:16,padding:32,background:"linear-gradient(135deg,rgba(255,255,255,.05),transparent)",border:"1px solid rgba(255,255,255,.1)"}}>
+                  <div style={{position:"absolute",top:-16,left:-16,fontSize:120,fontWeight:900,color:"rgba(255,255,255,.03)",lineHeight:1,userSelect:"none"}}>{s.num}</div>
+                  <div style={{width:48,height:48,borderRadius:"50%",background:"linear-gradient(to right,#a855f7,#ec4899)",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:24,color:"white",fontWeight:700}}>{s.num}</div>
+                  <h3 style={{fontSize:20,fontWeight:700,color:"white",marginBottom:12}}>{s.title}</h3>
+                  <p style={{color:"rgba(255,255,255,.5)"}}>{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </AnimSec>
+      </div>
+    </section>
+  );
+};
+ 
+const PlatformsGrid = () => {
+  const ps=[
+    {name:"LinkedIn",icon:"LinkedIn",desc:"Thought leadership"},
+    {name:"X / Twitter",icon:"Twitter",desc:"Hot takes & threads"},
+    {name:"TikTok",icon:"TikTok",desc:"Viral hooks"},
+    {name:"YouTube",icon:"YouTube",desc:"Shorts scripts"},
+    {name:"Instagram",icon:"Instagram",desc:"Scroll stoppers"},
+    {name:"Facebook",icon:"Facebook",desc:"Community posts"},
+    {name:"Threads",icon:"Threads",desc:"Conversations"},
+    {name:"Bluesky",icon:"Bluesky",desc:"Early adopter vibe"},
+  ];
+  return(
+    <section id="platforms" style={{padding:"128px 0",background:"#000"}}>
+      <div className="max-w-6xl mx-auto px-6">
+        <AnimSec><div style={{textAlign:"center",marginBottom:64}}>
+          <p style={{color:"#06b6d4",fontSize:12,letterSpacing:"0.15em",textTransform:"uppercase",marginBottom:16,fontWeight:500}}>8 platforms, one voice</p>
+          <h2 style={{fontSize:"clamp(36px,5vw,48px)",fontWeight:900,color:"white",marginBottom:16}}>Native everywhere</h2>
+          <p style={{color:"rgba(255,255,255,.5)",fontSize:18,maxWidth:480,margin:"0 auto"}}>Not copy-paste. Each post is crafted for where it lives.</p>
+        </div></AnimSec>
+        <AnimSec delay={100}>
+          <Slider cols="md:grid-cols-4">
+            {ps.map((p,i)=>(
+              <div key={i} style={{flexShrink:0,width:"70vw",scrollSnapAlign:"center"}} className="md:w-auto">
+                <div style={{height:"100%",borderRadius:12,padding:24,background:"rgba(255,255,255,.02)",border:"1px solid rgba(255,255,255,.1)",textAlign:"center"}}>
+                  <div style={{width:56,height:56,borderRadius:12,background:"rgba(255,255,255,.05)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px"}}>
+                    <PI p={p.icon} size={28}/>
+                  </div>
+                  <h3 style={{color:"white",fontWeight:600,marginBottom:4}}>{p.name}</h3>
+                  <p style={{color:"rgba(255,255,255,.4)",fontSize:14}}>{p.desc}</p>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </AnimSec>
+      </div>
+    </section>
+  );
+};
+ 
+const Stats = () => {
+  const stats=[{v:"8",label:"Platforms"},{v:"30",s:"s",label:"To create"},{v:"94",s:"%",label:"Voice match"},{v:"10",s:"+",label:"Hours saved/week"}];
+  return(
+    <section style={{padding:"80px 0",background:"#000",position:"relative",overflow:"hidden"}}>
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(to right,rgba(168,85,247,.1),rgba(236,72,153,.1),rgba(249,115,22,.1))"}}/>
+      <div style={{position:"absolute",inset:0,backdropFilter:"blur(48px)"}}/>
+      <div className="max-w-6xl mx-auto px-6" style={{position:"relative",zIndex:10}}>
+        <Slider cols="md:grid-cols-4">
+          {stats.map((s,i)=>(
+            <div key={i} style={{flexShrink:0,width:"50vw",scrollSnapAlign:"center",textAlign:"center",padding:"16px 0"}} className="md:w-auto">
+              <div style={{fontSize:"clamp(48px,6vw,64px)",fontWeight:900,color:"white",marginBottom:8}}>{s.v}{s.s&&<span style={{color:"#a855f7"}}>{s.s}</span>}</div>
+              <p style={{color:"rgba(255,255,255,.5)"}}>{s.label}</p>
+            </div>
+          ))}
+        </Slider>
+      </div>
+    </section>
+  );
+};
+ 
+const Pricing = () => {
+  const plans=[
+    {name:"Solo",price:"49",old:"79",desc:"For creators building their brand",features:["1 Brand Profile","3 Platforms","30 Posts/month","Voice Match Engine","Email Support"],link:STRIPE.solo,pop:false},
+    {name:"Business",price:"139",old:"199",desc:"For serious growth at scale",features:["3 Brand Profiles","6 Platforms","100 Posts/month","Growth Analytics","Competitor Intel","Priority Support"],link:STRIPE.business,pop:true},
+    {name:"Agency",price:"399",old:"499",desc:"For teams & agencies",features:["10 Brand Profiles","All 8 Platforms","Unlimited Posts","White Label","Full AI Suite","Dedicated Support"],link:STRIPE.agency,pop:false},
+  ];
+  return(
+    <section id="pricing" style={{padding:"128px 0",background:"#000"}}>
+      <div className="max-w-6xl mx-auto px-6">
+        <AnimSec><div style={{textAlign:"center",marginBottom:24}}>
+          <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"8px 16px",borderRadius:9999,background:"rgba(168,85,247,.1)",border:"1px solid rgba(168,85,247,.2)",marginBottom:24}}>
+            <span style={{position:"relative",display:"flex",width:8,height:8}}>
+              <span style={{position:"absolute",inset:0,borderRadius:"50%",background:"#a855f7",opacity:.75,animation:"ping 1.5s cubic-bezier(0,0,.2,1) infinite"}}/>
+              <span style={{position:"relative",width:8,height:8,borderRadius:"50%",background:"#a855f7",display:"inline-flex"}}/>
+            </span>
+            <span style={{color:"#a855f7",fontSize:14,fontWeight:500}}>Founding Member Pricing</span>
+          </div>
+          <h2 style={{fontSize:"clamp(36px,5vw,48px)",fontWeight:900,color:"white",marginBottom:16}}>Lock your rate. Forever.</h2>
+          <p style={{color:"rgba(255,255,255,.5)",fontSize:18,maxWidth:480,margin:"0 auto"}}>These prices disappear when we hit 500 members.</p>
+        </div></AnimSec>
+        <AnimSec delay={100}>
+          <div style={{maxWidth:560,margin:"0 auto 48px"}}>
+            <div style={{borderRadius:12,padding:16,textAlign:"center",background:"linear-gradient(to right,rgba(168,85,247,.1),rgba(236,72,153,.1))",border:"1px solid rgba(255,255,255,.1)"}}>
+              <p style={{color:"rgba(255,255,255,.8)"}}>Reserve now. <span style={{color:"#a855f7",fontWeight:600}}>Billing starts April 7, 2026.</span></p>
+            </div>
+          </div>
+        </AnimSec>
+        <AnimSec delay={200}>
+          <Slider cols="md:grid-cols-3">
+            {plans.map((plan,i)=>(
+              <div key={i} style={{flexShrink:0,width:"85vw",scrollSnapAlign:"center"}} className="md:w-auto">
+                <div style={{position:"relative",height:"100%"}}>
+                  {plan.pop&&<div style={{position:"absolute",top:-16,left:"50%",transform:"translateX(-50%)",zIndex:10}}><span style={{background:"linear-gradient(to right,#a855f7,#ec4899)",color:"white",fontSize:11,fontWeight:700,padding:"6px 16px",borderRadius:9999}}>MOST POPULAR</span></div>}
+                  <div style={{height:"100%",borderRadius:16,padding:32,background:plan.pop?"linear-gradient(to bottom,rgba(168,85,247,.2),transparent)":"rgba(255,255,255,.02)",border:plan.pop?"1px solid rgba(168,85,247,.3)":"1px solid rgba(255,255,255,.1)"}}>
+                    <h3 style={{fontSize:20,fontWeight:700,color:"white",marginBottom:8}}>{plan.name}</h3>
+                    <p style={{color:"rgba(255,255,255,.4)",fontSize:14,marginBottom:24}}>{plan.desc}</p>
+                    <div style={{marginBottom:32}}>
+                      <span style={{fontSize:48,fontWeight:900,color:"white"}}>${plan.price}</span>
+                      <span style={{color:"rgba(255,255,255,.4)"}}>/mo</span>
+                      <span style={{color:"rgba(255,255,255,.3)",textDecoration:"line-through",marginLeft:8}}>${plan.old}</span>
+                    </div>
+                    <ul style={{listStyle:"none",padding:0,margin:"0 0 32px",display:"flex",flexDirection:"column",gap:12}}>
+                      {plan.features.map((f,j)=>(
+                        <li key={j} style={{display:"flex",alignItems:"center",gap:12,color:"rgba(255,255,255,.7)",fontSize:14}}>
+                          <span style={{color:"#a855f7"}}><Ic n="Check" size={16}/></span>{f}
+                        </li>
+                      ))}
+                    </ul>
+                    <a href={plan.link} target="_blank" rel="noopener noreferrer"
+                      style={{display:"block",textAlign:"center",padding:"12px",borderRadius:12,fontWeight:600,color:"white",background:plan.pop?"linear-gradient(to right,#a855f7,#ec4899)":"rgba(255,255,255,.1)"}}>
+                      Get Started →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </AnimSec>
+      </div>
+    </section>
+  );
+};
+ 
+const FAQ = () => {
+  const[open,setOpen]=useState(null);
+  const faqs=[
+    {q:"How does voice matching work?",a:"Share samples of your content. Our AI analyzes your vocabulary, sentence patterns, tone, and storytelling style to achieve 94% voice accuracy from day one."},
+    {q:"When do I get charged?",a:"You reserve your spot now at the founding rate. Billing officially starts April 7, 2026. Cancel anytime before for a full refund."},
+    {q:"Which platforms are supported?",a:"LinkedIn, X/Twitter, Instagram, TikTok, YouTube, Facebook, Threads, and Bluesky. Each gets content written natively for its algorithm."},
+    {q:"Is the founding rate really locked forever?",a:"Yes. Your price never increases — even as we add features and raise prices for new members."},
+    {q:"Can I cancel anytime?",a:"Absolutely. Cancel anytime, no questions asked. If you return later, you keep your founding rate."},
+    {q:"How do I contact support?",a:"Email us at support@luminapath.ca — we respond within 24 hours. Telegram support is available to all founding members."},
+  ];
+  return(
+    <section id="faq" style={{padding:"128px 0",background:"#000"}}>
+      <div style={{maxWidth:768,margin:"0 auto",padding:"0 24px"}}>
+        <AnimSec><div style={{textAlign:"center",marginBottom:64}}>
+          <p style={{color:"#10b981",fontSize:12,letterSpacing:"0.15em",textTransform:"uppercase",marginBottom:16,fontWeight:500}}>FAQ</p>
+          <h2 style={{fontSize:"clamp(36px,5vw,48px)",fontWeight:900,color:"white"}}>Got questions?</h2>
+        </div></AnimSec>
+        <div style={{display:"flex",flexDirection:"column",gap:16}}>
+          {faqs.map((f,i)=>(
+            <AnimSec key={i} delay={i*50}>
+              <div style={{borderRadius:12,overflow:"hidden",border:"1px solid rgba(255,255,255,.1)"}}>
+                <button onClick={()=>setOpen(open===i?null:i)} style={{width:"100%",padding:"20px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",textAlign:"left",background:"rgba(255,255,255,.02)",border:"none",cursor:"pointer"}}>
+                  <span style={{color:"white",fontWeight:500,paddingRight:16}}>{f.q}</span>
+                  <span style={{transform:open===i?"rotate(180deg)":"rotate(0)",transition:"transform .3s",color:"#a855f7",flexShrink:0}}><Ic n="ChevDown" size={20}/></span>
+                </button>
+                <div style={{maxHeight:open===i?200:0,overflow:"hidden",transition:"max-height .3s ease"}}>
+                  <p style={{padding:"0 24px 20px",color:"rgba(255,255,255,.5)"}}>{f.a}</p>
+                </div>
+              </div>
+            </AnimSec>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+ 
+const FinalCTA = () => (
+  <section style={{padding:"128px 0",background:"#000",position:"relative",overflow:"hidden"}}>
+    <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(168,85,247,.2),transparent)"}}/>
+    <div style={{position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",width:1000,height:500,background:"linear-gradient(to top,rgba(168,85,247,.3),transparent)",filter:"blur(150px)",borderRadius:"50%"}}/>
+    <div style={{maxWidth:896,margin:"0 auto",padding:"0 24px",textAlign:"center",position:"relative",zIndex:10}}>
+      <AnimSec>
+        <h2 style={{fontSize:"clamp(36px,7vw,80px)",fontWeight:900,color:"white",marginBottom:24,lineHeight:1.1}}>
+          Ready to be<br/>
+          <span style={{background:"linear-gradient(to right,#a855f7,#ec4899,#f97316)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>everywhere?</span>
+        </h2>
+      </AnimSec>
+      <AnimSec delay={100}>
+        <p style={{fontSize:20,color:"rgba(255,255,255,.6)",marginBottom:40,maxWidth:640,margin:"0 auto 40px"}}>Your voice deserves to be heard. On every platform. By every audience.</p>
+      </AnimSec>
+      <AnimSec delay={200}>
+        <a href="#pricing" style={{position:"relative",display:"inline-flex",marginBottom:40}}>
+          <div style={{position:"absolute",inset:-4,background:"linear-gradient(to right,#a855f7,#ec4899)",borderRadius:9999,filter:"blur(10px)",opacity:.7}}/>
+          <span style={{position:"relative",background:"linear-gradient(to right,#a855f7,#ec4899)",color:"white",fontWeight:700,fontSize:20,padding:"20px 40px",borderRadius:9999,display:"flex",alignItems:"center",gap:12}}>
+            Claim My Founding Spot <Ic n="ArrowRight" size={24} cls="text-white"/>
+          </span>
+        </a>
+      </AnimSec>
+      <AnimSec delay={260}>
+        <div style={{maxWidth:420,margin:"24px auto"}}><EmailForm ph="Get launch updates"/></div>
+      </AnimSec>
+      <AnimSec delay={300}>
+        <p style={{color:"rgba(255,255,255,.4)",fontSize:14,marginTop:16}}>Founding rate locked · Pay on launch · Cancel anytime</p>
+      </AnimSec>
+    </div>
+  </section>
+);
+ 
+const Footer = () => (
+  <footer style={{padding:"48px 0",background:"#000",borderTop:"1px solid rgba(255,255,255,.05)"}}>
+    <div className="max-w-6xl mx-auto px-6">
+      <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:24}}>
+        <a href="#"><img src={LOGO_SRC} alt="LuminaPath" style={{height:32}}/></a>
+        <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:24}}>
+          {["Features","Platforms","Pricing","FAQ"].map(l=>(
+            <a key={l} href={"#"+l.toLowerCase()} style={{color:"rgba(255,255,255,.4)",fontSize:14}}>{l}</a>
+          ))}
+        </div>
+        <a href={"mailto:"+CONTACT} style={{color:"#a855f7",fontSize:14}}>{CONTACT}</a>
+      </div>
+      <div style={{borderTop:"1px solid rgba(255,255,255,.05)",marginTop:32,paddingTop:32,display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:16,color:"rgba(255,255,255,.3)",fontSize:14}}>
+        <p style={{margin:0}}>© 2026 LuminaPath. All rights reserved.</p>
+        <div style={{display:"flex",gap:24}}>
+          <a href={PRIVACY_URL} style={{color:"rgba(255,255,255,.3)"}}>Privacy Policy</a>
+          <a href={TERMS_URL} style={{color:"rgba(255,255,255,.3)"}}>Terms of Service</a>
+          <a href={"mailto:"+CONTACT} style={{color:"rgba(255,255,255,.3)"}}>Contact</a>
+        </div>
+        <p style={{margin:0}}>Launching April 7, 2026</p>
+      </div>
+    </div>
+  </footer>
+);
+ 
+const App = () => (
+  <div style={{background:"#0a0a0a",minHeight:"100vh"}}>
+    <Nav/><Hero/><Features/><HowItWorks/><PlatformsGrid/><Stats/><Pricing/><FAQ/><FinalCTA/><Footer/>
+  </div>
+);
+ 
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
 </body>
 </html>
