@@ -111,8 +111,10 @@ img{display:block}
 .stat-lbl{color:rgba(255,255,255,.5)}
  
 /* PRICING */
-.plan-wrap{position:relative;height:100%}
-.plan-popular-tag{position:absolute;top:-16px;left:50%;transform:translateX(-50%);z-index:10;background:linear-gradient(to right,#a855f7,#ec4899);color:#fff;font-size:11px;font-weight:700;padding:6px 16px;border-radius:9999px;white-space:nowrap}
+.plan-wrap{position:relative;height:100%;padding-top:0}
+.plan-popular-tag{display:none}
+.plan-popular-top-badge{display:flex;justify-content:center;margin-bottom:8px;}
+.plan-popular-top-badge span{background:linear-gradient(to right,#a855f7,#ec4899);color:#fff;font-size:11px;font-weight:700;padding:5px 16px;border-radius:9999px;white-space:nowrap;}
 .plan-card{height:100%;border-radius:16px;padding:32px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);display:flex;flex-direction:column;transition:border-color .3s}
 .plan-card.popular{background:linear-gradient(to bottom,rgba(168,85,247,.2),transparent);border-color:rgba(168,85,247,.3)}
 .plan-name{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
@@ -167,11 +169,14 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
 .grid-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;position:relative;z-index:10}
  
 @media(max-width:767px){
-  .grid-2,.grid-3,.grid-4,.grid-stats{display:flex;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+  .grid-2,.grid-3,.grid-4,.grid-stats{display:flex;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:0;scrollbar-width:none;-ms-overflow-style:none;}
+  .grid-2::-webkit-scrollbar,.grid-3::-webkit-scrollbar,.grid-4::-webkit-scrollbar,.grid-stats::-webkit-scrollbar{display:none;}
+  section[id]{padding-top:64px!important;padding-bottom:64px!important;}
+  #hero{padding-top:80px!important;}
   .grid-2 > *{flex:0 0 85vw;max-width:440px;scroll-snap-align:start}
   .grid-3 > *{flex:0 0 85vw;max-width:440px;scroll-snap-align:start}
   .grid-4 > *{flex:0 0 72vw;max-width:280px;scroll-snap-align:start}
-  .grid-stats > *{flex:0 0 48vw;max-width:200px;scroll-snap-align:start;padding:16px 0}
+  .grid-stats{display:grid!important;grid-template-columns:1fr 1fr!important;gap:24px!important;overflow:visible!important;}
   .hero-btns{flex-direction:column;align-items:center}
   .waitlist-form{flex-direction:column;border-radius:16px;padding:12px;gap:8px;align-items:stretch}
   .waitlist-form button{padding:12px;border-radius:9999px;text-align:center}
@@ -252,22 +257,207 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
   </div>
 </section>
  
+<!-- TAPLIO-STYLE FLOATING VISUAL -->
+<section id="product" style="padding:0 0 80px;background:#000;overflow:hidden;position:relative;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(124,58,237,.18) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:1000px;margin:0 auto;padding:0 24px;position:relative;z-index:2;">
+ 
+    <!-- Headline above visual -->
+    <div style="text-align:center;margin-bottom:48px;" class="reveal">
+      <p style="margin-bottom:12px;font-size:18px;font-weight:800;background:linear-gradient(90deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Your AI growing your brand — organically, from you, for you</p>
+      <h2 style="font-size:clamp(32px,4.5vw,52px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:16px;">You show up once.<br/><span style="background:linear-gradient(90deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">We keep you everywhere.</span></h2>
+      <p style="color:rgba(255,255,255,.5);font-size:17px;max-width:520px;margin:0 auto;">Drop a thought. Your AI turns it into content that matches how you write, how you think, and what your audience responds to — published across every platform automatically.</p>
+    </div>
+ 
+    <!-- Floating screen container -->
+    <div class="taplio-wrap reveal">
+ 
+      <!-- Main floating screen -->
+      <div class="taplio-screen-glow">
+        <div class="taplio-screen">
+ 
+          <!-- Top bar — clean, no URL -->
+          <div class="taplio-topbar">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="taplio-avatar">
+                <div class="taplio-av-inner">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="rgba(255,255,255,.6)"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                </div>
+              </div>
+              <span style="font-size:11px;color:rgba(255,255,255,.7);font-weight:600;">Alex Chen &nbsp;·&nbsp; Content Creator</span>
+              <span class="taplio-live-badge">● LIVE</span>
+            </div>
+            <div style="width:60px;"></div>
+          </div>
+ 
+          <!-- Main content area -->
+          <div class="taplio-body">
+ 
+            <!-- Left: Content spark input -->
+            <div class="taplio-left">
+              <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;">Today&rsquo;s spark</div>
+              <div class="taplio-spark-box">
+                <div class="taplio-spark-text" id="taplioTypeTarget"></div>
+                <span class="taplio-cursor">|</span>
+              </div>
+              <div class="taplio-gen-btn">
+                <div class="taplio-gen-glow"></div>
+                <span>✦ Generating for 8 platforms</span>
+              </div>
+              <div style="margin-top:16px;">
+                <div style="font-size:9px;color:rgba(255,255,255,.3);margin-bottom:8px;">PUBLISHED THIS WEEK</div>
+                <div class="taplio-stat-row"><div class="taplio-mini-bar" style="width:85%;background:linear-gradient(90deg,#7C3AED,#a855f7);"></div><span>24 posts</span></div>
+                <div class="taplio-stat-row"><div class="taplio-mini-bar" style="width:60%;background:linear-gradient(90deg,#ec4899,#f97316);"></div><span>8 platforms</span></div>
+                <div class="taplio-stat-row"><div class="taplio-mini-bar" style="width:40%;background:linear-gradient(90deg,#06b6d4,#3b82f6);"></div><span>0 hrs spent</span></div>
+              </div>
+            </div>
+ 
+            <!-- Right: Generated posts -->
+            <div class="taplio-right">
+              <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;">Generated — all in your voice</div>
+              <div class="taplio-posts">
+                <div class="taplio-post" style="animation-delay:.2s">
+                  <div class="taplio-post-header"><div class="tp-icon" style="background:#000;border:1px solid #333;font-size:9px;font-weight:800;color:#fff;">𝕏</div><span>X / Twitter</span><span class="tp-ready">Ready</span></div>
+                  <div class="tp-lines"><div class="tp-line w95"></div><div class="tp-line w80"></div><div class="tp-line w60"></div></div>
+                </div>
+                <div class="taplio-post" style="animation-delay:.5s">
+                  <div class="taplio-post-header"><div class="tp-icon" style="background:#0A66C2;font-size:8px;font-weight:800;color:#fff;">in</div><span>LinkedIn</span><span class="tp-ready">Ready</span></div>
+                  <div class="tp-lines"><div class="tp-line w100"></div><div class="tp-line w90"></div><div class="tp-line w70"></div><div class="tp-line w50"></div></div>
+                </div>
+                <div class="taplio-post" style="animation-delay:.8s">
+                  <div class="taplio-post-header"><div class="tp-icon" style="background:#E4405F;font-size:10px;color:#fff;">📷</div><span>Instagram</span><span class="tp-writing">Writing...</span></div>
+                  <div class="tp-lines"><div class="tp-line w85" style="animation:tpWrite 1.5s ease 1s both;"></div><div class="tp-line w65" style="animation:tpWrite 1.5s ease 1.3s both;"></div></div>
+                </div>
+              </div>
+              <div class="taplio-approve-row">
+                <button class="taplio-tweak-btn">Tweak</button>
+                <button class="taplio-approve-btn">Approve All &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Floating phone — right side -->
+      <div class="taplio-phone-float">
+        <div class="taplio-phone">
+          <div class="taplio-phone-notch"></div>
+          <div style="padding:10px 8px;">
+            <div style="display:flex;justify-content:space-between;font-size:7px;color:rgba(255,255,255,.4);margin-bottom:10px;"><span>9:41</span><span>●●●</span></div>
+            <div style="text-align:center;margin-bottom:10px;">
+              <div style="width:32px;height:32px;background:linear-gradient(135deg,#7C3AED,#C084FC);border-radius:10px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:16px;">L</div>
+              <div style="font-size:8px;font-weight:700;color:#fff;">Your posts are live</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.4);margin-top:2px;">Across all 8 platforms</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div class="phone-notif" style="animation-delay:.5s"><div class="pn-plat" style="background:#000;border:1px solid #333;font-size:7px;font-weight:800;">𝕏</div><div class="pn-text"><div class="pn-bar w90"></div><div class="pn-bar w60"></div></div><div style="font-size:7px;color:#10b981;">✓</div></div>
+              <div class="phone-notif" style="animation-delay:1s"><div class="pn-plat" style="background:#E4405F;font-size:7px;">📷</div><div class="pn-text"><div class="pn-bar w80"></div><div class="pn-bar w50"></div></div><div style="font-size:7px;color:#10b981;">✓</div></div>
+              <div class="phone-notif" style="animation-delay:1.5s"><div class="pn-plat" style="background:#0A66C2;font-size:7px;font-weight:700;color:#fff;">in</div><div class="pn-text"><div class="pn-bar w70"></div><div class="pn-bar w45"></div></div><div style="font-size:7px;color:#10b981;">✓</div></div>
+              <div class="phone-notif" style="animation-delay:2s"><div class="pn-plat" style="background:#FF0000;font-size:8px;">▶</div><div class="pn-text"><div class="pn-bar w85"></div><div class="pn-bar w55"></div></div><div style="font-size:7px;color:#10b981;">✓</div></div>
+            </div>
+            <div style="margin-top:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:6px;text-align:center;font-size:7px;color:#10b981;font-weight:700;">8 / 8 Published ✓</div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <!-- 3 accomplishment chips below visual -->
+    <div class="taplio-chips reveal">
+      <div class="taplio-chip">✦ Content that actually sounds like you — not a template</div>
+      <div class="taplio-chip">✦ Every platform gets what its algorithm rewards</div>
+      <div class="taplio-chip">✦ Consistent presence without burning out</div>
+    </div>
+  </div>
+</section>
+ 
+<style>
+/* TAPLIO-STYLE FLOATING VISUAL */
+.taplio-wrap{position:relative;display:flex;align-items:flex-start;justify-content:center;gap:24px;}
+.taplio-screen-glow{position:relative;flex:1;max-width:760px;}
+.taplio-screen-glow::before{content:'';position:absolute;inset:-2px;border-radius:18px;background:linear-gradient(135deg,#7C3AED,#ec4899,#7C3AED);opacity:.6;filter:blur(1px);z-index:-1;animation:glowPulse 3s ease-in-out infinite;}
+.taplio-screen-glow::after{content:'';position:absolute;inset:-20px;border-radius:30px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.35),transparent 70%);z-index:-2;}
+@keyframes glowPulse{0%,100%{opacity:.5;filter:blur(2px)}50%{opacity:.8;filter:blur(4px)}}
+.taplio-screen{background:#0a0818;border-radius:16px;overflow:hidden;border:1px solid rgba(124,58,237,.3);}
+.taplio-topbar{background:#100d20;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(124,58,237,.15);}
+.t-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.t-dot.r{background:#ff5f57}.t-dot.y{background:#febc2e}.t-dot.g{background:#28c840}
+.taplio-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#C084FC);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.taplio-av-inner{display:flex;align-items:center;justify-content:center;}
+.taplio-live-badge{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#10b981;font-size:9px;padding:2px 8px;border-radius:9999px;font-weight:700;animation:glowBlink 2s infinite;}
+@keyframes glowBlink{0%,100%{opacity:1}50%{opacity:.6}}
+.taplio-body{display:flex;gap:0;min-height:200px;}
+.taplio-left{width:38%;padding:16px;border-right:1px solid rgba(124,58,237,.12);display:flex;flex-direction:column;}
+.taplio-right{flex:1;padding:16px;display:flex;flex-direction:column;}
+.taplio-spark-box{background:rgba(255,255,255,.04);border:1px solid rgba(124,58,237,.2);border-radius:8px;padding:10px;min-height:52px;font-size:10px;color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:10px;position:relative;}
+.taplio-spark-text{display:inline;}
+.taplio-cursor{display:inline-block;width:1px;height:12px;background:#a855f7;animation:blink .8s infinite;vertical-align:middle;margin-left:1px;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.taplio-gen-btn{position:relative;background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(236,72,153,.2));border:1px solid rgba(124,58,237,.3);border-radius:8px;padding:8px 12px;font-size:9px;font-weight:700;color:#c084fc;text-align:center;overflow:hidden;}
+.taplio-gen-glow{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(168,85,247,.15),transparent);animation:genSweep 2s linear infinite;}
+@keyframes genSweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.taplio-stat-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.taplio-mini-bar{height:3px;border-radius:2px;transition:width .3s;}
+.taplio-stat-row span{font-size:8px;color:rgba(255,255,255,.3);white-space:nowrap;}
+.taplio-posts{display:flex;flex-direction:column;gap:8px;flex:1;}
+.taplio-post{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:10px;animation:mockFadeIn2 .5s ease both;}
+@keyframes mockFadeIn2{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.taplio-post-header{display:flex;align-items:center;gap:6px;margin-bottom:7px;font-size:9px;color:rgba(255,255,255,.5);}
+.taplio-post-header span:nth-child(2){flex:1;}
+.tp-icon{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tp-ready{color:#10b981;font-size:8px;font-weight:700;}
+.tp-writing{color:#f59e0b;font-size:8px;font-weight:700;animation:glowBlink 1s infinite;}
+.tp-lines{display:flex;flex-direction:column;gap:4px;}
+.tp-line{height:4px;background:rgba(255,255,255,.1);border-radius:2px;}
+@keyframes tpWrite{from{width:0}to{width:100%}}
+.tp-line.w95{width:95%}.tp-line.w100{width:100%}.tp-line.w90{width:90%}.tp-line.w85{width:85%}.tp-line.w80{width:80%}.tp-line.w70{width:70%}.tp-line.w65{width:65%}.tp-line.w60{width:60%}.tp-line.w50{width:50%}
+.taplio-approve-row{display:flex;gap:8px;margin-top:10px;}
+.taplio-tweak-btn{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:10px;padding:6px;border-radius:6px;cursor:default;}
+.taplio-approve-btn{flex:2;background:linear-gradient(135deg,#7C3AED,#ec4899);color:#fff;font-size:10px;font-weight:700;padding:6px 10px;border-radius:6px;border:none;cursor:default;}
+ 
+/* PHONE FLOAT */
+.taplio-phone-float{flex:0 0 140px;animation:phoneFloat 4s ease-in-out infinite;}
+@keyframes phoneFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.taplio-phone{width:140px;background:#0a0818;border-radius:22px;border:1.5px solid rgba(124,58,237,.4);box-shadow:0 0 30px rgba(124,58,237,.2),0 0 60px rgba(236,72,153,.1);overflow:hidden;margin-top:20px;}
+.taplio-phone-notch{width:48px;height:8px;background:#000;border-radius:0 0 8px 8px;margin:0 auto;}
+.phone-notif{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:4px 5px;animation:mockFadeIn2 .4s ease both;}
+.pn-plat{width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pn-text{flex:1;display:flex;flex-direction:column;gap:2px;}
+.pn-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;}
+.pn-bar.w90{width:90%}.pn-bar.w80{width:80%}.pn-bar.w70{width:70%}.pn-bar.w60{width:60%}.pn-bar.w50{width:50%}.pn-bar.w45{width:45%}.pn-bar.w55{width:55%}
+ 
+/* CHIPS */
+.taplio-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px;}
+.taplio-chip{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9999px;padding:10px 20px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500;}
+ 
+@media(max-width:768px){
+  .taplio-wrap{flex-direction:column;align-items:center;}
+  .taplio-phone-float{display:none;}
+  .taplio-body{flex-direction:column;}
+  .taplio-left{width:100%;border-right:none;border-bottom:1px solid rgba(124,58,237,.12);}
+  .taplio-chip{font-size:12px;padding:8px 14px;}
+}
+</style>
+ 
 <!-- FEATURES -->
 <section id="features" style="padding:128px 0;background:#000;position:relative">
   <div class="h-divider" style="position:absolute;top:0;left:0;right:0"></div>
   <div class="h-divider" style="position:absolute;bottom:0;left:0;right:0"></div>
   <div class="container">
     <div class="reveal section-center">
-      <p class="section-label purple">Why we&rsquo;re different</p>
-      <h2 class="section-h2">Not another AI tool.<br/><span class="dim">Your unfair advantage.</span></h2>
+      <p class="section-label purple">Built for creators who are serious about growth</p>
+      <h2 class="section-h2">Your content. Your tone.<br/><span class="dim">Showing up everywhere, every day.</span></h2>
     </div>
     <div class="grid-2">
       <div class="feature-card reveal">
         <div class="feature-icon" style="background:linear-gradient(135deg,#a855f7,#6366f1)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5Z"/><path d="M5 3L5.7 5.3L8 6L5.7 6.7L5 9L4.3 6.7L2 6L4.3 5.3Z"/></svg>
         </div>
-        <h3>Voice DNA</h3>
-        <p>We don&rsquo;t just copy your style. We decode how your mind works &mdash; your rhythm, your word choices, your storytelling patterns. 94% match rate, day one.</p>
+        <h3>Brand Voice Engine</h3>
+        <p>We study how you write, what you emphasize, the rhythm of your sentences. Every post we generate is indistinguishable from something you wrote yourself &mdash; on purpose.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon" style="background:linear-gradient(135deg,#ec4899,#f97316)">
@@ -306,8 +496,8 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <div class="step-card reveal">
         <div class="step-ghost">01</div>
         <div class="step-num">01</div>
-        <h3>Share your voice</h3>
-        <p>Upload your best content samples. Our AI decodes your unique communication DNA.</p>
+        <h3>Share your brand</h3>
+        <p>Tell us who you are, who you speak to, and what you stand for. Share content you&rsquo;re proud of. We use it to understand exactly how you think and communicate.</p>
       </div>
       <div class="step-card reveal">
         <div class="step-ghost">02</div>
@@ -388,7 +578,7 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
         </div>
       </div>
       <div class="plan-wrap reveal">
-        <div class="plan-popular-tag">MOST POPULAR</div>
+        <div class="plan-popular-top-badge"><span>MOST POPULAR</span></div>
         <div class="plan-card popular">
           <div class="plan-name">Business</div>
           <div class="plan-desc">For serious growth at scale</div>
@@ -398,7 +588,7 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>6 Platforms</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>100 Posts/month</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Growth Analytics</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Competitor Intel</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Advanced Analytics</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>Priority Support</li>
           </ul>
           <a href="https://buy.stripe.com/cNieVe1fX1GvgmqdlzbbG01" target="_blank" class="plan-btn popular-btn">Get Started &rarr;</a>
@@ -432,12 +622,12 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <h2 class="section-h2">Got questions?</h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How does voice matching work?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Share samples of your content. Our AI analyzes your vocabulary, sentence patterns, tone, and storytelling style to achieve 94% voice accuracy from day one.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How does LuminaPath match my writing style?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>During onboarding you share examples of content you&rsquo;ve written &mdash; posts, captions, anything. Our AI analyzes your vocabulary, sentence rhythm, tone, and what you naturally emphasize. From that point forward, every piece of content is written to match your brand pattern, not a generic template.</p></div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">When do I get charged?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>You reserve your spot now at the founding rate. Billing officially starts April 7, 2026. Cancel anytime before for a full refund.</p></div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Which platforms are supported?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>LinkedIn, X/Twitter, Instagram, TikTok, YouTube, Facebook, Threads, and Bluesky. Each gets content written natively for its algorithm.</p></div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Is the founding rate really locked forever?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Yes. Your price never increases &mdash; even as we add features and raise prices for new members.</p></div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel anytime?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Absolutely. Cancel anytime, no questions asked. If you return later, you keep your founding rate.</p></div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How do I contact support?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Email us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4a7a1a4a4bba6a094b8a1b9bdbab5a4b5a0bcfab7b5">[email&#160;protected]</a> &mdash; we respond within 24 hours. Telegram support is available to all founding members.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How do I contact support?<svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></button><div class="faq-a"><p>Email us at <a href="mailto:support@luminapath.ca" style="color:#a855f7">support@LUMINAPATH.CA</a> &mdash; we respond within 24 hours. Telegram support is available to all founding members.</p></div></div>
     </div>
   </div>
 </section>
@@ -485,21 +675,21 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </div>
-      <a href="/cdn-cgi/l/email-protection#42313732322d3036022e372f2b2c233223362a6c2123" class="footer-contact"><span class="__cf_email__" data-cfemail="a6d5d3d6d6c9d4d2e6cad3cbcfc8c7d6c7d2ce88c5c7">[email&#160;protected]</span></a>
+      <a href="mailto:support@luminapath.ca" class="footer-contact">support@LUMINAPATH.CA</a>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 LuminaPath. All rights reserved.</p>
       <div class="footer-legal">
         <a href="/privacy-policy.html">Privacy Policy</a>
         <a href="/terms-of-service.html">Terms of Service</a>
-        <a href="/cdn-cgi/l/email-protection#2a595f5a5a45585e6a465f4743444b5a4b5e4204494b">Contact</a>
+        <a href="mailto:support@luminapath.ca">Contact</a>
       </div>
       <p>Launching April 7, 2026</p>
     </div>
   </div>
 </footer>
  
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // NAV
 var nav=document.getElementById('nav');
 var hamburger=document.getElementById('hamburger');
@@ -550,6 +740,35 @@ document.querySelectorAll('.reveal').forEach(function(el){
   }
 });
  
+// TAPLIO TYPEWRITER
+(function(){
+  var phrases = [
+    "The best investment I made last year wasn't a course — it was protecting my time.",
+    "3 things I learned building in public that nobody talks about:",
+    "Your audience doesn't want polished. They want real.",
+    "I used to spend 4 hours a week just on content. Now I don't."
+  ];
+  var el = document.getElementById('taplioTypeTarget');
+  if(!el) return;
+  var pi = 0, ci = 0, deleting = false, pause = 0;
+  function tick() {
+    if(pause > 0){ pause--; setTimeout(tick, 50); return; }
+    var phrase = phrases[pi];
+    if(!deleting){
+      el.textContent = phrase.slice(0, ci+1);
+      ci++;
+      if(ci >= phrase.length){ deleting = true; pause = 60; setTimeout(tick, 50); return; }
+      setTimeout(tick, 40);
+    } else {
+      el.textContent = phrase.slice(0, ci-1);
+      ci--;
+      if(ci <= 0){ deleting = false; pi = (pi+1)%phrases.length; pause = 20; setTimeout(tick, 50); return; }
+      setTimeout(tick, 20);
+    }
+  }
+  setTimeout(tick, 1000);
+})();
+ 
 // WAITLIST
 function submitWaitlist(e,form){
   e.preventDefault();
@@ -573,6 +792,131 @@ function toggleFaq(btn){
   document.querySelectorAll('.faq-a').forEach(function(a){ a.classList.remove('open'); });
   document.querySelectorAll('.faq-q').forEach(function(q){ q.classList.remove('open'); });
   if(!isOpen){ answer.classList.add('open'); btn.classList.add('open'); }
+}
+</script>
+ 
+<!-- ── BEACON CHATBOT ─────────────────────────────────────────────────────── -->
+<style>
+#beacon-btn{position:fixed;bottom:28px;right:28px;width:60px;height:60px;background:linear-gradient(135deg,#7C3AED,#C084FC);border-radius:50%;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(124,58,237,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;transition:transform 0.3s,box-shadow 0.3s;animation:beaconPulse 2.5s infinite;}
+#beacon-btn:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(124,58,237,0.7);}
+@keyframes beaconPulse{0%,100%{box-shadow:0 4px 24px rgba(124,58,237,0.5)}50%{box-shadow:0 4px 40px rgba(192,132,252,0.8)}}
+#beacon-btn svg{width:28px;height:28px;fill:#fff;}
+#beacon-window{position:fixed;bottom:100px;right:28px;width:340px;max-height:520px;background:#0D0B1E;border:1px solid #2A1A5E;border-radius:20px;box-shadow:0 8px 48px rgba(0,0,0,0.6);z-index:9998;display:none;flex-direction:column;overflow:hidden;animation:beaconSlide 0.3s ease;}
+#beacon-window.open{display:flex;}
+@keyframes beaconSlide{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#beacon-header{background:linear-gradient(135deg,#7C3AED,#A855F7);padding:16px 18px;display:flex;align-items:center;gap:12px;}
+#beacon-header .bh-avatar{width:38px;height:38px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+#beacon-header .bh-info{flex:1;}
+#beacon-header .bh-name{font-size:14px;font-weight:700;color:#fff;}
+#beacon-header .bh-status{font-size:11px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:4px;}
+#beacon-header .bh-dot{width:6px;height:6px;background:#10B981;border-radius:50%;display:inline-block;animation:beaconPulse 2s infinite;}
+#beacon-close{background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font-size:20px;padding:0;line-height:1;}
+#beacon-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-height:340px;}
+#beacon-messages::-webkit-scrollbar{width:4px;}
+#beacon-messages::-webkit-scrollbar-track{background:transparent;}
+#beacon-messages::-webkit-scrollbar-thumb{background:#2A1A5E;border-radius:4px;}
+.bm-bot,.bm-user{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5;}
+.bm-bot{background:#12102A;border:1px solid #2A1A5E;color:#E2E8F0;align-self:flex-start;border-bottom-left-radius:4px;}
+.bm-user{background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
+.bm-typing{display:flex;gap:4px;align-items:center;padding:12px 14px;}
+.bm-typing span{width:7px;height:7px;background:#7C3AED;border-radius:50%;animation:beaconTyping 1.2s infinite;}
+.bm-typing span:nth-child(2){animation-delay:0.2s;}
+.bm-typing span:nth-child(3){animation-delay:0.4s;}
+@keyframes beaconTyping{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+#beacon-input-row{padding:12px;border-top:1px solid #2A1A5E;display:flex;gap:8px;background:#0D0B1E;}
+#beacon-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid #2A1A5E;border-radius:10px;padding:10px 13px;color:#fff;font-size:13px;font-family:inherit;outline:none;resize:none;}
+#beacon-input:focus{border-color:#7C3AED;}
+#beacon-send{background:linear-gradient(135deg,#7C3AED,#A855F7);border:none;border-radius:10px;padding:10px 14px;color:#fff;cursor:pointer;font-size:16px;transition:opacity 0.2s;}
+#beacon-send:hover{opacity:0.85;}
+</style>
+ 
+<!-- Trigger button -->
+<button id="beacon-btn" onclick="toggleBeacon()" title="Chat with BEACON">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l4.93-1.37A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 15c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm1-4h-2V7h2v6z"/></svg>
+</button>
+ 
+<!-- Chat window -->
+<div id="beacon-window">
+  <div id="beacon-header">
+    <div class="bh-avatar">🎧</div>
+    <div class="bh-info">
+      <div class="bh-name">BEACON — LuminaPath AI</div>
+      <div class="bh-status"><span class="bh-dot"></span> Online — ask me anything</div>
+    </div>
+    <button id="beacon-close" onclick="toggleBeacon()">×</button>
+  </div>
+  <div id="beacon-messages">
+    <div class="bm-bot">Hey! 👋 I'm BEACON, LuminaPath's AI guide. Ask me anything — pricing, platforms, how it works, or grab a founding seat.</div>
+  </div>
+  <div id="beacon-input-row">
+    <input id="beacon-input" placeholder="Ask anything..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendBeacon();}"/>
+    <button id="beacon-send" onclick="sendBeacon()">➤</button>
+  </div>
+</div>
+ 
+<script>
+let beaconOpen = false;
+let beaconHistory = [];
+let beaconTyping = false;
+ 
+function toggleBeacon() {
+  beaconOpen = !beaconOpen;
+  const w = document.getElementById('beacon-window');
+  if (beaconOpen) { w.classList.add('open'); document.getElementById('beacon-input').focus(); }
+  else { w.classList.remove('open'); }
+}
+ 
+function addBeaconMsg(text, role) {
+  const msgs = document.getElementById('beacon-messages');
+  const div = document.createElement('div');
+  div.className = role === 'user' ? 'bm-user' : 'bm-bot';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+ 
+function showTyping() {
+  const msgs = document.getElementById('beacon-messages');
+  const div = document.createElement('div');
+  div.className = 'bm-bot bm-typing';
+  div.id = 'beacon-typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+ 
+function hideTyping() {
+  const t = document.getElementById('beacon-typing');
+  if (t) t.remove();
+}
+ 
+async function sendBeacon() {
+  if (beaconTyping) return;
+  const input = document.getElementById('beacon-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addBeaconMsg(msg, 'user');
+  beaconHistory.push({ role: 'user', content: msg });
+  beaconTyping = true;
+  showTyping();
+  try {
+    const res = await fetch('https://command.luminapath.ca/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg, history: beaconHistory.slice(-6) })
+    });
+    const data = await res.json();
+    hideTyping();
+    const reply = data.reply || 'Let me get back to you on that!';
+    addBeaconMsg(reply, 'bot');
+    beaconHistory.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    hideTyping();
+    addBeaconMsg('Connection issue — try again or email support@LUMINAPATH.CA', 'bot');
+  }
+  beaconTyping = false;
 }
 </script>
 </body>
