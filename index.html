@@ -84,14 +84,14 @@ img{display:block}
 .section-center{text-align:center;margin-bottom:64px}
  
 /* FEATURE CARDS */
-.feature-card{border-radius:16px;padding:32px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.1);transition:border-color .3s,transform .3s;height:100%}
+.feature-card{border-radius:16px;padding:32px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.1);transition:border-color .3s,transform .3s;height:100%;display:flex;flex-direction:column}
 .feature-card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-4px)}
 .feature-icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
 .feature-card h3{font-size:24px;font-weight:700;color:#fff;margin-bottom:16px}
 .feature-card p{color:rgba(255,255,255,.6);line-height:1.7}
  
 /* STEPS */
-.step-card{position:relative;border-radius:16px;padding:32px;background:linear-gradient(135deg,rgba(255,255,255,.05),transparent);border:1px solid rgba(255,255,255,.1);overflow:hidden;transition:border-color .3s;height:100%}
+.step-card{position:relative;border-radius:16px;padding:32px;background:linear-gradient(135deg,rgba(255,255,255,.05),transparent);border:1px solid rgba(255,255,255,.1);overflow:hidden;transition:border-color .3s;height:100%;display:flex;flex-direction:column}
 .step-card:hover{border-color:rgba(255,255,255,.2)}
 .step-ghost{position:absolute;top:-20px;left:-16px;font-size:120px;font-weight:900;color:rgba(255,255,255,.03);line-height:1;user-select:none;pointer-events:none}
 .step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(to right,#a855f7,#ec4899);display:flex;align-items:center;justify-content:center;margin-bottom:24px;color:#fff;font-weight:700;font-size:15px}
@@ -185,10 +185,11 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
  
 @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
  
+ 
 /* SWIPE DOTS — mobile only */
-.swipe-dots{display:none;justify-content:center;gap:8px;margin-top:16px}
-.swipe-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .3s;cursor:pointer}
-.swipe-dot.active{background:#a855f7;width:20px;border-radius:9999px}
+.swipe-dots{display:none;justify-content:center;gap:7px;margin-top:14px}
+.swipe-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,width .3s;flex-shrink:0}
+.swipe-dot.active{background:#a855f7;width:18px;border-radius:9999px}
 @media(max-width:767px){.swipe-dots{display:flex}}
 </style>
 </head>
@@ -458,14 +459,14 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <p class="section-label purple">Built for creators who are serious about growth</p>
       <h2 class="section-h2">Your content. Your tone.<br/><span class="dim">Showing up everywhere, every day.</span></h2>
     </div>
-    <div class="swipe-wrap" data-dots="2"><div class="grid-2" onscroll="updateDots(this)">
+    <div class="grid-2">
       <div class="feature-card reveal">
         <div class="feature-icon" style="background:linear-gradient(135deg,#a855f7,#6366f1)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5Z"/><path d="M5 3L5.7 5.3L8 6L5.7 6.7L5 9L4.3 6.7L2 6L4.3 5.3Z"/></svg>
         </div>
         <h3>Brand Voice Engine</h3>
         <p>We study how you write, what you emphasize, the rhythm of your sentences. Every post we generate is indistinguishable from something you wrote yourself &mdash; on purpose.</p>
-      </div></div>
+      </div>
       <div class="feature-card reveal">
         <div class="feature-icon" style="background:linear-gradient(135deg,#ec4899,#f97316)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
@@ -499,13 +500,13 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <p class="section-label pink">How it works</p>
       <h2 class="section-h2">Three steps to everywhere</h2>
     </div>
-    <div class="swipe-wrap" data-dots="3"><div class="grid-3" onscroll="updateDots(this)">
+    <div class="grid-3">
       <div class="step-card reveal">
         <div class="step-ghost">01</div>
         <div class="step-num">01</div>
         <h3>Share your brand</h3>
         <p>Tell us who you are, who you speak to, and what you stand for. Share content you&rsquo;re proud of. We use it to understand exactly how you think and communicate.</p>
-      </div></div>
+      </div>
       <div class="step-card reveal">
         <div class="step-ghost">02</div>
         <div class="step-num">02</div>
@@ -530,8 +531,8 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <h2 class="section-h2">Native everywhere</h2>
       <p style="color:rgba(255,255,255,.5);font-size:18px;max-width:480px;margin:0 auto">Not copy-paste. Each post is crafted for where it lives.</p>
     </div>
-    <div class="swipe-wrap" data-dots="8"><div class="grid-4" onscroll="updateDots(this)">
-      <div class="platform-card reveal"><div class="platform-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><h3>LinkedIn</h3><p>Thought leadership</p></div></div>
+    <div class="grid-4">
+      <div class="platform-card reveal"><div class="platform-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><h3>LinkedIn</h3><p>Thought leadership</p></div>
       <div class="platform-card reveal"><div class="platform-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div><h3>X / Twitter</h3><p>Hot takes &amp; threads</p></div>
       <div class="platform-card reveal"><div class="platform-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></div><h3>TikTok</h3><p>Viral hooks</p></div>
       <div class="platform-card reveal"><div class="platform-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div><h3>YouTube</h3><p>Shorts scripts</p></div>
@@ -568,7 +569,7 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
       <p style="color:rgba(255,255,255,.5);font-size:18px;max-width:480px;margin:0 auto">These prices disappear when we hit 500 members.</p>
     </div>
     <div class="reveal pricing-banner"><p>Reserve now. <strong>Billing starts April 7, 2026.</strong></p></div>
-    <div class="swipe-wrap" data-dots="3"><div class="grid-3" style="align-items:start;margin-top:24px" onscroll="updateDots(this)">
+    <div class="grid-3" style="align-items:stretch;margin-top:24px">
       <div class="plan-wrap reveal">
         <div class="plan-card">
           <div class="plan-name">Solo</div>
@@ -587,7 +588,7 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
           </ul>
           <a href="https://buy.stripe.com/aFafZi0bT1Gvb260yNbbG00" target="_blank" class="plan-btn">Get Started &rarr;</a>
         </div>
-      </div></div>
+      </div>
       <div class="plan-wrap reveal">
         <div class="plan-popular-top-badge"><span>MOST POPULAR</span></div>
         <div class="plan-card popular">
@@ -940,34 +941,81 @@ async function sendBeacon() {
 </script>
  
 <script>
-function initDots(){
-  document.querySelectorAll('.swipe-wrap').forEach(wrap=>{
-    const n=parseInt(wrap.dataset.dots)||3;
-    const dotsEl=document.createElement('div');
-    dotsEl.className='swipe-dots';
-    for(let i=0;i<n;i++){
-      const d=document.createElement('div');
-      d.className='swipe-dot'+(i===0?' active':'');
-      d.onclick=()=>{
-        const grid=wrap.querySelector('[class^="grid"]');
-        const cardW=grid.firstElementChild?.offsetWidth||300;
-        grid.scrollTo({left:i*(cardW+16),behavior:'smooth'});
-      };
-      dotsEl.appendChild(d);
-    }
-    wrap.appendChild(dotsEl);
-  });
-}
-function updateDots(grid){
-  const wrap=grid.closest('.swipe-wrap');
-  if(!wrap)return;
-  const dots=wrap.querySelectorAll('.swipe-dot');
-  if(!dots.length)return;
-  const cardW=grid.firstElementChild?.offsetWidth||300;
-  const idx=Math.round(grid.scrollLeft/(cardW+16));
-  dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
-}
-document.addEventListener('DOMContentLoaded',initDots);
+(function(){
+  var INTERVAL = 3000;
+  var RESUME_AFTER = 5000;
+ 
+  function initDots(){
+    document.querySelectorAll('.grid-2,.grid-3,.grid-4').forEach(function(grid){
+      var n = grid.children.length;
+      if(n < 2) return;
+ 
+      var paused = false;
+      var resumeTimer = null;
+      var cur = 0;
+ 
+      // Build dots
+      var dotsEl = document.createElement('div');
+      dotsEl.className = 'swipe-dots';
+      for(var i=0;i<n;i++){
+        var d = document.createElement('div');
+        d.className = 'swipe-dot'+(i===0?' active':'');
+        (function(idx){
+          d.addEventListener('click',function(){
+            pause(); goTo(idx); scheduleResume();
+          });
+        })(i);
+        dotsEl.appendChild(d);
+      }
+      grid.parentNode.insertBefore(dotsEl, grid.nextSibling);
+ 
+      function getDotEls(){ return dotsEl.querySelectorAll('.swipe-dot'); }
+ 
+      function goTo(idx){
+        cur = (idx + n) % n;
+        var cardW = (grid.firstElementChild ? grid.firstElementChild.offsetWidth : 280) + 16;
+        grid.scrollTo({left: cur * cardW, behavior:'smooth'});
+        getDotEls().forEach(function(d,i){ d.classList.toggle('active', i===cur); });
+      }
+ 
+      // Sync dots when user manually swipes
+      grid.addEventListener('scroll', function(){
+        var cardW = (grid.firstElementChild ? grid.firstElementChild.offsetWidth : 280) + 16;
+        cur = Math.round(grid.scrollLeft / cardW);
+        getDotEls().forEach(function(d,i){ d.classList.toggle('active', i===cur); });
+      });
+ 
+      function pause(){
+        paused = true;
+        if(resumeTimer){ clearTimeout(resumeTimer); resumeTimer = null; }
+      }
+      function scheduleResume(){
+        resumeTimer = setTimeout(function(){ paused = false; }, RESUME_AFTER);
+      }
+ 
+      // Touch — pause while finger down, resume after lift
+      grid.addEventListener('touchstart', pause, {passive:true});
+      grid.addEventListener('touchend', scheduleResume, {passive:true});
+ 
+      // Hover — pause while hovering
+      grid.addEventListener('mouseenter', pause);
+      grid.addEventListener('mouseleave', function(){ paused = false; });
+ 
+      // Single interval — only advance on mobile where carousel is active
+      setInterval(function(){
+        if(paused) return;
+        if(window.innerWidth > 767) return;
+        goTo(cur + 1);
+      }, INTERVAL);
+    });
+  }
+ 
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', initDots);
+  } else {
+    initDots();
+  }
+})();
 </script>
 </body>
 </html>
