@@ -142,7 +142,7 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
     </div>
     <h2>Email Us</h2>
     <p>For general questions, billing, or anything else.</p>
-    <a href="mailto:hello@luminapath.ca">hello@luminapath.ca</a>
+    <a href="mailto:support@luminapath.ca">support@luminapath.ca</a>
   </div>
   <div class="contact-card">
     <div class="contact-icon" style="background:linear-gradient(135deg,#ec4899,#f97316)">
@@ -208,14 +208,14 @@ footer{padding:48px 0;background:#000;border-top:1px solid rgba(255,255,255,.05)
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </div>
-      <a href="/cdn-cgi/l/email-protection#6f1c1a1f1f001d1b2f031a0206010e1f0e1b07410c0e" class="footer-contact"><span class="__cf_email__" data-cfemail="5f2c2a2f2f302d2b1f130a1216111e0f1e0b17711c1e">[email&#160;protected]</span></a>
+      <a href="mailto:support@luminapath.ca" class="footer-contact">support@luminapath.ca</a>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 LuminaPath. All rights reserved.</p>
       <div class="footer-legal">
         <a href="/privacy-policy.html">Privacy Policy</a>
         <a href="/terms-of-service.html">Terms of Service</a>
-        <a href="/cdn-cgi/l/email-protection#b1c2c4c1c1dec3c5f1ddc4dcd8dfd0c1d0c5d99fd2d0">Contact</a>
+        <a href="mailto:support@luminapath.ca">Contact</a>
       </div>
       <p>Launching April 7, 2026</p>
     </div>
@@ -245,7 +245,6 @@ function handleSubmit(e){
   var form = document.getElementById('contactForm');
   var success = document.getElementById('contactSuccess');
   var data = new FormData(form);
-  // Send to your server or a form service — for now just show success
   fetch('https://command.luminapath.ca/api/contact', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
