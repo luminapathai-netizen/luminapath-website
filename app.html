@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuminaPath — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p:#6d28d9; --p2:#8b5cf6; --pk:#db2777; --g:linear-gradient(135deg,#6d28d9,#db2777);
+  --bg:#fafafa; --w:#fff; --s:#f5f3ff; --s2:#ede9fe;
+  --br:#e8e4f5; --br2:#d4ccf0;
+  --tx:#18142e; --tx2:#4a435e; --mu:#9490aa; --di:#c8c3dc;
+  --gn:#059669; --gnbg:#ecfdf5; --gnbr:#a7f3d0;
+  --rd:#dc2626; --rdbg:#fef2f2; --rdbr:#fecaca;
+  --or:#d97706; --orbg:#fffbeb; --orbr:#fde68a;
+  --bl:#2563eb; --blbg:#eff6ff; --blbr:#bfdbfe;
+  --sh:0 1px 3px rgba(109,40,217,.06),0 4px 16px rgba(109,40,217,.06);
+  --sh2:0 4px 24px rgba(109,40,217,.12);
+  --r:14px; --r2:10px; --r3:20px;
+  --sb:230px; --sb-icon:60px;
+  --top:58px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.6;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+
+/* ── TOPBAR ── */
+.topbar{height:var(--top);background:var(--w);border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 16px;flex-shrink:0;z-index:200;gap:12px}
+.tb-left{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.tb-menu{width:32px;height:32px;border-radius:8px;background:var(--s);border:1px solid var(--br);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;background:var(--g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.tb-sep{width:1px;height:18px;background:var(--br)}
+.tb-page{font-size:13px;font-weight:500;color:var(--tx2)}
+.tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.ai-name-pill{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--br2);border-radius:100px;padding:5px 12px;cursor:pointer;transition:all .2s}
+.ai-name-pill:hover{border-color:var(--p)}
+.ai-name-dot{width:7px;height:7px;border-radius:50%;background:var(--gn);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ai-name-text{font-size:11px;font-weight:600;color:var(--p);font-family:'JetBrains Mono',monospace}
+.cr-pill{display:flex;align-items:center;gap:7px;background:var(--s);border:1px solid var(--br);border-radius:100px;padding:5px 12px}
+.cr-bar{width:44px;height:4px;background:var(--br);border-radius:2px;overflow:hidden}
+.cr-fill{height:100%;background:var(--g);border-radius:2px;width:83%}
+.cr-text{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--p);font-weight:500}
+.notif-btn{position:relative;width:32px;height:32px;border-radius:50%;background:var(--s);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.notif-btn:hover{border-color:var(--p)}
+.nb{position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:var(--rd);border-radius:50%;font-size:8px;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;border:2px solid var(--w)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff;cursor:pointer;flex-shrink:0}
+.plan-tag{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 9px;border-radius:100px;background:var(--s2);color:var(--p);border:1px solid var(--br2);white-space:nowrap}
+
+/* ── BODY LAYOUT ── */
+.body-wrap{display:flex;flex:1;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sb);flex-shrink:0;background:var(--w);border-right:1px solid var(--br);display:flex;flex-direction:column;transition:width .2s;overflow:hidden}
+.sidebar.collapsed{width:var(--sb-icon)}
+.nav-wrap{flex:1;overflow-y:auto;padding:10px 8px;scrollbar-width:none}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-section{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--di);letter-spacing:.12em;text-transform:uppercase;padding:14px 10px 5px;white-space:nowrap;overflow:hidden;transition:opacity .2s}
+.sidebar.collapsed .nav-section{opacity:0}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--tx2);transition:all .15s;margin-bottom:1px;white-space:nowrap;overflow:hidden;font-size:13px;font-weight:400}
+.nav-item:hover{background:var(--s);color:var(--tx)}
+.nav-item.on{background:var(--s2);color:var(--p);font-weight:500}
+.nav-item.wizard-nav{background:var(--s2);color:var(--p);font-weight:600}
+.nav-ico{font-size:16px;flex-shrink:0;width:20px;text-align:center}
+.nav-text{flex:1;overflow:hidden;transition:opacity .2s}
+.sidebar.collapsed .nav-text{opacity:0;width:0}
+.nav-badge{margin-left:auto;background:var(--rdbg);color:var(--rd);border:1px solid var(--rdbr);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:100px;flex-shrink:0;transition:opacity .2s}
+.sidebar.collapsed .nav-badge{opacity:0}
+.nav-new{margin-left:auto;background:var(--s2);color:var(--p);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:100px;flex-shrink:0;transition:opacity .2s}
+.sidebar.collapsed .nav-new{opacity:0}
+.sidebar-bottom{padding:12px 8px;border-top:1px solid var(--br);flex-shrink:0}
+.sb-user{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;cursor:pointer;background:var(--s);white-space:nowrap;overflow:hidden}
+.sb-av{width:30px;height:30px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:#fff;flex-shrink:0}
+.sb-info{overflow:hidden}
+.sb-name{font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;transition:opacity .2s}
+.sb-plan{font-size:10px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;transition:opacity .2s}
+.sidebar.collapsed .sb-info{opacity:0;width:0}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;overflow-x:hidden;background:var(--bg);scrollbar-width:thin;scrollbar-color:var(--br) transparent}
+.main::-webkit-scrollbar{width:4px}
+.main::-webkit-scrollbar-thumb{background:var(--br);border-radius:2px}
+.pg{display:none;padding:28px 28px 40px;animation:pgIn .2s ease}
+.pg.on{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ── COMMON COMPONENTS ── */
+.ph{margin-bottom:24px}
+.ph-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ph-h{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--tx);margin-bottom:3px}
+.ph-sub{font-size:13px;color:var(--mu)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+.btn-pr{background:var(--g);color:#fff;box-shadow:0 2px 10px rgba(109,40,217,.25)}
+.btn-pr:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(109,40,217,.35)}
+.btn-gh{background:var(--w);color:var(--tx2);border:1px solid var(--br)}
+.btn-gh:hover{border-color:var(--p);color:var(--p)}
+.btn-sm{padding:6px 14px;font-size:12px}
+.tag{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+.tg{background:var(--gnbg);color:var(--gn);border:1px solid var(--gnbr)}
+.to{background:var(--orbg);color:var(--or);border:1px solid var(--orbr)}
+.tb{background:var(--blbg);color:var(--bl);border:1px solid var(--blbr)}
+.tp{background:var(--s2);color:var(--p);border:1px solid var(--br2)}
+.tr{background:var(--rdbg);color:var(--rd);border:1px solid var(--rdbr)}
+.card{background:var(--w);border:1px solid var(--br);border-radius:var(--r3);padding:20px;transition:box-shadow .2s,border-color .2s;box-shadow:var(--sh)}
+.card:hover{box-shadow:var(--sh2);border-color:var(--br2)}
+.divider{height:1px;background:var(--br);margin:16px 0}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+
+/* STAT CARDS */
+.stat{background:var(--w);border:1px solid var(--br);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh)}
+.stat-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--mu);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:26px;line-height:1;margin-bottom:4px}
+.stat-sub{font-size:11px;color:var(--mu)}
+.delta{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:100px}
+.du{background:var(--gnbg);color:var(--gn)}
+.dd{background:var(--rdbg);color:var(--rd)}
+
+/* SECTION HEADER */
+.sh{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.sh-link{font-size:11px;font-weight:400;color:var(--p);cursor:pointer}
+
+/* INPUTS */
+.inp{width:100%;background:var(--s);border:1.5px solid var(--br);border-radius:10px;padding:10px 13px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--tx);outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--p);background:var(--w)}
+.inp::placeholder{color:var(--di)}
+textarea.inp{resize:vertical;min-height:80px;line-height:1.6}
+.field{margin-bottom:14px}
+.label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mu);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+
+/* PROGRESS BAR */
+.prog{height:7px;background:var(--br);border-radius:100px;overflow:hidden}
+.prog-fill{height:100%;background:var(--g);border-radius:100px;transition:width .5s}
+
+/* TOGGLE */
+.toggle{position:relative;width:38px;height:21px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.t-track{position:absolute;inset:0;background:var(--di);border-radius:100px;transition:.2s;cursor:pointer}
+.toggle input:checked + .t-track{background:var(--p)}
+.t-thumb{position:absolute;top:2.5px;left:2.5px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.2s;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle input:checked ~ .t-thumb{left:19.5px}
+
+/* ── HOME PAGE ── */
+.welcome-bar{background:var(--w);border:1px solid var(--br);border-radius:var(--r3);padding:24px 26px;margin-bottom:20px;display:flex;align-items:center;gap:20px;justify-content:space-between;box-shadow:var(--sh);position:relative;overflow:hidden}
+.wb-glow{position:absolute;right:-80px;top:-80px;width:260px;height:260px;background:radial-gradient(circle,rgba(109,40,217,.08) 0%,transparent 70%);pointer-events:none}
+.wb-h{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:4px}
+.wb-sub{font-size:13px;color:var(--mu);margin-bottom:16px}
+.wb-btns{display:flex;gap:10px;flex-wrap:wrap}
+.ai-alert{background:linear-gradient(135deg,var(--s),#fdf2f8);border:1px solid var(--br2);border-radius:12px;padding:12px 15px;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;transition:all .2s}
+.ai-alert:hover{box-shadow:var(--sh2)}
+.ai-alert-dot{width:7px;height:7px;border-radius:50%;background:var(--p);flex-shrink:0;margin-top:4px;animation:pulse 2s infinite}
+.ai-alert-txt{font-size:13px;color:var(--tx2);line-height:1.6}
+.ai-alert-txt strong{color:var(--p)}
+.post-item{display:flex;align-items:center;gap:12px;padding:13px 15px;background:var(--w);border:1px solid var(--br);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:all .15s;box-shadow:var(--sh)}
+.post-item:hover{border-color:var(--br2);box-shadow:var(--sh2)}
+.post-thumb{width:44px;height:44px;border-radius:10px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.post-body{flex:1;min-width:0}
+.post-title{font-size:13px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.post-meta{font-size:11px;color:var(--mu);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.plat-chips{display:flex;gap:3px}
+.pc{width:20px;height:20px;border-radius:5px;background:var(--s);display:flex;align-items:center;justify-content:center;font-size:11px}
+.voice-ring-sm{width:80px;height:80px;position:relative;flex-shrink:0}
+.voice-ring-sm svg{transform:rotate(-90deg)}
+.vr-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--p)}
+
+/* ALPHA CARD */
+.alpha-card{background:var(--w);border:1px solid var(--br);border-radius:var(--r3);padding:18px 20px;box-shadow:var(--sh)}
+.alpha-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.alpha-stats{display:flex;gap:24px}
+.as-val{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--p)}
+.as-lbl{font-size:10px;color:var(--mu);font-family:'JetBrains Mono',monospace}
+.alpha-note{font-size:11px;color:var(--mu);background:var(--s);padding:8px 12px;border-radius:8px;font-family:'JetBrains Mono',monospace;margin-top:10px}
+
+/* ── WIZARD ── */
+.wiz-top{background:linear-gradient(135deg,#faf7ff,#fdf2f8);border:1px solid var(--br2);border-radius:var(--r3);padding:22px 24px;margin-bottom:16px}
+.wiz-h{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:3px}
+.wiz-sub{font-size:13px;color:var(--mu)}
+.steps-bar{display:flex;gap:0;border-bottom:1px solid var(--br);background:var(--w);border-radius:16px 16px 0 0;overflow:hidden;margin-bottom:0}
+.step-tab{display:flex;align-items:center;gap:6px;padding:13px 16px;font-size:12px;font-weight:500;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;flex:1;justify-content:center}
+.step-tab:hover{color:var(--tx);background:var(--s)}
+.step-tab.on{color:var(--p);border-bottom-color:var(--p);background:var(--s)}
+.step-tab.done{color:var(--gn);border-bottom-color:var(--gn)}
+.step-num{width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:500;flex-shrink:0}
+.step-tab.on .step-num{background:var(--p);border-color:var(--p);color:#fff}
+.step-tab.done .step-num{background:var(--gn);border-color:var(--gn);color:#fff}
+.wiz-body{background:var(--w);border:1px solid var(--br);border-radius:0 0 16px 16px;border-top:none;padding:24px}
+.wiz-panel{display:none;animation:pgIn .2s}
+.wiz-panel.on{display:block}
+.intel-hint{background:var(--orbg);border:1px solid var(--orbr);border-radius:10px;padding:10px 14px;font-size:12px;color:#92400e;display:flex;gap:8px;margin-bottom:14px;line-height:1.55}
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{padding:8px 16px;border-radius:100px;border:1.5px solid var(--br);font-size:13px;cursor:pointer;transition:all .15s;background:var(--w);color:var(--tx2);font-weight:400;user-select:none}
+.chip:hover{border-color:var(--p);color:var(--p)}
+.chip.on{border-color:var(--p);background:var(--s2);color:var(--p);font-weight:500}
+.wiz-nav{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--br)}
+.btn-back{padding:11px 20px;background:var(--w);border:1.5px solid var(--br);border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;color:var(--tx2);font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.btn-back:hover{border-color:var(--p);color:var(--p)}
+.btn-next{flex:1;padding:11px;background:var(--g);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 3px 12px rgba(109,40,217,.3);transition:all .2s}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(109,40,217,.4)}
+
+/* AI OUTPUT */
+.out-block{background:var(--s);border:1px solid var(--br);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.out-head{padding:10px 15px;background:var(--w);border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between}
+.out-lbl{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--p);font-weight:500;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.out-body{padding:14px 15px;font-size:13px;color:var(--tx2);line-height:1.75}
+.hook-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:14px 15px}
+.hook-opt{border:1.5px solid var(--br);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;font-size:12px;line-height:1.5;background:var(--w)}
+.hook-opt:hover{border-color:var(--p)}
+.hook-opt.on{border-color:var(--p);background:var(--s2)}
+.hook-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--p);margin-bottom:5px}
+.kw-cloud{display:flex;flex-wrap:wrap;gap:6px;padding:14px 15px}
+.kw{padding:4px 11px;background:var(--s2);border:1px solid var(--br2);border-radius:100px;font-size:11px;color:var(--p)}
+
+/* CREATE VIDEO */
+.path-card{background:var(--w);border:1.5px solid var(--br);border-radius:14px;padding:18px;margin-bottom:10px;cursor:pointer;transition:all .15s;box-shadow:var(--sh)}
+.path-card:hover{border-color:var(--p)}
+.path-card.on{border-color:var(--p);background:var(--s)}
+.path-top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.path-icon{font-size:22px}
+.path-title{font-size:14px;font-weight:600}
+.path-desc{font-size:12px;color:var(--mu);margin-left:34px;line-height:1.55}
+.tool-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;margin-left:34px}
+.tool-chip{padding:6px 13px;background:var(--s);border:1px solid var(--br);border-radius:100px;font-size:12px;cursor:pointer;transition:all .15s;font-weight:500}
+.tool-chip:hover{border-color:var(--p);color:var(--p);background:var(--s2)}
+.upload-zone{border:2px dashed var(--br);border-radius:14px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-top:12px}
+.upload-zone:hover{border-color:var(--p);background:var(--s)}
+.uz-icon{font-size:30px;margin-bottom:8px}
+.uz-h{font-size:14px;font-weight:600;margin-bottom:3px}
+.uz-p{font-size:12px;color:var(--mu)}
+
+/* CAPTION STUDIO */
+.cap-length-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.cap-lbl{font-size:13px;font-weight:500}
+.lopt-row{display:flex;gap:6px}
+.lopt{padding:5px 13px;border-radius:100px;border:1.5px solid var(--br);font-size:11px;cursor:pointer;font-family:'JetBrains Mono',monospace;color:var(--mu);transition:all .15s}
+.lopt:hover{border-color:var(--p);color:var(--p)}
+.lopt.on{border-color:var(--p);background:var(--s2);color:var(--p)}
+.cap-card{background:var(--w);border:1px solid var(--br);border-radius:14px;overflow:hidden;margin-bottom:10px;box-shadow:var(--sh)}
+.cap-head{padding:10px 14px;background:var(--s);border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between}
+.cap-plat{font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px}
+.cap-vm{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--gn);background:var(--gnbg);border:1px solid var(--gnbr);padding:2px 8px;border-radius:100px}
+.cap-body{padding:0}
+.cap-text{width:100%;border:none;outline:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--tx);line-height:1.75;padding:12px 14px;resize:none;min-height:80px}
+.cap-foot{padding:8px 14px;border-top:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.cap-tags{display:flex;gap:5px;flex-wrap:wrap}
+.htag{font-size:11px;color:var(--bl);cursor:pointer}
+.cap-btns{display:flex;gap:6px}
+.cbtn{padding:5px 11px;border-radius:7px;font-size:11px;border:1px solid var(--br);background:var(--w);cursor:pointer;color:var(--mu);font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.cbtn:hover{border-color:var(--p);color:var(--p)}
+.cbtn.appr{background:var(--gnbg);border-color:var(--gnbr);color:var(--gn);font-weight:500}
+
+/* SCHEDULE */
+.sched-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.smode{border:1.5px solid var(--br);border-radius:12px;padding:15px;cursor:pointer;transition:all .15s;background:var(--w)}
+.smode:hover{border-color:var(--p)}
+.smode.on{border-color:var(--p);background:var(--s)}
+.smode-ico{font-size:20px;margin-bottom:7px}
+.smode-h{font-size:13px;font-weight:600;margin-bottom:2px}
+.smode-p{font-size:11px;color:var(--mu)}
+.plt-row{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;background:var(--w);border:1px solid var(--br);border-radius:11px;margin-bottom:7px;box-shadow:var(--sh)}
+.plt-left{display:flex;align-items:center;gap:11px}
+.plt-ico{width:36px;height:36px;border-radius:9px;background:var(--s);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.plt-name{font-size:13px;font-weight:500}
+.plt-handle{font-size:11px;color:var(--mu)}
+.plt-right{display:flex;align-items:center;gap:10px}
+.plt-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--p)}
+
+/* INTEL CHECK */
+.ici{border-radius:11px;padding:12px 14px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.6}
+.ici-icon{flex-shrink:0;font-size:15px;margin-top:1px}
+.post-summary{background:var(--s);border-radius:12px;padding:14px;font-size:13px;margin-bottom:14px}
+.ps-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--br)}
+.ps-row:last-child{border-bottom:none}
+.ps-lbl{color:var(--mu)}
+.ps-val{font-weight:500}
+.post-final-btn{width:100%;padding:15px;background:var(--g);color:#fff;border:none;border-radius:14px;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 4px 18px rgba(109,40,217,.35);transition:all .2s;letter-spacing:.02em}
+.post-final-btn:hover{transform:translateY(-2px);box-shadow:0 6px 26px rgba(109,40,217,.45)}
+.success-wrap{text-align:center;padding:28px 20px}
+.success-icon{font-size:48px;margin-bottom:14px}
+.success-h{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:8px}
+.success-sub{font-size:13px;color:var(--mu);margin-bottom:20px;line-height:1.65}
+.success-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.sm{background:var(--w);border:1px solid var(--br);border-radius:12px;padding:14px;text-align:center}
+.sm-val{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:2px}
+.sm-lbl{font-size:9px;color:var(--mu);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+.while-box{background:var(--s);border-radius:12px;padding:16px;text-align:left;margin-bottom:16px}
+.while-title{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.wi{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:13px;color:var(--tx2)}
+.wi-dot{width:6px;height:6px;border-radius:50%;background:var(--p);flex-shrink:0;margin-top:5px}
+
+/* ── APPROVALS ── */
+.appr-card{background:var(--w);border:1px solid var(--br);border-radius:var(--r3);padding:20px;margin-bottom:14px;box-shadow:var(--sh)}
+.appr-from{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--p);margin-bottom:3px}
+.appr-ago{font-size:11px;color:var(--mu);margin-bottom:12px}
+.appr-body{font-size:13px;color:var(--tx2);line-height:1.75;background:var(--s);border-radius:10px;padding:14px;margin-bottom:14px;border:1px solid var(--br)}
+.appr-acts{display:flex;gap:8px;flex-wrap:wrap}
+.appr-appr{flex:1;padding:11px;background:var(--g);color:#fff;border:none;border-radius:11px;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+.appr-appr:hover{opacity:.9}
+.appr-chg{padding:11px 15px;background:var(--w);border:1.5px solid var(--br);border-radius:11px;font-weight:500;font-size:13px;cursor:pointer;color:var(--tx2);font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.appr-chg:hover{border-color:var(--p);color:var(--p)}
+.appr-rej{padding:11px 14px;background:var(--rdbg);border:1px solid var(--rdbr);border-radius:11px;font-size:13px;cursor:pointer;color:var(--rd);font-family:'Plus Jakarta Sans',sans-serif}
+.feedback-wrap{margin-top:12px}
+.feedback-wrap input{width:100%;background:var(--s);border:1.5px solid var(--br);border-radius:9px;padding:10px 13px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--tx);outline:none;margin-bottom:8px}
+.feedback-wrap input:focus{border-color:var(--p)}
+.feedback-send{width:100%;padding:10px;background:var(--p);color:#fff;border:none;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
+
+/* ── INTEL ── */
+.intel-filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.ifilt{padding:6px 15px;border-radius:100px;border:1.5px solid var(--br);font-size:12px;cursor:pointer;transition:all .15s;font-weight:500;background:var(--w)}
+.ifilt:hover{border-color:var(--p);color:var(--p)}
+.ifilt.on{border-color:var(--p);background:var(--s2);color:var(--p)}
+.intel-card{background:var(--w);border:1px solid var(--br);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:var(--sh);cursor:pointer;transition:all .15s}
+.intel-card:hover{box-shadow:var(--sh2);border-color:var(--br2)}
+.ic-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.itype{padding:3px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.04em;font-weight:500}
+.it-crit{background:var(--rdbg);color:var(--rd);border:1px solid var(--rdbr)}
+.it-act{background:var(--orbg);color:var(--or);border:1px solid var(--orbr)}
+.it-fyi{background:var(--blbg);color:var(--bl);border:1px solid var(--blbr)}
+.ic-time{font-size:10px;color:var(--mu);font-family:'JetBrains Mono',monospace;margin-left:auto}
+.ic-text{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:7px}
+.ic-text strong{color:var(--tx)}
+.ic-action{font-size:12px;color:var(--p);display:inline-flex;align-items:center;gap:4px}
+
+/* ── ANALYTICS ── */
+.chart-wrap{background:var(--w);border:1px solid var(--br);border-radius:var(--r3);padding:20px;box-shadow:var(--sh)}
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:110px;margin-bottom:6px}
+.bar{flex:1;border-radius:4px 4px 0 0;cursor:pointer;transition:opacity .2s;position:relative;min-height:4px}
+.bar:hover{opacity:.8}
+.bar-lbl{text-align:center;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--mu);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── VOICE PROFILE ── */
+.voice-match-card{background:linear-gradient(135deg,#faf7ff,#fdf2f8);border:1px solid var(--br2);border-radius:var(--r3);padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:24px;box-shadow:var(--sh)}
+.voice-ring{width:100px;height:100px;position:relative;flex-shrink:0}
+.voice-ring svg{transform:rotate(-90deg)}
+.vr-val-lg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:var(--p)}
+.vm-info{}
+.vm-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:4px}
+.vm-sub{font-size:13px;color:var(--mu);line-height:1.55}
+.vslider-row{margin-bottom:15px}
+.vslider-top{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px}
+.vslider-lbl{font-weight:500;color:var(--tx2)}
+.vslider-val{color:var(--p);font-weight:500;font-size:12px}
+.slider{width:100%;-webkit-appearance:none;height:5px;border-radius:3px;background:var(--br);outline:none;cursor:pointer}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--p);cursor:pointer;border:3px solid var(--w);box-shadow:0 1px 4px rgba(109,40,217,.3)}
+
+/* ── SETTINGS / PROFILE ── */
+.settings-card{background:var(--w);border:1px solid var(--br);border-radius:var(--r3);padding:22px;margin-bottom:14px;box-shadow:var(--sh)}
+.settings-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--br)}
+.ai-name-setter{background:linear-gradient(135deg,var(--s2),#fdf2f8);border:1.5px solid var(--br2);border-radius:14px;padding:18px;margin-bottom:14px}
+.ai-name-setter h3{border-color:rgba(109,40,217,.2);font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(109,40,217,.15)}
+.ai-name-preview{background:rgba(255,255,255,.7);border:1px solid var(--br2);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--tx2);margin-top:10px;line-height:1.6}
+.ai-name-preview strong{color:var(--p)}
+.notif-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--br)}
+.notif-row:last-child{border-bottom:none}
+.notif-h{font-size:13px;font-weight:500;margin-bottom:2px}
+.notif-p{font-size:12px;color:var(--mu)}
+.platform-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--br)}
+.platform-row:last-child{border-bottom:none}
+.plat-left{display:flex;align-items:center;gap:11px}
+.plat-icon{width:36px;height:36px;border-radius:9px;background:var(--s);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.credits-bar-lg{height:8px;background:var(--br);border-radius:100px;overflow:hidden;margin:8px 0}
+.credits-fill-lg{height:100%;background:var(--g);border-radius:100px;width:83%}
+.topup-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.topup-btn{padding:8px 16px;background:var(--s);border:1.5px solid var(--br);border-radius:100px;font-size:12px;cursor:pointer;transition:all .15s;font-weight:500}
+.topup-btn:hover{border-color:var(--p);color:var(--p);background:var(--s2)}
+.save-btn{width:100%;padding:12px;background:var(--g);color:#fff;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 3px 12px rgba(109,40,217,.25);margin-top:6px;transition:all .2s}
+.save-btn:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(109,40,217,.35)}
+
+/* ── BEACON CHATBOT ── */
+#beacon-btn{position:fixed;bottom:28px;right:28px;width:52px;height:52px;border-radius:50%;background:var(--g);border:none;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(109,40,217,.4);z-index:500;transition:all .2s}
+#beacon-btn:hover{transform:scale(1.08)}
+#beacon-win{display:none;position:fixed;bottom:92px;right:28px;width:340px;height:440px;background:var(--w);border:1px solid var(--br);border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.12);z-index:499;flex-direction:column;overflow:hidden}
+#beacon-win.open{display:flex}
+.bhead{padding:14px 18px;background:var(--g);display:flex;align-items:center;justify-content:space-between}
+.bhead-title{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#fff;display:flex;align-items:center;gap:8px}
+.bclose{background:none;border:none;color:rgba(255,255,255,.75);cursor:pointer;font-size:17px}
+.bmsgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none}
+.bmsgs::-webkit-scrollbar{display:none}
+.bmsg{padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.55;max-width:88%}
+.bmsg.bot{background:var(--s);color:var(--tx2);align-self:flex-start}
+.bmsg.user{background:var(--s2);color:var(--p);align-self:flex-end}
+.btyping{display:none;align-self:flex-start;padding:10px 13px;background:var(--s);border-radius:12px}
+.btyping span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--mu);margin:0 2px;animation:bounce 1.2s infinite}
+.btyping span:nth-child(2){animation-delay:.2s}
+.btyping span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+.binp-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--br)}
+.binp{flex:1;background:var(--s);border:1px solid var(--br);border-radius:10px;padding:9px 13px;color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.binp:focus{border-color:var(--p)}
+.bsend{background:var(--p);border:none;border-radius:9px;padding:0 14px;color:#fff;cursor:pointer;font-size:15px;transition:all .15s}
+.bsend:hover{background:var(--p2)}
+
+/* ── MOBILE OVERLAY ── */
+#mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:299}
+#mob-overlay.show{display:block}
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  .sidebar{width:var(--sb-icon)}
+  .nav-text,.nav-section,.nav-badge,.nav-new,.sb-info{display:none}
+  .g4{grid-template-columns:1fr 1fr}
+  .hook-row{grid-template-columns:1fr}
+  .step-tab .step-num{display:none}
+  .step-tab{font-size:11px;padding:12px 10px}
+}
+@media (max-width:768px) {
+  .sidebar{display:none;position:fixed;top:var(--top);left:0;bottom:0;z-index:300;width:var(--sb) !important;background:var(--w);border-right:1px solid var(--br)}
+  .sidebar.mob-open{display:flex}
+  .nav-text,.nav-section,.nav-badge,.nav-new,.sb-info{display:block !important}
+  .tb-menu{display:flex}
+  .tb-sep,.plan-tag{display:none}
+  .plan-tag{display:none}
+  .pg{padding:20px 16px 36px}
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr 1fr}
+  .g4{grid-template-columns:1fr 1fr}
+  .welcome-bar{flex-direction:column;align-items:flex-start}
+  .voice-ring-sm{display:none}
+  .sched-mode-grid{grid-template-columns:1fr 1fr}
+  .steps-bar{overflow-x:auto;scrollbar-width:none}
+  .steps-bar::-webkit-scrollbar{display:none}
+  .cr-pill{display:none}
+  #beacon-btn{bottom:20px;right:16px}
+  #beacon-win{right:12px;width:calc(100vw - 24px)}
+  .voice-match-card{flex-direction:column;align-items:flex-start;gap:14px}
+}
+@media (max-width:480px) {
+  .g3,.g4{grid-template-columns:1fr 1fr}
+  .ph-row{flex-direction:column}
+  .success-metrics{grid-template-columns:1fr 1fr 1fr}
+  .sched-mode-grid{grid-template-columns:1fr}
+  .appr-acts{flex-wrap:wrap}
+  .lopt-row{flex-wrap:wrap}
+}
+
+/* ── CALENDAR ── */
+.cal-view-btn{padding:5px 12px;border-radius:7px;background:transparent;border:none;font-size:12px;font-weight:500;cursor:pointer;color:var(--mu);font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.cal-view-btn.on{background:var(--w);color:var(--p);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.cal-grid-header > div{text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--mu);letter-spacing:.05em;text-transform:uppercase;padding:6px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-day{min-height:80px;background:var(--w);border:1px solid var(--br);border-radius:8px;padding:6px 5px;cursor:pointer;transition:all .15s;position:relative}
+.cal-day:hover{border-color:var(--p);background:var(--s)}
+.cal-day.today{border-color:var(--p);background:var(--s)}
+.cal-day.other-month{background:var(--bg);opacity:.5}
+.cal-day.today .cal-day-num{background:var(--g);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.cal-day-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);margin-bottom:4px;font-weight:500}
+.cal-post-dot{font-size:10px;margin-bottom:2px;border-radius:5px;padding:2px 5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;line-height:1.3}
+.cal-post-dot.approved{background:var(--gnbg);color:var(--gn);border:1px solid var(--gnbr)}
+.cal-post-dot.pending{background:var(--orbg);color:var(--or);border:1px solid var(--orbr)}
+.cal-post-dot.drafting{background:var(--s2);color:var(--p);border:1px solid var(--br2)}
+.cal-post-dot.empty{background:var(--rdbg);color:var(--rd);border:1px solid var(--rdbr)}
+.week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);gap:0;background:var(--w);border:1px solid var(--br);border-radius:16px;overflow:hidden}
+.week-day-header{text-align:center;padding:10px 4px;border-bottom:1px solid var(--br);font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--mu)}
+.week-day-header.today{background:var(--s2);color:var(--p)}
+.week-time-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--di);padding:4px 6px;border-bottom:1px solid var(--br);border-right:1px solid var(--br);display:flex;align-items:flex-start}
+.week-cell{border-bottom:1px solid var(--br);border-right:1px solid var(--br);min-height:36px;padding:2px;position:relative;transition:background .15s;cursor:pointer}
+.week-cell:hover{background:var(--s)}
+.week-cell:last-child{border-right:none}
+.week-event{background:var(--s2);border:1px solid var(--br2);border-radius:4px;padding:2px 5px;font-size:10px;color:var(--p);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── ONBOARDING MODAL ── */
+.onboard-overlay{position:fixed;inset:0;background:rgba(18,14,46,.7);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.onboard-modal{background:var(--w);border-radius:24px;max-width:520px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.25);overflow:hidden;animation:pgIn .3s ease}
+.onboard-header{background:var(--g);padding:28px 28px 24px;position:relative;overflow:hidden}
+.onboard-header-glow{position:absolute;right:-40px;top:-40px;width:160px;height:160px;background:rgba(255,255,255,.1);border-radius:50%}
+.onboard-step-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.onboard-title{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#fff;margin-bottom:4px;line-height:1.2}
+.onboard-sub{font-size:13px;color:rgba(255,255,255,.8)}
+.onboard-progress{display:flex;gap:4px;margin-top:16px}
+.onboard-pip{height:3px;border-radius:2px;background:rgba(255,255,255,.3);transition:all .3s;flex:1}
+.onboard-pip.done{background:#fff}
+.onboard-pip.on{background:rgba(255,255,255,.8)}
+.onboard-body{padding:24px 28px 28px}
+.onboard-nav{display:flex;gap:10px;margin-top:20px}
+.onboard-skip{padding:11px 18px;background:transparent;border:1.5px solid var(--br);border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;color:var(--mu);font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.onboard-skip:hover{border-color:var(--p);color:var(--p)}
+.onboard-next{flex:1;padding:11px;background:var(--g);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 3px 12px rgba(109,40,217,.3);transition:all .2s}
+.onboard-next:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(109,40,217,.4)}
+.onboard-chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.onboard-chip{padding:8px 15px;border-radius:100px;border:1.5px solid var(--br);font-size:13px;cursor:pointer;transition:all .15s;background:var(--w);color:var(--tx2)}
+.onboard-chip:hover{border-color:var(--p);color:var(--p)}
+.onboard-chip.on{border-color:var(--p);background:var(--s2);color:var(--p);font-weight:500}
+.onboard-name-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.onboard-name-chip{padding:8px 15px;border-radius:100px;border:1.5px solid var(--br);font-size:13px;cursor:pointer;background:var(--w);color:var(--tx2);transition:all .15s}
+.onboard-name-chip:hover{border-color:var(--p);color:var(--p)}
+.onboard-name-chip.on{border-color:var(--p);background:var(--s2);color:var(--p);font-weight:500}
+.onboard-ai-preview{background:linear-gradient(135deg,var(--s2),#fdf2f8);border:1px solid var(--br2);border-radius:12px;padding:14px;margin-top:12px;font-size:13px;color:var(--tx2);line-height:1.65}
+.onboard-ai-preview strong{color:var(--p)}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-menu" id="mob-menu-btn" onclick="toggleMobSidebar()">☰</div>
+    <div class="logo">LuminaPath</div>
+    <div class="tb-sep"></div>
+    <div class="tb-page" id="page-title">Dashboard</div>
+  </div>
+  <div class="tb-right">
+    <div class="ai-name-pill" onclick="goTo('profile');setTimeout(()=>document.getElementById('ai-name-inp').focus(),300)" title="Your AI assistant — click to rename">
+      <div class="ai-name-dot"></div>
+      <div class="ai-name-text" id="ai-name-display">Nova</div>
+    </div>
+    <div class="cr-pill">
+      <div class="cr-bar"><div class="cr-fill"></div></div>
+      <span class="cr-text" id="cr-display">1,247 cr</span>
+    </div>
+    <span class="plan-tag">Solo · Founding</span>
+    <div class="notif-btn" onclick="goTo('approvals')">🔔<span class="nb" id="notif-count">3</span></div>
+    <div class="avatar">TJ</div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="body-wrap">
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="nav-wrap">
+    <div class="nav-section">Overview</div>
+    <div class="nav-item on" onclick="nav('home',this)"><div class="nav-ico">🏠</div><div class="nav-text">Dashboard</div></div>
+    <div class="nav-item" onclick="nav('analytics',this)"><div class="nav-ico">📊</div><div class="nav-text">Analytics</div></div>
+    <div class="nav-item" onclick="nav('intel',this)"><div class="nav-ico">🧠</div><div class="nav-text">Intel Feed</div></div>
+
+    <div class="nav-section">Create & Post</div>
+    <div class="nav-item wizard-nav" onclick="nav('wizard',this)"><div class="nav-ico">✨</div><div class="nav-text">Content Wizard</div><div class="nav-new">Core</div></div>
+    <div class="nav-item" onclick="nav('captions',this)"><div class="nav-ico">📝</div><div class="nav-text">Caption Studio</div></div>
+    <div class="nav-item" onclick="nav('schedule',this)"><div class="nav-ico">📅</div><div class="nav-text">Schedule</div></div>
+    <div class="nav-item" onclick="nav('approvals',this)"><div class="nav-ico">✅</div><div class="nav-text">Approvals</div><div class="nav-badge" id="appr-badge">3</div></div>
+
+    <div class="nav-section">My Brand</div>
+    <div class="nav-item" onclick="nav('voice',this)"><div class="nav-ico">🎙</div><div class="nav-text">Voice Profile</div></div>
+    <div class="nav-item" onclick="nav('platforms',this)"><div class="nav-ico">🔗</div><div class="nav-text">Platforms</div></div>
+    <div class="nav-item" onclick="nav('media',this)"><div class="nav-ico">📁</div><div class="nav-text">Media Library</div></div>
+
+    <div class="nav-section">Account</div>
+    <div class="nav-item" onclick="nav('profile',this)"><div class="nav-ico">⚙️</div><div class="nav-text">Settings & Profile</div></div>
+    <div class="nav-item" onclick="toggleBeacon()"><div class="nav-ico">💬</div><div class="nav-text" id="beacon-nav-text">Chat with Nova</div></div>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="sb-user">
+      <div class="sb-av">TJ</div>
+      <div class="sb-info">
+        <div class="sb-name">Taranjit Singh</div>
+        <div class="sb-plan">Solo · 482 seats left</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE OVERLAY -->
+<div id="mob-overlay" onclick="closeMobSidebar()"></div>
+
+<!-- MAIN -->
+<div class="main" id="main-scroll">
+
+<!-- ── HOME ── -->
+<div class="pg on" id="pg-home">
+  <div class="welcome-bar">
+    <div class="wb-glow"></div>
+    <div>
+      <div class="wb-h">Good morning, TJ ☀️</div>
+      <div class="wb-sub">Your AI has been working overnight. Here's what's ready for you today.</div>
+      <div class="wb-btns">
+        <button class="btn btn-pr" onclick="nav('wizard',null)">✨ Create Today's Content</button>
+        <button class="btn btn-gh" onclick="nav('approvals',null)">✅ Review 3 Approvals</button>
+      </div>
+    </div>
+    <div class="voice-ring-sm">
+      <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="var(--br)" stroke-width="6"/><circle cx="40" cy="40" r="32" fill="none" stroke="url(#vgs)" stroke-width="6" stroke-dasharray="201" stroke-dashoffset="26" stroke-linecap="round"/><defs><linearGradient id="vgs" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs></svg>
+      <div class="vr-val" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:var(--p)">87%</div>
+    </div>
+  </div>
+
+  <!-- AI INTEL ALERT — niche-based, no bot names -->
+  <div class="ai-alert" onclick="nav('intel',null)">
+    <div class="ai-alert-dot"></div>
+    <div class="ai-alert-txt"><strong id="ai-alert-name">Nova found something for you:</strong> #SlowLiving is trending at peak volume today — 340K posts. Your audience is most active 10am–12pm today. Drop 03 timing is perfect. <span style="color:var(--p);text-decoration:underline">See full report →</span></div>
+  </div>
+
+  <div class="g4">
+    <div class="stat"><div class="stat-lbl">Reach (30d)</div><div class="stat-val" style="color:var(--gn)">142K</div><span class="delta du">↑ 23%</span></div>
+    <div class="stat"><div class="stat-lbl">Engagement</div><div class="stat-val" style="color:var(--p)">4.8%</div><span class="delta du">↑ 1.2%</span></div>
+    <div class="stat"><div class="stat-lbl">New Followers</div><div class="stat-val">+847</div><span class="delta du">↑ 31%</span></div>
+    <div class="stat"><div class="stat-lbl">Credits Left</div><div class="stat-val" style="color:var(--p)">1,247</div><div class="stat-sub">Resets April 7</div></div>
+  </div>
+
+  <div class="g2">
+    <div>
+      <div class="sh">Upcoming Posts <span class="sh-link" onclick="nav('schedule',null)">See all →</span></div>
+      <div class="post-item"><div class="post-thumb">🎬</div><div class="post-body"><div class="post-title">Drop 03 — The Weight</div><div class="post-meta">Today · 3:00 PM <div class="plat-chips"><span class="pc">𝕏</span><span class="pc">🦋</span><span class="pc">▶️</span></div></div></div><span class="tag tg">Approved</span></div>
+      <div class="post-item"><div class="post-thumb">📸</div><div class="post-body"><div class="post-title">Drop 04 — The Shift</div><div class="post-meta">Tomorrow · 10:00 AM</div></div><span class="tag to">Pending</span></div>
+      <div class="post-item" style="opacity:.6"><div class="post-thumb">✨</div><div class="post-body"><div class="post-title">Drop 05 — The Memory</div><div class="post-meta">Mar 15 · Your AI is writing</div></div><span class="tag tp">Drafting</span></div>
+    </div>
+    <div>
+      <div class="sh">Your AI's Activity Today <span class="sh-link" id="ai-activity-label">Nova</span></div>
+      <div class="alpha-card">
+        <div class="alpha-top"><span style="font-size:13px;color:var(--mu)">Audience building</span><span class="tag tg">Active</span></div>
+        <div class="alpha-stats">
+          <div><div class="as-val">3</div><div class="as-lbl">Replies sent</div></div>
+          <div><div class="as-val">2</div><div class="as-lbl">Follows</div></div>
+          <div><div class="as-val" style="color:var(--gn)">1</div><div class="as-lbl">Replied back</div></div>
+        </div>
+        <div class="alpha-note">Your AI engages in your niche — human tone, 5 replies/day, 3 follows/day</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WIZARD ── -->
+<div class="pg" id="pg-wizard">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-h">✨ Content Wizard</div><div class="ph-sub">One spark → full script, 3 hooks, captions for all 8 platforms. About 2 minutes.</div></div>
+    </div>
+  </div>
+
+  <div class="wiz-top">
+    <div class="wiz-h">What do you want to create today?</div>
+    <div class="wiz-sub">Tell your AI your spark. It does the rest — script, hooks, thumbnails, captions.</div>
+  </div>
+
+  <div class="steps-bar">
+    <div class="step-tab on" onclick="wizGo(0,this)" id="st0"><div class="step-num">1</div>&nbsp;Spark</div>
+    <div class="step-tab" onclick="wizGo(1,this)" id="st1"><div class="step-num">2</div>&nbsp;Output</div>
+    <div class="step-tab" onclick="wizGo(2,this)" id="st2"><div class="step-num">3</div>&nbsp;Video</div>
+    <div class="step-tab" onclick="wizGo(3,this)" id="st3"><div class="step-num">4</div>&nbsp;Captions</div>
+    <div class="step-tab" onclick="wizGo(4,this)" id="st4"><div class="step-num">5</div>&nbsp;Schedule</div>
+    <div class="step-tab" onclick="wizGo(5,this)" id="st5"><div class="step-num">6</div>&nbsp;Post</div>
+  </div>
+
+  <div class="wiz-body">
+
+    <!-- Step 1: Spark -->
+    <div class="wiz-panel on" id="wp0">
+      <div class="intel-hint"><span>📡</span>&nbsp;<span>Today's trends from your AI: <strong>#SlowLiving at peak volume</strong> · "unplugged" content up 180% · best posting window 10am–1pm</span></div>
+      <div class="field"><label class="label">Your spark — what happened, what you're thinking</label><textarea class="inp" id="spark-inp" style="height:100px" placeholder="e.g. Spent the morning at a coffee shop with no wifi. Best 2 hours of my week. Changed how I think about focus..."></textarea></div>
+      <div class="field">
+        <label class="label">Post vibe</label>
+        <div class="chip-grid" id="vibe-chips">
+          <div class="chip on" onclick="solo(this,'vibe-chips')">💭 Relatable moment</div>
+          <div class="chip" onclick="solo(this,'vibe-chips')">🔥 Hot take</div>
+          <div class="chip" onclick="solo(this,'vibe-chips')">📚 Educational</div>
+          <div class="chip" onclick="solo(this,'vibe-chips')">❤️ Personal story</div>
+          <div class="chip" onclick="solo(this,'vibe-chips')">🚀 Inspire action</div>
+          <div class="chip" onclick="solo(this,'vibe-chips')">🎯 Brand / Product</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Post goal</label>
+        <div class="chip-grid">
+          <div class="chip on" onclick="this.classList.toggle('on')">Grow followers</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Build trust</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Drive to bio link</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Start conversation</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Sell</div>
+        </div>
+      </div>
+      <div class="wiz-nav" style="border:none;padding-top:0">
+        <button class="btn-next" onclick="runWizard()">✨ Create everything for me →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: AI Output -->
+    <div class="wiz-panel" id="wp1">
+      <div style="background:var(--gnbg);border:1px solid var(--gnbr);border-radius:11px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">✅</span>
+        <div><div style="font-size:13px;font-weight:600;color:var(--gn)">Your content brief is ready</div><div style="font-size:11px;color:var(--mu)">Generated in your exact voice with today's live trend data</div></div>
+        <span class="tag tp" style="margin-left:auto;flex-shrink:0">10 credits</span>
+      </div>
+      <div class="out-block">
+        <div class="out-head"><div class="out-lbl">🎬 Video concept</div></div>
+        <div class="out-body">Morning coffee shop. No laptop open. Handheld footage, natural light. Your notebook on the table, steam rising from an oat flat white. Unhurried — like you forgot the world exists for 2 hours. End on close-up of handwriting mid-sentence.</div>
+      </div>
+      <div class="out-block">
+        <div class="out-head"><div class="out-lbl">📝 Video script — your exact words</div><button class="btn btn-gh btn-sm" style="font-size:11px">Copy</button></div>
+        <div class="out-body">I did something this morning I haven't done in months. Left my laptop at home. Found a coffee shop. Ordered the oat flat white. And just... sat there. For two hours. With a notebook.<br><br>No pings. No emails. Nothing.<br><br>You know what happened? I solved three things I'd been stuck on for weeks. Not because I'm smarter. Because I finally had space to think.<br><br>We keep saying we're too busy. What we're actually saying is we're too distracted. There's a difference.</div>
+      </div>
+      <div class="out-block">
+        <div class="out-head"><div class="out-lbl">⚡ Pick your opening hook</div></div>
+        <div class="hook-row">
+          <div class="hook-opt on" onclick="pickHook(this)"><div class="hook-n">Hook 1</div>"I left my laptop at home this morning and accidentally fixed my whole week."</div>
+          <div class="hook-opt" onclick="pickHook(this)"><div class="hook-n">Hook 2</div>"The most productive 2 hours of my week cost $7 and had no wifi."</div>
+          <div class="hook-opt" onclick="pickHook(this)"><div class="hook-n">Hook 3</div>"You're not too busy. You're too distracted. There's a difference."</div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="out-block">
+          <div class="out-head"><div class="out-lbl">🖼 Thumbnail concept</div></div>
+          <div class="out-body">Hands writing in notebook, coffee steam rising behind. Bold text overlay: "NO WIFI. BEST 2 HRS." Warm tones, slightly grainy. Emotion: peaceful focus.</div>
+        </div>
+        <div class="out-block">
+          <div class="out-head"><div class="out-lbl">🤖 AI video prompt</div></div>
+          <div class="out-body" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mu)">Lifestyle video, morning coffee shop, warm golden light, person writing in notebook, no phone, slow-motion steam, calm, authentic not staged, 9:16 aspect ratio, indie film style...</div>
+        </div>
+      </div>
+      <div class="out-block">
+        <div class="out-head"><div class="out-lbl">🔑 Trending keywords + hashtags</div></div>
+        <div class="kw-cloud"><span class="kw">slow living</span><span class="kw">morning routine</span><span class="kw">productivity hack</span><span class="kw">deep work</span><span class="kw">creator life</span><span class="kw">#SlowLiving</span><span class="kw">#MorningRoutine</span><span class="kw">#fyp</span><span class="kw">#Shorts</span><span class="kw">#CreatorLife</span></div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-back" onclick="wizGo(0,null)">← Back</button>
+        <button class="btn-back" onclick="wizGo(1,null)" style="border-color:var(--p);color:var(--p)">🔄 Regenerate</button>
+        <button class="btn-next" onclick="wizGo(2,null)">Next: Create Video →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Create Video -->
+    <div class="wiz-panel" id="wp2">
+      <div class="label" style="margin-bottom:12px">How are you creating this video?</div>
+      <div class="path-card on" onclick="pickPath(this)">
+        <div class="path-top"><div class="path-icon">🎬</div><div class="path-title">I'll film it myself</div></div>
+        <div class="path-desc">Use the script and concept above. Film on your phone. Come back and upload.</div>
+        <div class="upload-zone" onclick="document.getElementById('file-inp').click();event.stopPropagation()">
+          <div class="uz-icon">📁</div>
+          <div class="uz-h">Upload finished video</div>
+          <div class="uz-p">MP4, MOV, AVI · Drag & drop or click to browse</div>
+          <input type="file" id="file-inp" style="display:none" accept="video/*,image/*" onchange="handleFile(this)">
+        </div>
+      </div>
+      <div class="path-card" onclick="pickPath(this)">
+        <div class="path-top"><div class="path-icon">🛠</div><div class="path-title">Create with a connected tool</div></div>
+        <div class="path-desc">Launch your editor. Paste the AI video prompt above into the tool directly.</div>
+        <div class="tool-row">
+          <div class="tool-chip" onclick="openTool('capcut');event.stopPropagation()">CapCut →</div>
+          <div class="tool-chip" onclick="openTool('canva');event.stopPropagation()">Canva →</div>
+          <div class="tool-chip" onclick="openTool('adobe');event.stopPropagation()">Adobe Express →</div>
+          <div class="tool-chip" onclick="openTool('invideo');event.stopPropagation()">InVideo →</div>
+        </div>
+      </div>
+      <div id="file-ready" style="display:none;background:var(--gnbg);border:1px solid var(--gnbr);border-radius:11px;padding:12px 14px;margin-top:10px;font-size:13px;color:var(--gn)">✅ <strong id="file-name-txt"></strong> ready to attach</div>
+      <div class="wiz-nav">
+        <button class="btn-back" onclick="wizGo(1,null)">← Back</button>
+        <button class="btn-next" onclick="wizGo(3,null)">Next: Write Captions →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Caption Studio -->
+    <div class="wiz-panel" id="wp3">
+      <div class="cap-length-row">
+        <div class="cap-lbl">Caption length per platform</div>
+        <div class="lopt-row">
+          <div class="lopt on" onclick="setLen(this)">Short</div>
+          <div class="lopt" onclick="setLen(this)">Medium</div>
+          <div class="lopt" onclick="setLen(this)">Long</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--mu);margin-bottom:14px">Your AI remembers your preference after 3 posts. Edit any caption — every change teaches your voice.</div>
+
+      <div id="cap-cards">
+        <!-- All 8 platforms -->
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">📷 Instagram</div><div class="cap-vm">Voice 87%</div></div><div class="cap-body"><textarea class="cap-text">unplugged for 2 hours this morning and honestly? it fixed everything.
+
+no wifi. no emails. just a notebook and the best oat flat white of my life.
+
+protect your mornings. drop a ☕ if you're building a slower life.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#slowliving</span><span class="htag">#morningroutine</span><span class="htag">#lifestyle</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">🎵 TikTok</div><div class="cap-vm">Voice 83%</div></div><div class="cap-body"><textarea class="cap-text">left my laptop at home this morning
+found a coffee shop
+no wifi
+2 hours later my whole week made sense
+
+we really underestimate what a slow morning can fix</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#fyp</span><span class="htag">#slowliving</span><span class="htag">#morningroutine</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">▶️ YouTube Shorts</div><div class="cap-vm">Voice 80%</div></div><div class="cap-body"><textarea class="cap-text">Why I Left My Laptop at Home (Best Decision of the Week) #Shorts
+
+Tracked my "unplugged morning" experiment. Here's what actually changed and why I'm making it non-negotiable.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#Shorts</span><span class="htag">#SlowLiving</span><span class="htag">#CreatorLife</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">𝕏 X / Twitter</div><div class="cap-vm">Voice 85%</div></div><div class="cap-body"><textarea class="cap-text">took 2 hours offline this morning and accidentally solved my whole week
+
+not hacks. not routines. just space.
+
+we keep adding more when the answer is always less</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#slowliving</span><span class="htag">#deepwork</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">💼 LinkedIn</div><div class="cap-vm">Voice 82%</div></div><div class="cap-body"><textarea class="cap-text">In a world obsessed with constant connectivity, sometimes the most powerful work happens offline.
+
+Two uninterrupted hours this morning solved three things I'd been stuck on for weeks.
+
+Your potential isn't defined by how connected you are. It's defined by how focused you can get.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#DeepWork</span><span class="htag">#Productivity</span><span class="htag">#Leadership</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">🦋 Bluesky</div><div class="cap-vm">Voice 84%</div></div><div class="cap-body"><textarea class="cap-text">coffee shop. no wifi. best 2 hours of my week.
+
+your brain works differently when it has space. protect your mornings.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#slowliving</span><span class="htag">#morningroutine</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">🧵 Threads</div><div class="cap-vm">Voice 81%</div></div><div class="cap-body"><textarea class="cap-text">zero wifi this morning. maximum momentum.
+
+protect your mornings before the world takes them.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#slowliving</span><span class="htag">#lifestyle</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+
+        <div class="cap-card"><div class="cap-head"><div class="cap-plat">👥 Facebook</div><div class="cap-vm">Voice 80%</div></div><div class="cap-body"><textarea class="cap-text">Tried something different this morning — left the laptop at home, found a quiet coffee shop, and spent two hours with just a notebook.
+
+Result: solved three things I'd been stuck on all week.
+
+Sometimes disconnecting is the most productive thing you can do. Who else has experienced this? ☕</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#SlowLiving</span><span class="htag">#MorningRoutine</span></div><div class="cap-btns"><button class="cbtn">🔄 Regen</button><button class="cbtn appr" onclick="this.textContent='✓ Approved'">Approve</button></div></div></div>
+      </div>
+
+      <div class="wiz-nav">
+        <button class="btn-back" onclick="wizGo(2,null)">← Back</button>
+        <button class="btn-next" onclick="wizGo(4,null)">Next: Schedule →</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Schedule -->
+    <div class="wiz-panel" id="wp4">
+      <div class="label" style="margin-bottom:10px">Posting mode</div>
+      <div class="sched-mode-grid">
+        <div class="smode on" onclick="pickMode(this)"><div class="smode-ico">⚡</div><div class="smode-h">All at once</div><div class="smode-p">Same time, all platforms</div></div>
+        <div class="smode" onclick="pickMode(this)"><div class="smode-ico">📅</div><div class="smode-h">Staggered</div><div class="smode-p">Different time per platform</div></div>
+      </div>
+      <div style="background:var(--orbg);border:1px solid var(--orbr);border-radius:9px;padding:9px 13px;font-size:12px;color:#92400e;margin-bottom:14px">💡 Your AI recommends tomorrow at 10am — your audience peaks then based on your last 14 posts</div>
+      <div class="label" style="margin-bottom:10px">Select platforms for this post</div>
+      <div class="plt-row"><div class="plt-left"><div class="plt-ico">📷</div><div><div class="plt-name">Instagram</div><div class="plt-handle">Connected</div></div></div><div class="plt-right"><span class="plt-time">Mar 14 · 10am</span><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div></div>
+      <div class="plt-row"><div class="plt-left"><div class="plt-ico">🎵</div><div><div class="plt-name">TikTok</div><div class="plt-handle">Connected</div></div></div><div class="plt-right"><span class="plt-time">Mar 14 · 10am</span><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div></div>
+      <div class="plt-row"><div class="plt-left"><div class="plt-ico">▶️</div><div><div class="plt-name">YouTube Shorts</div><div class="plt-handle">Connected</div></div></div><div class="plt-right"><span class="plt-time">Mar 14 · 10am</span><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div></div>
+      <div class="plt-row"><div class="plt-left"><div class="plt-ico">𝕏</div><div><div class="plt-name">X / Twitter</div><div class="plt-handle">Connected</div></div></div><div class="plt-right"><span class="plt-time">Mar 14 · 10am</span><label class="toggle"><input type="checkbox"><div class="t-track"></div><div class="t-thumb"></div></label></div></div>
+      <div class="plt-row" style="opacity:.5"><div class="plt-left"><div class="plt-ico">💼</div><div><div class="plt-name">LinkedIn</div><div class="plt-handle">Pending BC Registry</div></div></div><div class="plt-right"><span class="tag to" style="font-size:9px">Pending</span></div></div>
+      <div class="wiz-nav">
+        <button class="btn-back" onclick="wizGo(3,null)">← Back</button>
+        <button class="btn-next" onclick="wizGo(5,null)">Next: Final Check →</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Intel Check + Post -->
+    <div class="wiz-panel" id="wp5">
+      <div class="label" style="margin-bottom:12px">Your AI checked everything before you post</div>
+      <div class="ici" style="background:var(--gnbg);border:1px solid var(--gnbr)"><span class="ici-icon">✅</span><span>10am is your strongest Instagram window based on your last 14 posts. You're posting at the right time.</span></div>
+      <div class="ici" style="background:var(--s);border:1px solid var(--br2)"><span class="ici-icon">📡</span><span>#SlowLiving at peak volume today — already added to your Instagram and TikTok captions.</span></div>
+      <div class="ici" style="background:var(--orbg);border:1px solid var(--orbr)"><span class="ici-icon">💡</span><span>Your "personal story" posts average 6.2% engagement vs 3.8% for other formats. This post is personal story. Strong.</span></div>
+      <div class="post-summary" style="margin-top:14px">
+        <div class="ps-row"><span class="ps-lbl">Posting to</span><span class="ps-val">Instagram · TikTok · YouTube Shorts</span></div>
+        <div class="ps-row"><span class="ps-lbl">Scheduled for</span><span class="ps-val" style="color:var(--p)">Tomorrow, March 14 · 10:00 AM</span></div>
+        <div class="ps-row"><span class="ps-lbl">Hook selected</span><span class="ps-val">"I left my laptop at home..."</span></div>
+        <div class="ps-row"><span class="ps-lbl">Credits used</span><span class="ps-val">12 credits</span></div>
+      </div>
+      <div id="post-btn-area">
+        <button class="post-final-btn" onclick="doPost()">🚀 Schedule — 3 platforms · Mar 14 · 10:00 AM</button>
+        <div class="wiz-nav" style="padding-top:10px;border-top:none">
+          <button class="btn-back" onclick="wizGo(4,null)">← Back</button>
+        </div>
+      </div>
+      <div id="post-success" style="display:none">
+        <div class="success-wrap">
+          <div class="success-icon">🎉</div>
+          <div class="success-h">You're live tomorrow at 10 AM.</div>
+          <div class="success-sub">3 platforms. 1 video. Different captions each. All your voice.</div>
+          <div class="success-metrics">
+            <div class="sm"><div class="sm-val" style="color:var(--p)">3</div><div class="sm-lbl">Platforms</div></div>
+            <div class="sm"><div class="sm-val" style="color:var(--gn)">87%</div><div class="sm-lbl">Voice match</div></div>
+            <div class="sm"><div class="sm-val" style="color:var(--or)">12 cr</div><div class="sm-lbl">Used</div></div>
+          </div>
+          <div class="while-box">
+            <div class="while-title">While you sleep tonight</div>
+            <div class="wi"><div class="wi-dot"></div>Your AI scans tomorrow's trends in your niche</div>
+            <div class="wi"><div class="wi-dot"></div>Tomorrow's content draft prepared in your Approvals</div>
+            <div class="wi" id="alpha-while"><div class="wi-dot"></div>Your AI engages 5 creators in your space on your behalf</div>
+            <div class="wi"><div class="wi-dot"></div>Your post goes live at 10am. You don't touch it again.</div>
+          </div>
+          <button class="btn-next" onclick="nav('home',null)" style="width:100%;padding:14px;font-size:15px">Back to Dashboard</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end wiz-body -->
+</div>
+
+<!-- ── ANALYTICS ── -->
+<div class="pg" id="pg-analytics">
+  <div class="ph"><div class="ph-row"><div><div class="ph-h">Analytics</div><div class="ph-sub">Performance across all connected platforms.</div></div></div></div>
+  <div class="g4">
+    <div class="stat"><div class="stat-lbl">Reach (30d)</div><div class="stat-val" style="color:var(--gn)">142K</div><span class="delta du">↑ 23%</span></div>
+    <div class="stat"><div class="stat-lbl">Avg Engagement</div><div class="stat-val" style="color:var(--p)">4.8%</div><span class="delta du">↑ 1.2%</span></div>
+    <div class="stat"><div class="stat-lbl">New Followers</div><div class="stat-val">+847</div><span class="delta du">↑ 31%</span></div>
+    <div class="stat"><div class="stat-lbl">Posts Published</div><div class="stat-val">38</div><span class="delta du">↑ 8</span></div>
+  </div>
+  <div class="sh" style="margin-bottom:14px">Reach — Last 14 Days</div>
+  <div class="chart-wrap" style="margin-bottom:18px">
+    <div class="chart-bars" id="chart-bars"></div>
+    <div id="chart-labels" style="display:flex;gap:4px"></div>
+  </div>
+  <div class="g2">
+    <div>
+      <div class="sh">Platform Breakdown</div>
+      <div class="card" style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span style="font-weight:600">𝕏 X / Twitter</span><span class="tag tb">67.2K reach</span></div>
+        <div style="font-size:12px;color:var(--mu);margin-bottom:5px;display:flex;justify-content:space-between"><span>Reach</span><span>67.2K</span></div>
+        <div class="prog" style="margin-bottom:10px"><div class="prog-fill" style="width:82%"></div></div>
+        <div style="font-size:12px;color:var(--mu);margin-bottom:5px;display:flex;justify-content:space-between"><span>Engagement</span><span>5.4%</span></div>
+        <div class="prog"><div class="prog-fill" style="width:54%"></div></div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span style="font-weight:600">🦋 Bluesky</span><span class="tag tg">41.8K reach</span></div>
+        <div style="font-size:12px;color:var(--mu);margin-bottom:5px;display:flex;justify-content:space-between"><span>Reach</span><span>41.8K</span></div>
+        <div class="prog" style="margin-bottom:10px"><div class="prog-fill" style="width:51%"></div></div>
+        <div style="font-size:12px;color:var(--mu);margin-bottom:5px;display:flex;justify-content:space-between"><span>Engagement</span><span>6.1%</span></div>
+        <div class="prog"><div class="prog-fill" style="width:61%"></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sh">Best Posting Times</div>
+      <div class="card" style="margin-bottom:10px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--s2);border-radius:8px;font-size:12px"><span>𝕏 Twitter</span><span style="font-family:'JetBrains Mono',monospace;color:var(--p)">Tue, Thu · 2–4 PM</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--gnbg);border-radius:8px;font-size:12px"><span>🦋 Bluesky</span><span style="font-family:'JetBrains Mono',monospace;color:var(--gn)">Mon, Wed · 9–11 AM</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--rdbg);border-radius:8px;font-size:12px"><span>▶️ YouTube</span><span style="font-family:'JetBrains Mono',monospace;color:var(--rd)">Sat, Sun · 12–2 PM</span></div>
+        </div>
+      </div>
+      <div class="sh">Best Posts (30d)</div>
+      <div class="post-item"><div class="post-thumb" style="background:#fef3c7">🔥</div><div class="post-body"><div class="post-title">Drop 02 — The Silence</div><div class="post-meta">18.4K reach · 6.8% engagement</div></div><span class="tag tg">Best</span></div>
+      <div class="post-item"><div class="post-thumb" style="background:var(--s2)">⚡</div><div class="post-body"><div class="post-title">Drop 01 — The Founder</div><div class="post-meta">14.2K reach · 5.2% engagement</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INTEL FEED — niche-based only, zero internal bot names ── -->
+<div class="pg" id="pg-intel">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-h">Intel Feed</div><div class="ph-sub" id="intel-sub">Your AI scans market trends in your niche every 4 hours. Only what's relevant to you shows here.</div></div>
+      <div style="font-size:12px;color:var(--mu);font-family:'JetBrains Mono',monospace;padding-top:4px">Updated 30 min ago</div>
+    </div>
+  </div>
+  <div class="intel-filters">
+    <div class="ifilt on" onclick="filterIntel('all',this)">All</div>
+    <div class="ifilt" onclick="filterIntel('critical',this)">🔥 Hot</div>
+    <div class="ifilt" onclick="filterIntel('actionable',this)">📈 Trending</div>
+    <div class="ifilt" onclick="filterIntel('fyi',this)">💡 FYI</div>
+  </div>
+  <!-- INTEL CARDS — no internal agent names, all user-niche focused -->
+  <div class="intel-card" data-type="critical"><div class="ic-top"><span class="itype it-crit">🔥 HOT · TREND</span><span class="ic-time">30 min ago</span></div><div class="ic-text"><strong>#SlowLiving trending at peak:</strong> 340K posts today on Instagram. Your niche is most active right now. Best window: 10am–1pm today.</div><div class="ic-action" onclick="nav('wizard',null)">→ Create a post now ↗</div></div>
+  <div class="intel-card" data-type="critical"><div class="ic-top"><span class="itype it-crit">🔥 HOT · OPPORTUNITY</span><span class="ic-time">2 hrs ago</span></div><div class="ic-text"><strong>Content gap in your niche:</strong> 73% of lifestyle creators mention tool-switching as their #1 pain. No one in your space is talking about it. First-mover opportunity.</div><div class="ic-action" onclick="nav('wizard',null)">→ Use as your next hook ↗</div></div>
+  <div class="intel-card" data-type="actionable"><div class="ic-top"><span class="itype it-act">📈 TRENDING · AUDIENCE</span><span class="ic-time">4 hrs ago</span></div><div class="ic-text"><strong>847 ideal accounts identified</strong> in your niche on X and Bluesky — lifestyle creators 500–50K followers posting about content burnout. High match with your audience.</div><div class="ic-action">→ Your AI will engage them today ↗</div></div>
+  <div class="intel-card" data-type="actionable"><div class="ic-top"><span class="itype it-act">📈 TRENDING · CONTENT</span><span class="ic-time">5 hrs ago</span></div><div class="ic-text"><strong>"Unplugged" content up 180% this week.</strong> Morning routine videos seeing 3× saves vs 30 days ago. Your planned Drop 03 is perfectly timed.</div><div class="ic-action" onclick="nav('wizard',null)">→ Create Drop 03 now ↗</div></div>
+  <div class="intel-card" data-type="fyi"><div class="ic-top"><span class="itype it-fyi">💡 FYI · PERFORMANCE</span><span class="ic-time">8 hrs ago</span></div><div class="ic-text"><strong>Your personal story posts average 6.2% engagement</strong> vs 3.8% for other formats. Highest performing day: Tuesday. Your audience responds most to authentic, unfiltered moments.</div></div>
+  <div class="intel-card" data-type="fyi"><div class="ic-top"><span class="itype it-fyi">💡 FYI · COMPETITORS</span><span class="ic-time">12 hrs ago</span></div><div class="ic-text"><strong>Top 3 creators in your niche</strong> posted 4–6x this week. You posted 2x. Consistency gap detected — your audience expects 4–5 posts/week for maximum algorithm reach.</div><div class="ic-action" onclick="nav('schedule',null)">→ Plan your content calendar ↗</div></div>
+  <div class="intel-card" data-type="fyi"><div class="ic-top"><span class="itype it-fyi">💡 FYI · HASHTAGS</span><span class="ic-time">Yesterday</span></div><div class="ic-text"><strong>3 of your regular hashtags have declined 40%+ in engagement.</strong> Recommended replacements: #SlowMorning, #OfflineLife, #MindfulCreator — all gaining volume in your niche this week.</div></div>
+</div>
+
+<!-- ── CAPTION STUDIO (standalone) ── -->
+<div class="pg" id="pg-captions">
+  <div class="ph"><div class="ph-row"><div><div class="ph-h">Caption Studio</div><div class="ph-sub">Edit, regenerate or approve any caption. Every change you make teaches your AI your voice.</div></div><div style="display:flex;gap:8px"><button class="btn btn-gh btn-sm">🔄 Regenerate All</button><button class="btn btn-pr btn-sm" onclick="nav('schedule',null)">Schedule →</button></div></div></div>
+  <div class="card" style="margin-bottom:16px;padding:16px 20px">
+    <div style="display:flex;align-items:center;gap:20px">
+      <div style="flex:1"><div style="font-size:13px;font-weight:600;margin-bottom:4px">Voice Match Score</div><div style="font-size:12px;color:var(--mu);margin-bottom:8px">Approving captions unchanged teaches your AI. Editing shows it how you'd say it differently.</div><div class="prog"><div class="prog-fill" style="width:87%"></div></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--p);text-align:right;margin-top:4px">87%</div></div>
+      <div style="text-align:center;flex-shrink:0"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:32px;color:var(--p)">38</div><div style="font-size:11px;color:var(--mu)">posts learned</div></div>
+    </div>
+  </div>
+  <div class="cap-length-row"><div class="cap-lbl">Caption length</div><div class="lopt-row"><div class="lopt on" onclick="setLen(this)">Short</div><div class="lopt" onclick="setLen(this)">Medium</div><div class="lopt" onclick="setLen(this)">Long</div></div></div>
+  <div class="cap-card"><div class="cap-head"><div class="cap-plat">📷 Instagram</div><div class="cap-vm">Voice 87%</div></div><div class="cap-body"><textarea class="cap-text">unplugged for 2 hours this morning and honestly? it fixed everything.
+
+no wifi. no emails. just a notebook and the best oat flat white of my life.
+
+protect your mornings. drop a ☕ if you're building a slower life.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#slowliving</span><span class="htag">#morningroutine</span></div><div class="cap-btns"><button class="cbtn">🔄</button><button class="cbtn appr" onclick="this.textContent='✓'">Approve</button></div></div></div>
+  <div class="cap-card"><div class="cap-head"><div class="cap-plat">🎵 TikTok</div><div class="cap-vm">Voice 83%</div></div><div class="cap-body"><textarea class="cap-text">left my laptop at home this morning
+found a coffee shop
+no wifi
+2 hours later my whole week made sense</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#fyp</span><span class="htag">#slowliving</span></div><div class="cap-btns"><button class="cbtn">🔄</button><button class="cbtn appr" onclick="this.textContent='✓'">Approve</button></div></div></div>
+  <div class="cap-card"><div class="cap-head"><div class="cap-plat">𝕏 X / Twitter</div><div class="cap-vm">Voice 85%</div></div><div class="cap-body"><textarea class="cap-text">took 2 hours offline and accidentally solved my whole week. not hacks. not routines. just space.</textarea></div><div class="cap-foot"><div class="cap-tags"><span class="htag">#slowliving</span></div><div class="cap-btns"><button class="cbtn">🔄</button><button class="cbtn appr" onclick="this.textContent='✓'">Approve</button></div></div></div>
+</div>
+
+<!-- ── SCHEDULE ── -->
+<div class="pg" id="pg-schedule">
+  <div class="ph">
+    <div class="ph-row">
+      <div><div class="ph-h">Schedule</div><div class="ph-sub">Your content calendar. Your AI suggests best times based on your last 14 posts.</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="display:flex;gap:4px;background:var(--s);border:1px solid var(--br);border-radius:10px;padding:4px">
+          <button class="cal-view-btn on" onclick="calView('month',this)">Month</button>
+          <button class="cal-view-btn" onclick="calView('week',this)">Week</button>
+          <button class="cal-view-btn" onclick="calView('list',this)">List</button>
+        </div>
+        <button class="btn btn-pr" onclick="nav('wizard',null)">+ New Post</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONTH VIEW -->
+  <div id="cal-month">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <button class="btn btn-gh btn-sm" onclick="calShift(-1)">← Prev</button>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px" id="cal-month-title">March 2026</div>
+      <button class="btn btn-gh btn-sm" onclick="calShift(1)">Next →</button>
+    </div>
+    <div class="cal-grid-header">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <!-- WEEK VIEW -->
+  <div id="cal-week" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <button class="btn btn-gh btn-sm" onclick="weekShift(-1)">← Prev</button>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px" id="week-title">Mar 9–15, 2026</div>
+      <button class="btn btn-gh btn-sm" onclick="weekShift(1)">Next →</button>
+    </div>
+    <div id="week-grid" class="week-grid"></div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="cal-list" style="display:none">
+    <div class="sh">Upcoming Posts <span class="sh-link" onclick="nav('wizard',null)">+ New Post</span></div>
+    <div class="post-item"><div class="post-thumb">🎬</div><div class="post-body"><div class="post-title">Drop 03 — The Weight</div><div class="post-meta">Today · 3:00 PM · X · Bluesky · YouTube</div></div><span class="tag tg">Scheduled</span></div>
+    <div class="post-item"><div class="post-thumb">📸</div><div class="post-body"><div class="post-title">Drop 04 — The Shift</div><div class="post-meta">Tomorrow · 10:00 AM · Instagram · TikTok</div></div><span class="tag to">Pending Approval</span></div>
+    <div class="post-item" style="opacity:.6"><div class="post-thumb">✨</div><div class="post-body"><div class="post-title">Drop 05 — The Memory</div><div class="post-meta">Mar 15 · Your AI is writing this now</div></div><span class="tag tp">Drafting</span></div>
+    <div class="post-item" style="opacity:.4"><div class="post-thumb">🎯</div><div class="post-body"><div class="post-title">Drop 06 — The Result</div><div class="post-meta">Mar 16 · Not started</div></div><span class="tag tr">Empty</span></div>
+    <div class="post-item" style="opacity:.4"><div class="post-thumb">🎯</div><div class="post-body"><div class="post-title">Drop 07 — Not created</div><div class="post-meta">Mar 17 · Not started</div></div><span class="tag tr">Empty</span></div>
+  </div>
+
+  <!-- POST DETAIL MODAL -->
+  <div id="cal-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:600;display:none;align-items:center;justify-content:center;padding:20px">
+    <div style="background:var(--w);border-radius:20px;padding:24px;max-width:420px;width:100%;box-shadow:0 16px 48px rgba(0,0,0,.2)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px" id="modal-title">Post Details</div>
+        <button onclick="closeModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--mu)">✕</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APPROVALS ── -->
+<div class="pg" id="pg-approvals">
+  <div class="ph"><div class="ph-h">Approvals</div><div class="ph-sub">Content your AI prepared — ready for your review. Approve, request changes, or reject.</div></div>
+  <div class="appr-card">
+    <div class="appr-from" id="appr-from-1">Your AI → Drop 04 Draft</div>
+    <div class="appr-ago">2 hours ago</div>
+    <div class="appr-body">🎯 THE SHIFT — Drop 04<br><br>Day 1 it sounds like AI. Day 30 it sounds like you.<br><br>That's the difference between a content tool and a content partner. LuminaPath learns your voice with every post. The longer you use it, the more it sounds like you wrote it yourself.<br><br>482 founding seats left. LUMINAPATH.CA</div>
+    <div class="appr-acts">
+      <button class="appr-appr" onclick="approveCard(this)">✓ Approve & Schedule</button>
+      <button class="appr-chg" onclick="showFeedback(this)">📝 Changes</button>
+      <button class="appr-rej" onclick="this.closest('.appr-card').style.opacity='.4'">✗</button>
+    </div>
+  </div>
+  <div class="appr-card">
+    <div class="appr-from" id="appr-from-2">Your AI → Drop 05 Draft</div>
+    <div class="appr-ago">45 minutes ago</div>
+    <div class="appr-body">🧠 THE MEMORY — Drop 05<br><br>Every AI caption tool starts over every time you post. Ours remembers.<br><br>90 days in, it knows your patterns. Your phrases. Your tone. Your cadence. It gets better the longer you use it.<br><br>482 founding seats left. LUMINAPATH.CA</div>
+    <div class="appr-acts">
+      <button class="appr-appr" onclick="approveCard(this)">✓ Approve & Schedule</button>
+      <button class="appr-chg" onclick="showFeedback(this)">📝 Changes</button>
+      <button class="appr-rej" onclick="this.closest('.appr-card').style.opacity='.4'">✗</button>
+    </div>
+  </div>
+  <div class="appr-card">
+    <div class="appr-from">Your AI → Drop 06 Draft</div>
+    <div class="appr-ago">20 minutes ago</div>
+    <div class="appr-body">🔥 THE RESULT — Drop 06<br><br>487 creators signed up in the first 48 hours of our pre-sale. Not because we promised them results. Because we showed them.<br><br>The AI that learns your voice. The platform that grows with you.<br><br>482 founding seats left. LUMINAPATH.CA</div>
+    <div class="appr-acts">
+      <button class="appr-appr" onclick="approveCard(this)">✓ Approve & Schedule</button>
+      <button class="appr-chg" onclick="showFeedback(this)">📝 Changes</button>
+      <button class="appr-rej" onclick="this.closest('.appr-card').style.opacity='.4'">✗</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── VOICE PROFILE ── -->
+<div class="pg" id="pg-voice">
+  <div class="ph"><div class="ph-row"><div><div class="ph-h">Voice Profile</div><div class="ph-sub">The AI learns your voice with every post. This profile updates automatically — you can also tune it manually here.</div></div><button class="btn btn-pr" onclick="saveVoice(event)">Save Profile</button></div></div>
+  <div class="voice-match-card">
+    <div class="voice-ring">
+      <svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="var(--br)" stroke-width="7"/><circle cx="50" cy="50" r="42" fill="none" stroke="url(#vgl)" stroke-width="7" stroke-dasharray="264" stroke-dashoffset="34" stroke-linecap="round"/><defs><linearGradient id="vgl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6d28d9"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs></svg>
+      <div class="vr-val-lg">87%</div>
+    </div>
+    <div class="vm-info">
+      <div class="vm-title">Voice Match Score</div>
+      <div class="vm-sub">Your AI studied 38 posts and 247 edits. At 90%+ captions rarely need changing. The longer you post, the more accurate it gets.</div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--br)">🎙 Tone Sliders</div>
+      <div class="vslider-row"><div class="vslider-top"><span class="vslider-lbl">Formality</span><span class="vslider-val" id="vs0">Casual</span></div><input type="range" class="slider" min="1" max="5" value="2" oninput="vsl(this,'vs0',['Very Casual','Casual','Balanced','Formal','Very Formal'])"></div>
+      <div class="vslider-row"><div class="vslider-top"><span class="vslider-lbl">Energy</span><span class="vslider-val" id="vs1">High</span></div><input type="range" class="slider" min="1" max="5" value="4" oninput="vsl(this,'vs1',['Very Low','Low','Medium','High','Very High'])"></div>
+      <div class="vslider-row"><div class="vslider-top"><span class="vslider-lbl">Humor</span><span class="vslider-val" id="vs2">Dry / Witty</span></div><input type="range" class="slider" min="1" max="5" value="3" oninput="vsl(this,'vs2',['None','Subtle','Dry/Witty','Playful','Very Funny'])"></div>
+      <div class="vslider-row"><div class="vslider-top"><span class="vslider-lbl">Directness</span><span class="vslider-val" id="vs3">Very Direct</span></div><input type="range" class="slider" min="1" max="5" value="5" oninput="vsl(this,'vs3',['Indirect','Gentle','Balanced','Direct','Very Direct'])"></div>
+      <div class="vslider-row" style="margin-bottom:0"><div class="vslider-top"><span class="vslider-lbl">Storytelling</span><span class="vslider-val" id="vs4">Heavy</span></div><input type="range" class="slider" min="1" max="5" value="4" oninput="vsl(this,'vs4',['None','Occasional','Balanced','Heavy','Always'])"></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--br)">📌 Brand Rules</div>
+        <div class="field"><label class="label">Signature phrases</label><input class="inp" value="built different, no fluff, LUMINAPATH.CA"></div>
+        <div class="field"><label class="label">Words to NEVER use</label><input class="inp" value="game-changer, revolutionary, unleash, synergy"></div>
+        <div class="field" style="margin-bottom:0"><label class="label">Your posting persona</label><input class="inp" value="Founder sharing real journey · direct · never salesy"></div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:12px">📈 Learning History</div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--br)"><span style="color:var(--mu)">Approved unchanged</span><span style="color:var(--gn);font-weight:500">24 / 38</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--br)"><span style="color:var(--mu)">Minor edits</span><span style="color:var(--or);font-weight:500">11 / 38</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span style="color:var(--mu)">Regenerated</span><span style="color:var(--rd);font-weight:500">3 / 38</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PLATFORMS ── -->
+<div class="pg" id="pg-platforms">
+  <div class="ph"><div class="ph-h">Connected Platforms</div><div class="ph-sub">Only connected platforms appear in the Schedule step. Connect more as approvals come through.</div></div>
+  <div class="card">
+    <div class="platform-row"><div class="plat-left"><div class="plat-icon">𝕏</div><div><div style="font-size:14px;font-weight:500">X / Twitter</div><div style="font-size:11px;color:var(--mu)">@LuminaPath · 2.1K followers</div></div></div><span class="tag tg">Live</span></div>
+    <div class="platform-row"><div class="plat-left"><div class="plat-icon">🦋</div><div><div style="font-size:14px;font-weight:500">Bluesky</div><div style="font-size:11px;color:var(--mu)">@luminapath.bsky.social · 847</div></div></div><span class="tag tg">Live</span></div>
+    <div class="platform-row"><div class="plat-left"><div class="plat-icon">▶️</div><div><div style="font-size:14px;font-weight:500">YouTube Shorts</div><div style="font-size:11px;color:var(--mu)">@LuminaPath · 312 subscribers</div></div></div><span class="tag tg">Live</span></div>
+    <div class="platform-row" style="opacity:.7"><div class="plat-left"><div class="plat-icon">🎵</div><div><div style="font-size:14px;font-weight:500">TikTok</div><div style="font-size:11px;color:var(--mu)">Draft mode only — video.publish audit pending</div></div></div><span class="tag to">Pending</span></div>
+    <div class="platform-row" style="opacity:.5"><div class="plat-left"><div class="plat-icon">📷</div><div><div style="font-size:14px;font-weight:500">Instagram</div><div style="font-size:11px;color:var(--mu)">Awaiting Meta developer approval</div></div></div><span class="tag to">Pending Meta</span></div>
+    <div class="platform-row" style="opacity:.5"><div class="plat-left"><div class="plat-icon">💼</div><div><div style="font-size:14px;font-weight:500">LinkedIn</div><div style="font-size:11px;color:var(--mu)">Awaiting BC Registry name approval</div></div></div><span class="tag to">Pending Registry</span></div>
+    <div class="platform-row" style="opacity:.5"><div class="plat-left"><div class="plat-icon">👥</div><div><div style="font-size:14px;font-weight:500">Facebook / Threads</div><div style="font-size:11px;color:var(--mu)">Awaiting Meta developer approval</div></div></div><span class="tag to">Pending Meta</span></div>
+    <div class="platform-row" style="opacity:.4"><div class="plat-left"><div class="plat-icon">📌</div><div><div style="font-size:14px;font-weight:500">Pinterest</div><div style="font-size:11px;color:var(--mu)">Not started</div></div></div><button class="btn btn-gh btn-sm">Setup →</button></div>
+  </div>
+</div>
+
+<!-- ── MEDIA LIBRARY ── -->
+<div class="pg" id="pg-media">
+  <div class="ph"><div class="ph-row"><div><div class="ph-h">Media Library</div><div class="ph-sub">All your uploaded content. 10GB included with your plan.</div></div><button class="btn btn-pr" onclick="nav('wizard',null)">+ Upload</button></div></div>
+  <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span style="color:var(--mu)">2.3 GB of 10 GB used</span><span style="color:var(--p)">23%</span></div><div class="prog"><div class="prog-fill" style="width:23%"></div></div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px" id="media-grid"></div>
+</div>
+
+<!-- ── PROFILE / SETTINGS ── -->
+<div class="pg" id="pg-profile">
+  <div class="ph"><div class="ph-h">Settings & Profile</div><div class="ph-sub">Account, your AI name, billing, notifications.</div></div>
+
+  <!-- AI NAME SETTER — KEY FEATURE -->
+  <div class="ai-name-setter">
+    <h3 style="color:var(--p)">🤖 Name Your AI Assistant</h3>
+    <div class="field">
+      <label class="label" style="color:var(--p)">Give your AI a name — it appears everywhere in your dashboard</label>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <input class="inp" id="ai-name-inp" value="Nova" placeholder="e.g. Nova, Aria, Sage, Kira..." style="flex:1;border-color:var(--br2)">
+        <button class="btn btn-pr" onclick="saveAiName()">Save</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <div class="chip" onclick="setAiName('Nova')">Nova</div>
+      <div class="chip" onclick="setAiName('Aria')">Aria</div>
+      <div class="chip" onclick="setAiName('Sage')">Sage</div>
+      <div class="chip" onclick="setAiName('Kira')">Kira</div>
+      <div class="chip" onclick="setAiName('Atlas')">Atlas</div>
+      <div class="chip" onclick="setAiName('Lumi')">Lumi</div>
+    </div>
+    <div class="ai-name-preview">Your dashboard will say: <strong id="ai-preview-text">"Good morning TJ ☀️ Nova found something for you today..."</strong> and your chat button will show <strong id="ai-chat-preview">"Chat with Nova →"</strong></div>
+  </div>
+
+  <div class="g2">
+    <div class="settings-card">
+      <h3>👤 Account</h3>
+      <div class="field"><label class="label">Full Name</label><input class="inp" value="Taranjit Singh"></div>
+      <div class="field"><label class="label">Email</label><input class="inp" value="tj@luminapath.ca" type="email"></div>
+      <div class="field" style="margin-bottom:0"><label class="label">Brand Name</label><input class="inp" value="LuminaPath"></div>
+    </div>
+    <div class="settings-card">
+      <h3>💰 Plan & Credits</h3>
+      <div style="background:var(--gnbg);border:1px solid var(--gnbr);border-radius:12px;padding:14px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-family:'Syne',sans-serif;font-weight:700">Solo — Founding Member</span><span class="tag tg">Active</span></div>
+        <div style="font-size:12px;color:var(--mu)">$49/mo · 1 brand · 300 posts/mo · 8 platforms · 10GB</div>
+      </div>
+      <div style="font-size:12px;color:var(--mu);margin-bottom:4px;display:flex;justify-content:space-between"><span>Credits: 1,247 / 1,500</span><span style="color:var(--p)">Resets April 7</span></div>
+      <div class="credits-bar-lg"><div class="credits-fill-lg"></div></div>
+      <div style="font-size:11px;color:var(--mu);margin-bottom:10px;font-family:'JetBrains Mono',monospace">Unused credits roll over · Max bank: 3,000</div>
+      <div class="topup-row">
+        <div class="topup-btn">+ 500 credits — $5</div>
+        <div class="topup-btn">+ 1,500 credits — $12</div>
+        <div class="topup-btn">+ 5,000 credits — $35</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-card">
+    <h3>🔔 Notifications</h3>
+    <div class="notif-row"><div><div class="notif-h">Post published</div><div class="notif-p">When your scheduled post goes live</div></div><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div>
+    <div class="notif-row"><div><div class="notif-h">New approval ready</div><div class="notif-p">When your AI drafts new content for review</div></div><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div>
+    <div class="notif-row"><div><div class="notif-h">Urgent trend alert</div><div class="notif-p">When your AI spots a trending opportunity in your niche</div></div><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div>
+    <div class="notif-row"><div><div class="notif-h">Weekly performance digest</div><div class="notif-p">Summary of your best posts every Monday</div></div><label class="toggle"><input type="checkbox"><div class="t-track"></div><div class="t-thumb"></div></label></div>
+  </div>
+
+  <div style="padding:0 0 20px">
+    <button class="save-btn" onclick="saveProfile(event)">Save All Settings</button>
+  </div>
+</div>
+
+</div><!-- end main -->
+</div><!-- end body-wrap -->
+
+<!-- BEACON CHATBOT — name dynamically set -->
+<button id="beacon-btn" onclick="toggleBeacon()" id="beacon-btn-el"></button>
+<div id="beacon-win">
+  <div class="bhead">
+    <div class="bhead-title">🤖 <span id="beacon-title-name">Nova</span></div>
+    <button class="bclose" onclick="toggleBeacon()">✕</button>
+  </div>
+  <div class="bmsgs" id="bmsgs">
+    <div class="bmsg bot" id="beacon-greeting">Hey TJ! I'm Nova 👋 Ask me anything about your dashboard, content, captions, or account.</div>
+  </div>
+  <div class="btyping" id="btyping"><span></span><span></span><span></span></div>
+  <div class="binp-row">
+    <input class="binp" id="binp" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendB()">
+    <button class="bsend" onclick="sendB()">→</button>
+  </div>
+</div>
+
+<script>
+// ── AI NAME SYSTEM ──
+let aiName = localStorage.getItem('lp_ai_name') || 'Nova';
+function applyAiName(name){
+  aiName = name;
+  localStorage.setItem('lp_ai_name', name);
+  document.getElementById('ai-name-display').textContent = name;
+  document.getElementById('ai-name-inp').value = name;
+  document.getElementById('beacon-title-name').textContent = name;
+  document.getElementById('beacon-nav-text').textContent = 'Chat with ' + name;
+  document.getElementById('beacon-btn').title = 'Chat with ' + name;
+  document.getElementById('ai-alert-name').textContent = name + ' found something for you:';
+  document.getElementById('ai-activity-label').textContent = name;
+  document.getElementById('ai-preview-text').textContent = '"Good morning TJ ☀️ ' + name + ' found something for you today..."';
+  document.getElementById('ai-chat-preview').textContent = '"Chat with ' + name + ' →"';
+  document.getElementById('beacon-greeting').textContent = 'Hey TJ! I\'m ' + name + ' 👋 Ask me anything about your dashboard, content, captions, or account.';
+  document.getElementById('intel-sub').textContent = name + ' scans market trends in your niche every 4 hours. Only what\'s relevant to you shows here.';
+  document.getElementById('alpha-while').innerHTML = '<div class="wi-dot"></div>' + name + ' engages 5 creators in your space on your behalf';
+  // Approval from labels
+  ['appr-from-1','appr-from-2'].forEach((id,i)=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = name + ' → Drop 0' + (i+4) + ' Draft';
+  });
+}
+function saveAiName(){
+  const val = document.getElementById('ai-name-inp').value.trim();
+  if(!val) return;
+  applyAiName(val);
+  const btn = event.target;
+  btn.textContent = '✓ Saved';
+  setTimeout(()=>btn.textContent='Save',1500);
+}
+function setAiName(name){
+  document.getElementById('ai-name-inp').value = name;
+  applyAiName(name);
+}
+applyAiName(aiName);
+
+// ── NAVIGATION ──
+const pages = {
+  home:'pg-home',wizard:'pg-wizard',analytics:'pg-analytics',intel:'pg-intel',
+  captions:'pg-captions',schedule:'pg-schedule',approvals:'pg-approvals',
+  voice:'pg-voice',platforms:'pg-platforms',media:'pg-media',profile:'pg-profile'
+};
+const pageTitles = {
+  home:'Dashboard',wizard:'Content Wizard',analytics:'Analytics',intel:'Intel Feed',
+  captions:'Caption Studio',schedule:'Schedule',approvals:'Approvals',
+  voice:'Voice Profile',platforms:'Platforms',media:'Media Library',profile:'Settings & Profile'
+};
+function nav(id, el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));
+  const pg = document.getElementById(pages[id]);
+  if(pg) pg.classList.add('on');
+  if(el) el.classList.add('on');
+  document.getElementById('main-scroll').scrollTop = 0;
+  document.getElementById('page-title').textContent = pageTitles[id] || 'Dashboard';
+  if(id === 'analytics') buildChart();
+  if(id === 'media') buildMedia();
+  closeMobSidebar();
+}
+function goTo(id){ nav(id, null); }
+
+// ── MOBILE SIDEBAR ──
+function toggleMobSidebar(){
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('mob-overlay');
+  sb.classList.toggle('mob-open');
+  ov.classList.toggle('show');
+}
+function closeMobSidebar(){
+  document.getElementById('sidebar').classList.remove('mob-open');
+  document.getElementById('mob-overlay').classList.remove('show');
+}
+
+// ── WIZARD ──
+let wizCur = 0;
+function wizGo(n, el){
+  document.querySelectorAll('.wiz-panel').forEach((p,i)=>p.classList.toggle('on',i===n));
+  document.querySelectorAll('.step-tab').forEach((s,i)=>{
+    s.classList.remove('on','done');
+    if(i<n) s.classList.add('done');
+    if(i===n) s.classList.add('on');
+  });
+  wizCur=n;
+  document.getElementById('main-scroll').scrollTop=0;
+}
+function solo(el, groupId){
+  document.querySelectorAll('#'+groupId+' .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+function pickHook(el){document.querySelectorAll('.hook-opt').forEach(h=>h.classList.remove('on'));el.classList.add('on');}
+function pickPath(el){document.querySelectorAll('.path-card').forEach(p=>p.classList.remove('on'));el.classList.add('on');}
+function pickMode(el){document.querySelectorAll('.smode').forEach(m=>m.classList.remove('on'));el.classList.add('on');}
+function setLen(el){el.closest('.lopt-row').querySelectorAll('.lopt').forEach(l=>l.classList.remove('on'));el.classList.add('on');}
+function openTool(t){const u={capcut:'https://www.capcut.com',canva:'https://canva.com',adobe:'https://adobe.com/express',invideo:'https://invideo.io'};window.open(u[t],'_blank');}
+function handleFile(inp){if(inp.files[0]){document.getElementById('file-name-txt').textContent=inp.files[0].name;document.getElementById('file-ready').style.display='block';}}
+function runWizard(){
+  const btn = event.target;
+  btn.textContent='✨ Creating your brief...';
+  btn.disabled=true;
+  setTimeout(()=>{wizGo(1,null);btn.textContent='✨ Create everything for me →';btn.disabled=false;},1200);
+}
+function doPost(){
+  document.getElementById('post-btn-area').style.display='none';
+  document.getElementById('post-success').style.display='block';
+}
+
+// ── APPROVALS ──
+function approveCard(btn){
+  const c=btn.closest('.appr-card');
+  c.querySelector('.appr-acts').innerHTML='<span class="tag tg" style="padding:8px 16px;font-size:12px">✓ Approved — Scheduled</span>';
+  c.style.opacity='.7';
+  const b=document.getElementById('appr-badge');
+  const nb=document.getElementById('notif-count');
+  if(b){const n=Math.max(0,parseInt(b.textContent)-1);b.textContent=n;if(!n)b.style.display='none';}
+  if(nb){const n=Math.max(0,parseInt(nb.textContent)-1);nb.textContent=n;if(!n)nb.style.display='none';}
+}
+function showFeedback(btn){
+  const c=btn.closest('.appr-card');
+  if(c.querySelector('.feedback-wrap'))return;
+  const d=document.createElement('div');d.className='feedback-wrap';
+  d.innerHTML='<input placeholder="Tell your AI what to change..."><button class="feedback-send" onclick="this.parentElement.innerHTML=\'<div style=\\\"color:var(--p);font-size:13px;padding:4px 0\\\">✓ Sent — your AI is rewriting...</div>\'">Send changes →</button>';
+  c.appendChild(d);
+}
+
+// ── INTEL FILTER ──
+function filterIntel(type, btn){
+  document.querySelectorAll('.ifilt').forEach(f=>f.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.intel-card').forEach(c=>{
+    c.style.display=(type==='all'||c.dataset.type===type)?'block':'none';
+  });
+}
+
+// ── VOICE SLIDERS ──
+function vsl(el,id,opts){document.getElementById(id).textContent=opts[el.value-1];}
+
+// ── SAVE ACTIONS ──
+function saveVoice(e){const b=e.target;b.textContent='Saving...';setTimeout(()=>{b.textContent='✓ Saved';setTimeout(()=>b.textContent='Save Profile',1500);},600);}
+function saveProfile(e){const b=e.target;b.textContent='Saving...';setTimeout(()=>{b.textContent='✓ All Settings Saved';setTimeout(()=>b.textContent='Save All Settings',1500);},600);}
+
+// ── CHART ──
+function buildChart(){
+  const c=document.getElementById('chart-bars');
+  const lc=document.getElementById('chart-labels');
+  if(!c||c.dataset.built)return;
+  c.dataset.built=1;
+  const vals=[12,8,15,22,18,25,30,20,28,35,24,40,32,48];
+  const labels=['1','2','3','4','5','6','7','8','9','10','11','12','13','14'];
+  const max=Math.max(...vals);
+  c.innerHTML='';lc.innerHTML='';
+  vals.forEach((v,i)=>{
+    const wrap=document.createElement('div');wrap.style.cssText='flex:1;display:flex;flex-direction:column;align-items:stretch;gap:0';
+    const bar=document.createElement('div');bar.className='bar';
+    bar.style.height=Math.round((v/max)*100)+'%';
+    bar.style.background=i%3===2?'linear-gradient(to top,#db2777,#f9a8d4)':'linear-gradient(to top,#6d28d9,#a78bfa)';
+    bar.title='Mar '+labels[i]+': '+v+'K reach';
+    const lbl=document.createElement('div');lbl.className='bar-lbl';lbl.textContent=labels[i];
+    wrap.appendChild(bar);c.appendChild(wrap);lc.appendChild(lbl);
+  });
+}
+
+// ── MEDIA ──
+function buildMedia(){
+  const g=document.getElementById('media-grid');if(!g||g.dataset.built)return;g.dataset.built=1;
+  const items=[{i:'🎬',t:'VIDEO'},{i:'🎬',t:'VIDEO'},{i:'🖼️',t:'IMAGE'},{i:'🎬',t:'VIDEO'},{i:'🖼️',t:'IMAGE'},{i:'🎵',t:'AUDIO'},{i:'🖼️',t:'IMAGE'},{i:'🎬',t:'VIDEO'},{i:'🖼️',t:'IMAGE'},{i:'🎬',t:'VIDEO'},{i:'🖼️',t:'IMAGE'},{i:'🎬',t:'VIDEO'}];
+  items.forEach(item=>{
+    const d=document.createElement('div');
+    d.style.cssText='aspect-ratio:1;border-radius:10px;background:var(--s);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;position:relative;overflow:hidden;transition:all .15s';
+    d.innerHTML='<span style="position:absolute;top:5px;left:5px;font-family:JetBrains Mono,monospace;font-size:8px;padding:2px 5px;border-radius:4px;background:rgba(255,255,255,.9);color:var(--mu)">'+item.t+'</span>'+item.i;
+    d.onmouseover=()=>d.style.borderColor='var(--p)';
+    d.onmouseout=()=>d.style.borderColor='var(--br)';
+    g.appendChild(d);
+  });
+}
+
+// ── BEACON CHAT ──
+function toggleBeacon(){
+  const w=document.getElementById('beacon-win');
+  w.classList.toggle('open');
+  if(w.classList.contains('open'))document.getElementById('binp').focus();
+}
+async function sendB(){
+  const inp=document.getElementById('binp');const msg=inp.value.trim();if(!msg)return;
+  const msgs=document.getElementById('bmsgs');
+  const um=document.createElement('div');um.className='bmsg user';um.textContent=msg;msgs.appendChild(um);
+  inp.value='';msgs.scrollTop=msgs.scrollHeight;
+  const ty=document.getElementById('btyping');ty.style.display='flex';msgs.scrollTop=msgs.scrollHeight;
+  try{
+    const r=await fetch('https://command.luminapath.ca/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await r.json();ty.style.display='none';
+    const bm=document.createElement('div');bm.className='bmsg bot';bm.textContent=d.reply||d.message||'Happy to help! Ask me anything.';msgs.appendChild(bm);msgs.scrollTop=msgs.scrollHeight;
+  }catch{
+    ty.style.display='none';
+    const bm=document.createElement('div');bm.className='bmsg bot';bm.textContent='Trouble connecting to the server right now. Mission Control needs to be running.';msgs.appendChild(bm);msgs.scrollTop=msgs.scrollHeight;
+  }
+}
+</script>
+
+<!-- ── ONBOARDING MODAL (first time only) ── -->
+<div class="onboard-overlay" id="onboard-overlay" style="display:none">
+  <div class="onboard-modal" id="onboard-modal">
+
+    <div class="onboard-header" id="ob-header">
+      <div class="onboard-header-glow"></div>
+      <div class="onboard-step-label" id="ob-step-label">Step 1 of 5</div>
+      <div class="onboard-title" id="ob-title">Welcome to LuminaPath.</div>
+      <div class="onboard-sub" id="ob-sub">Let's spend 8 minutes learning your voice. Every post we ever write for you starts here.</div>
+      <div class="onboard-progress" id="ob-progress">
+        <div class="onboard-pip on"></div>
+        <div class="onboard-pip"></div>
+        <div class="onboard-pip"></div>
+        <div class="onboard-pip"></div>
+        <div class="onboard-pip"></div>
+      </div>
+    </div>
+
+    <div class="onboard-body">
+      <!-- Step 1: Who are you -->
+      <div class="ob-panel on" id="ob0">
+        <div class="label" style="margin-bottom:6px">Who are you and what do you create?</div>
+        <textarea class="inp" style="height:90px" placeholder="e.g. I'm a lifestyle creator in Vancouver. I post about slow mornings, travel finds, honest fashion — the real version of a beautiful life, not the filtered one."></textarea>
+        <div class="label" style="margin-top:14px;margin-bottom:6px">Who is your audience?</div>
+        <textarea class="inp" style="height:80px" placeholder="e.g. Women 24–35 building a life they actually like. Tired of perfect aesthetics. They want real, relatable, beautiful."></textarea>
+        <div class="onboard-nav">
+          <button class="onboard-skip" onclick="closeOnboard()">Skip setup</button>
+          <button class="onboard-next" onclick="obGo(1)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Goals + tone -->
+      <div class="ob-panel" id="ob1" style="display:none">
+        <div class="label" style="margin-bottom:6px">Your 1-year goal</div>
+        <div class="onboard-chip-grid" id="ob-goals">
+          <div class="onboard-chip on" onclick="obChip(this,'ob-goals')">10K+ followers</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-goals')">Brand deals</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-goals')">Consistent posting</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-goals')">Full-time creator</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-goals')">Launch a product</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-goals')">Grow my business</div>
+        </div>
+        <div class="label" style="margin-top:16px;margin-bottom:6px">Your posting tone</div>
+        <div class="onboard-chip-grid" id="ob-tone">
+          <div class="onboard-chip on" onclick="obChip(this,'ob-tone')">Casual & real</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-tone')">Bold & direct</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-tone')">Warm & friendly</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-tone')">Professional</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-tone')">Funny & witty</div>
+          <div class="onboard-chip" onclick="obChip(this,'ob-tone')">Inspiring</div>
+        </div>
+        <div class="onboard-nav">
+          <button class="onboard-skip" onclick="obGo(0)">← Back</button>
+          <button class="onboard-next" onclick="obGo(2)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Past content -->
+      <div class="ob-panel" id="ob2" style="display:none">
+        <div class="label" style="margin-bottom:6px">Paste 2–3 of your best past captions</div>
+        <div style="font-size:12px;color:var(--mu);margin-bottom:8px">Your AI reads these to understand exactly how you write. This is the most important step — the more you share, the faster it sounds like you.</div>
+        <textarea class="inp" style="height:130px" placeholder="Paste your captions here — any platform, any length. The more the better..."></textarea>
+        <div class="label" style="margin-top:14px;margin-bottom:6px">Words you never want your AI to use</div>
+        <input class="inp" placeholder="e.g. game-changer, revolutionary, unleash, synergy...">
+        <div class="onboard-nav">
+          <button class="onboard-skip" onclick="obGo(1)">← Back</button>
+          <button class="onboard-next" onclick="obGo(3)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Platforms + niche -->
+      <div class="ob-panel" id="ob3" style="display:none">
+        <div class="label" style="margin-bottom:6px">Your niche — what topics do you cover?</div>
+        <div class="onboard-chip-grid" id="ob-niche">
+          <div class="onboard-chip on" onclick="this.classList.toggle('on')">Lifestyle</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Fashion</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Travel</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Fitness</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Food</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Business</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Finance</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Tech</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Parenting</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Education</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Beauty</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">Motivation</div>
+        </div>
+        <div class="label" style="margin-top:16px;margin-bottom:6px">Platforms you want to post on</div>
+        <div class="onboard-chip-grid" id="ob-plats">
+          <div class="onboard-chip on" onclick="this.classList.toggle('on')">📷 Instagram</div>
+          <div class="onboard-chip on" onclick="this.classList.toggle('on')">🎵 TikTok</div>
+          <div class="onboard-chip on" onclick="this.classList.toggle('on')">▶️ YouTube</div>
+          <div class="onboard-chip on" onclick="this.classList.toggle('on')">𝕏 X / Twitter</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">💼 LinkedIn</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">🦋 Bluesky</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">🧵 Threads</div>
+          <div class="onboard-chip" onclick="this.classList.toggle('on')">👥 Facebook</div>
+        </div>
+        <div class="onboard-nav">
+          <button class="onboard-skip" onclick="obGo(2)">← Back</button>
+          <button class="onboard-next" onclick="obGo(4)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 5: NAME YOUR AI — last step -->
+      <div class="ob-panel" id="ob4" style="display:none">
+        <div style="font-size:13px;color:var(--tx2);margin-bottom:14px;line-height:1.65">One last thing — give your AI a name. It's yours. It will appear everywhere in your dashboard and support chat.</div>
+        <div class="label" style="margin-bottom:8px">Choose a name or type your own</div>
+        <div style="display:flex;gap:10px;margin-bottom:12px">
+          <input class="inp" id="ob-ai-name-inp" value="Nova" placeholder="Type a name..." style="flex:1">
+        </div>
+        <div class="onboard-name-options" id="ob-name-opts">
+          <div class="onboard-name-chip on" onclick="obSetName('Nova',this)">Nova</div>
+          <div class="onboard-name-chip" onclick="obSetName('Aria',this)">Aria</div>
+          <div class="onboard-name-chip" onclick="obSetName('Sage',this)">Sage</div>
+          <div class="onboard-name-chip" onclick="obSetName('Kira',this)">Kira</div>
+          <div class="onboard-name-chip" onclick="obSetName('Atlas',this)">Atlas</div>
+          <div class="onboard-name-chip" onclick="obSetName('Lumi',this)">Lumi</div>
+          <div class="onboard-name-chip" onclick="obSetName('Pulse',this)">Pulse</div>
+          <div class="onboard-name-chip" onclick="obSetName('Echo',this)">Echo</div>
+        </div>
+        <div class="onboard-ai-preview" id="ob-ai-preview">
+          Your dashboard will say: <strong>"Good morning! Nova found something for you today — #SlowLiving is trending at peak volume in your niche..."</strong>
+        </div>
+        <div class="onboard-nav">
+          <button class="onboard-skip" onclick="obGo(3)">← Back</button>
+          <button class="onboard-next" onclick="finishOnboard()" style="background:linear-gradient(135deg,#059669,#0d9488)">✨ Start creating →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
