@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><title>Connecting TikTok...</title></head>
+<body>
 <script>
-  window.location.replace('https://command.luminapath.ca/auth/tiktok/callback' + window.location.search);
+  var params = window.location.search;
+  window.location.replace('https://command.luminapath.ca/auth/tiktok/callback' + params);
 </script>
-</head>
-<body>Connecting TikTok to LuminaPath...</body>
+<p>Connecting your TikTok account...</p>
+</body>
 </html>
